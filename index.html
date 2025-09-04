@@ -10,127 +10,126 @@
   :root{
     --blanco:#ffffff;
     --azul-osc:#003366;
-    --cian:#6bd6ff;
   }
 
   /* ——— MOBILE FIRST ———
-     Yo optimizo todo para móvil (320–480px).
-     Uso el fondo de copos que subí al repo: fondo_frozen_mobile.png */
+     Yo fuerzo todo a verse bien en móviles de 320–480 px.
+     Uso el fondo que subí al repo. Importante: nombres EXACTOS. */
   html,body{ height:100%; }
   body{
     margin:0;
-    -webkit-text-size-adjust: 100%;
     font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-    background: url("fondo_frozen_mobile.png") center/cover no-repeat; /* en móvil evito 'fixed' porque a veces salta */
+    background: url("fondo_frozen_mobile.png") center top/cover no-repeat; /* evito 'fixed' en móvil */
     color: var(--blanco);
     text-align:center;
+    -webkit-text-size-adjust: 100%;
     touch-action: manipulation;
   }
 
-  /* Yo limito el ancho para que en móvil todo quede centrado y muy legible */
+  /* Contenedor centrado y ancho máximo de móvil */
   .page{
     width: 94vw;
     max-width: 480px;
     margin: 0 auto;
-    padding: 18px 4vw 90px;
+    padding: 18px 4vw 96px; /* dejo aire abajo para que nada se corte */
   }
 
-  /* ——— Títulos ———
-     Me pediste letra grande: subo bastante el tamaño y doy un “latido” MUY suave (3%). */
+  /* ——— Títulos grandes y legibles ———
+     Yo uso sombra + un contorno finito (no recuadro) para que siempre se lean. */
   h1,h2{
-    margin:.3rem 0;
+    margin:.35rem 0;
     font-weight: 900;
     color:#fff;
-    letter-spacing: .02em;
-    text-shadow: 0 3px 10px rgba(0,0,0,.45), 0 0 22px rgba(255,255,255,.25);
-    animation: softBeat 2.2s ease-in-out infinite, softGlow 3s ease-in-out infinite alternate;
-    transform-origin: center;
+    letter-spacing:.02em;
+    text-shadow: 0 3px 10px rgba(0,0,0,.55);
+    -webkit-text-stroke: 1px rgba(0,0,0,.18); /* contorno sutil para fondo con copos */
+    animation: softBeat 2.2s ease-in-out infinite;
+    transform-origin:center;
   }
-  /* Títulos grandes, incluso en móviles pequeños */
-  h1{ font-size: clamp(44px, 9vw, 96px); line-height: 1.05; }
-  h2{ font-size: clamp(28px, 6.4vw, 56px); }
+  h1{ font-size: clamp(48px, 9.6vw, 100px); line-height:1.05; }
+  h2{ font-size: clamp(28px, 6.8vw, 58px); }
 
-  /* Latido muy sutil (no “salta” como antes) */
+  /* Latido suave (3%) para que no sea molesto */
   @keyframes softBeat{
-    0%, 100% { transform: scale(1); }
-    50% { transform: scale(1.03); } /* 3% para que no sea brusco */
-  }
-  /* Brillo leve en el contorno del texto */
-  @keyframes softGlow{
-    from { text-shadow: 0 3px 10px rgba(0,0,0,.45), 0 0 14px rgba(255,255,255,.2); }
-    to   { text-shadow: 0 4px 12px rgba(0,0,0,.55), 0 0 26px rgba(255,255,255,.35); }
+    0%,100%{ transform: scale(1); }
+    50%{ transform: scale(1.03); }
   }
 
-  /* ——— Texto general ———
-     También lo agrando; priorizo lectura sobre “que quepa todo sin scroll”. */
+  /* ——— Texto base ——— */
   p, time{
-    font-size: clamp(18px, 4.6vw, 26px);
-    line-height: 1.35;
-    margin: .45rem 0;
-    text-shadow: 0 2px 8px rgba(0,0,0,.45);
+    font-size: clamp(18px, 4.8vw, 28px);
+    line-height:1.35;
+    margin:.5rem 0;
+    text-shadow: 0 2px 8px rgba(0,0,0,.55);
+    -webkit-text-stroke: .6px rgba(0,0,0,.15);
   }
 
-  /* ——— Foto circular clicable ——— */
+  /* ——— Foto circular bien centrada ———
+     Yo centro la cara con object-position y ajusto tamaños para móviles estrechos. */
   .photo-wrap{
-    width: min(86vw, 320px);
-    height: min(86vw, 320px);
-    margin: 18px auto 10px;
+    width: min(88vw, 330px);
+    height: min(88vw, 330px);
+    margin: 18px auto 12px;
     border-radius: 50%;
     position: relative;
-    box-shadow: 0 10px 30px rgba(0,0,0,.35), inset 0 0 30px rgba(255,255,255,.35);
-    outline: 5px solid rgba(255,255,255,.75);
     overflow: hidden;
+    outline: 6px solid rgba(255,255,255,.85);
+    box-shadow: 0 12px 28px rgba(0,0,0,.35), inset 0 0 30px rgba(255,255,255,.35);
     cursor: pointer;
-    backdrop-filter: blur(1px);
   }
-  .photo-wrap img{ width:100%; height:100%; object-fit: cover; display:block; }
+  .photo-wrap img{
+    width:100%; height:100%;
+    object-fit: cover;
+    object-position: 50% 35%; /* si la carita queda alta/baja, muevo este 35% */
+    display:block;
+  }
   .tap-hint{
     position:absolute; left:0; right:0; bottom:10px;
     font-weight: 800;
-    font-size: clamp(16px, 4.6vw, 22px);
+    font-size: clamp(16px, 4.8vw, 22px);
     text-shadow: 0 2px 8px rgba(0,0,0,.6);
     pointer-events:none;
   }
 
-  /* ——— Contador (bien grande) ——— */
+  /* ——— Contador ——— */
   #countdown{
     font-weight: 900;
-    font-size: clamp(24px, 6vw, 44px);
+    font-size: clamp(24px, 6.2vw, 44px);
     margin-top: 8px;
-    text-shadow: 0 3px 10px rgba(0,0,0,.55), 0 0 18px rgba(107,214,255,.55);
+    text-shadow: 0 3px 10px rgba(0,0,0,.6), 0 0 20px rgba(255,255,255,.35);
+    -webkit-text-stroke: .6px rgba(0,0,0,.18);
   }
 
-  /* ——— Botones grandes y fáciles de pulsar ——— */
+  /* ——— Botones grandes para dedo ——— */
   .btn{
     display:block;
-    width: 100%;
-    max-width: 420px;
+    width:100%;
+    max-width: 440px;
     margin: 14px auto 0;
     padding: 14px 18px;
     border-radius: 999px;
-    border: 2px solid rgba(255,255,255,.7);
+    border: 2px solid rgba(255,255,255,.75);
     background: rgba(255,255,255,.18);
     color: var(--blanco);
     font-weight: 900;
-    font-size: clamp(18px, 4.8vw, 26px);
+    font-size: clamp(18px, 5vw, 26px);
     text-decoration: none;
-    text-shadow: 0 2px 10px rgba(0,0,0,.55);
+    text-shadow: 0 2px 10px rgba(0,0,0,.6);
     backdrop-filter: blur(6px);
-    box-shadow: 0 8px 24px rgba(0,0,0,.25), inset 0 0 18px rgba(255,255,255,.25);
-    cursor: pointer;
+    box-shadow: 0 10px 26px rgba(0,0,0,.28), inset 0 0 18px rgba(255,255,255,.28);
     transition: transform .12s ease, background .2s ease;
   }
-  .btn:active{ transform: scale(.98); }
+  .btn:active{ transform: scale(.985); }
   .btn:hover{ background: rgba(255,255,255,.26); }
 
-  /* ——— Emoji burst ——— */
+  /* ——— Emojis que explotan ——— */
   .emoji-layer{ position: fixed; inset: 0; pointer-events: none; overflow: hidden; }
   .emoji{
     position:absolute;
-    font-size: clamp(22px, 6.2vw, 40px);
+    font-size: clamp(22px, 6.4vw, 40px);
     will-change: transform, opacity;
     animation: floatUp 1400ms ease-out forwards;
-    filter: drop-shadow(0 3px 6px rgba(0,0,0,.45));
+    filter: drop-shadow(0 3px 6px rgba(0,0,0,.5));
   }
   @keyframes floatUp{
     0%{ transform: translate(var(--x,0), var(--y,0)) scale(.7) rotate(var(--r,0deg)); opacity:0; }
@@ -138,80 +137,72 @@
     100%{ transform: translate(var(--xEnd,0), var(--yEnd,-230px)) scale(1) rotate(calc(var(--r) + 25deg)); opacity:0; }
   }
 
-  /* ——— Mensaje final ——— */
+  /* ——— Mensaje final grande ——— */
   .final-message{
     margin-top: 28px;
-    font-size: clamp(22px, 5.8vw, 34px);
+    font-size: clamp(22px, 6vw, 36px);
     font-weight: 900;
-    text-shadow: 0 3px 10px rgba(0,0,0,.6), 0 0 22px rgba(255,255,255,.35);
+    text-shadow: 0 3px 10px rgba(0,0,0,.65), 0 0 22px rgba(255,255,255,.35);
+    -webkit-text-stroke: .6px rgba(0,0,0,.18);
     animation: softBeat 2.6s ease-in-out infinite;
   }
 
-  /* ——— Tira de copitos/corazones al pie ——— */
+  /* Tira de copitos al pie */
   .snow-bottom{
     position: fixed;
     left:0; right:0; bottom: 8px;
     pointer-events:none;
-    font-size: clamp(18px, 5.2vw, 26px);
-    text-shadow: 0 2px 8px rgba(0,0,0,.45);
-  }
-
-  /* Un pequeño ajuste para pantallas un poco más anchas */
-  @media (min-width: 481px){
-    .page{ padding-bottom: 110px; }
+    font-size: clamp(18px, 5.6vw, 26px);
+    text-shadow: 0 2px 8px rgba(0,0,0,.55);
   }
 </style>
 </head>
 
 <body>
   <div class="page">
-    <!-- Presento cabecera grande y clara -->
+    <!-- Yo doy la bienvenida con títulos bien grandes -->
     <h2>¡Te invito a mi fiesta!</h2>
     <h1>JIMENA CUMPLE 6 AÑOS</h1>
 
-    <!-- Aquí pongo mi foto (usa jimena1.jpg del repo) -->
+    <!-- Aquí coloco mi foto (archivo jimena.jpg del repo) -->
     <div class="photo-wrap" id="photo" aria-label="Tocar para ver la magia y oír la invitación">
       <img src="jimena.jpg" alt="Foto de Jimena" />
       <div class="tap-hint">🎈 Toca mi foto para ver la magia 🎉</div>
     </div>
 
-    <!-- Fecha y lugar (bien visibles) -->
+    <!-- Fecha y lugar, bien legibles -->
     <p>📅 <time datetime="2025-09-27">27 de septiembre de 2025</time> — 🕔 17:00 h</p>
     <p>📍 <strong>Burbuja’s Park</strong></p>
 
-    <!-- Contador grande -->
+    <!-- Contador -->
     <div id="countdown">⏳ Cargando contador...</div>
 
     <p>¡Habrá juegos, risas y mucha nieve imaginaria! ❄️</p>
 
-    <!-- Botón Maps (si tengo dirección exacta, cambio la query) -->
+    <!-- Botones grandes -->
     <a class="btn" href="https://www.google.com/maps/search/?api=1&query=Burbuja%27s+Park" target="_blank" rel="noopener">📍 Abrir ubicación</a>
-
-    <!-- Botón WhatsApp (yo cambio 34123456789 por mi número con prefijo, sin + ni espacios) -->
     <a class="btn" href="https://wa.me/34123456789?text=Hola%20Jimena%21%20Confirmo%20que%20voy%20a%20tu%20cumple%20%F0%9F%A5%B3" target="_blank" rel="noopener">💬 Confirmar por WhatsApp</a>
-
-    <!-- Botón para oír de nuevo la grabación -->
     <button class="btn" id="replayBtn">🔊 Volver a escuchar</button>
 
-    <!-- Mensaje final (grande y con latido suave) -->
+    <!-- Mensaje final -->
     <div class="final-message" id="finalMsg">
       ❄️💙☃️ Adoro los abrazos calentitos. Con cariño, Jimena ❄️💙☃️
     </div>
   </div>
 
-  <!-- Capa donde suelto los emojis -->
+  <!-- Capa para los emojis -->
   <div class="emoji-layer" id="emojiLayer" aria-hidden="true"></div>
 
-  <!-- Audio (yo me aseguro de que el archivo se llame voz.mp3, no .unknown) -->
+  <!-- Audio: IMPORTANTÍSIMO que el archivo en el repo se llame exactamente voz.mp3 -->
   <audio id="voice" preload="auto">
     <source src="voz.mp3" type="audio/mpeg">
   </audio>
 
-  <!-- Tira suave de copitos y corazones al pie -->
+  <!-- Tira de copitos al pie -->
   <div class="snow-bottom" id="snowBottom" aria-hidden="true"></div>
 
 <script>
-  /* ——— Mi set de emojis (cumple + Frozen) ——— */
+  /* Mis emojis (cumple + Frozen) */
   const EMOJIS = ["🎉","🎈","🎂","🧁","🎁","✨","❄️","⛄","🪄","👑","💙","🌟","🍭","🎊","🧊"];
   const FINAL_FLAKES = ["❄️","💙","❄️","💙","❄️","💙"];
 
@@ -221,27 +212,32 @@
   const replay = document.getElementById('replayBtn');
   const snowBottom = document.getElementById('snowBottom');
 
-  /* ——— Interacciones principales ——— */
+  /* Click en la foto: exploto emojis y reproduzco mi voz */
   photo.addEventListener('click', (ev) => {
     burstEmojis(ev.clientX, ev.clientY, 42);
     playVoice();
   });
+
+  /* Botón de volver a escuchar */
   replay.addEventListener('click', () => {
     playVoice();
     burstEmojis(window.innerWidth/2, window.innerHeight*0.35, 28);
   });
 
-  /* Yo habilito el audio con el primer toque (por políticas móviles) */
+  /* Habilito audio con el primer toque (política de navegadores móviles) */
   window.addEventListener('pointerdown', ()=> {
     try{ audio.play().then(()=>audio.pause()); }catch(e){}
   }, { once:true });
 
-  /* ——— Reproducir voz ——— */
+  /* Reproducir voz */
   function playVoice(){
-    try{ audio.currentTime = 0; audio.play().catch(()=>{}); }catch(e){}
+    try{
+      audio.currentTime = 0;
+      audio.play().catch(()=>{});
+    }catch(e){}
   }
 
-  /* ——— Explosión de emojis ——— */
+  /* Explosión de emojis */
   function burstEmojis(x,y,count=36){
     for(let i=0;i<count;i++){
       const span=document.createElement('span');
@@ -268,7 +264,7 @@
     }
   }
 
-  /* ——— Contador (yo ajusto aquí la fecha/hora si cambia) ——— */
+  /* Contador (yo edito esta fecha si cambia) */
   const countdownEl = document.getElementById("countdown");
   const targetDate = new Date("2025-09-27T17:00:00");
 
@@ -287,8 +283,7 @@
   }
   const timer=setInterval(updateCountdown,1000); updateCountdown();
 
-  /* ——— Copitos/corazones al pie ———
-     Yo “siembro” una tirita proporcional al ancho del móvil. */
+  /* Tira de copitos/corazones al pie, proporcional al ancho */
   function sprinkleFinal(){
     snowBottom.innerHTML = "";
     const width = window.innerWidth;
@@ -306,5 +301,3 @@
 </script>
 </body>
 </html>
-
-
