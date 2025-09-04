@@ -9,15 +9,19 @@
 <style>
   /* ——— RUEDITAS DE AJUSTE RÁPIDO ——— */
   :root{
-    --bg-zoom: 2.6;     /* sube si ves franjas (2.8, 3.0) */
-    --photo-size: 56vw; /* baja si quieres la foto más pequeña */
-    --gap-elsa: 36px;   /* colchón antes del arte inferior */
+    --bg-zoom: 2.8;      /* subo si aún veo franjas (3.0) */
+    --photo-size: 56vw;  /* bajo si quiero la foto más pequeña (54vw, 52vw) */
+    --gap-elsa: 36px;    /* colchón antes del arte inferior */
 
+    /* paleta hielo */
     --white:#ffffff;
-    --deep:#0b3a66;     /* azul oscuro para borde */
-    --ice1:#e8f7ff;     /* tonos de hielo para el relleno animado */
+    --deep:#0b3a66;      /* azul contorno */
+    --ice1:#e8f7ff;      /* gradiente del relleno animado */
     --ice2:#9fd1ff;
     --ice3:#55a8ff;
+
+    /* transparencia de las tarjetas cristal (más bajo = más transparente) */
+    --glass-alpha: .08;
   }
 
   /* ——— MOBILE FIRST ——— */
@@ -49,17 +53,22 @@
     text-align:center;
   }
 
-  /* ——— TEXTO HIELO: relleno azul animado + borde ———
-     Lo uso en todos los textos importantes. */
+  /* ——— TEXTO HIELO PRO ———
+     Relleno azul animado + contorno azul oscuro con sombra para legibilidad. */
   .ice{
     position:relative;
     font-weight:900;
-    -webkit-text-stroke: 1.2px rgba(255,255,255,.95);  /* borde blanco para punch */
-    color: transparent;                                /* relleno por gradiente */
+    color: transparent; /* el color viene del gradiente */
     background: linear-gradient(90deg,var(--ice1),var(--ice2),var(--ice3),var(--ice2),var(--ice1));
     background-size: 260% 100%;
     -webkit-background-clip:text; background-clip:text;
-    text-shadow: 0 3px 16px rgba(0,0,0,.6);
+    /* contorno "real" con sombras a los 4 lados + sombra global */
+    text-shadow:
+      -1px -1px 0 var(--deep),
+       1px -1px 0 var(--deep),
+      -1px  1px 0 var(--deep),
+       1px  1px 0 var(--deep),
+       0   3px 16px rgba(0,0,0,.6);
     animation: sheen 6s linear infinite, softBeat 2.1s ease-in-out infinite;
   }
   @keyframes sheen{ 0%{background-position:0% 0} 100%{background-position:100% 0} }
@@ -67,13 +76,13 @@
 
   /* Títulos grandes */
   h1,h2{ margin:.35rem 0; line-height:1.05; }
-  h1{ font-size: clamp(64px, 12.6vw, 120px); }
-  h2{ font-size: clamp(32px, 8vw, 70px); }
+  h1{ font-size: clamp(66px, 13vw, 122px); }
+  h2{ font-size: clamp(34px, 8.2vw, 72px); }
 
   /* Texto base grande */
-  p, time{ font-size: clamp(20px, 5.6vw, 32px); margin:.6rem 0; line-height:1.38; }
+  p, time{ font-size: clamp(20px, 5.8vw, 34px); margin:.6rem 0; line-height:1.38; }
 
-  /* Foto circular (usa jimena1.jpg) */
+  /* Foto circular (jimena1.jpg) */
   .photo-wrap{
     width:min(var(--photo-size),268px);
     height:min(var(--photo-size),268px);
@@ -86,51 +95,51 @@
     cursor:pointer;
   }
   .photo-wrap img{ width:100%; height:100%; object-fit:cover; object-position:50% 35%; display:block; }
-  .tap-hint{ position:absolute; left:0; right:0; bottom:10px; font-size:clamp(14px,4vw,19px); pointer-events:none; }
+  .tap-hint{ position:absolute; left:0; right:0; bottom:10px; font-size:clamp(14px,3.9vw,18px); pointer-events:none; }
 
-  /* Tarjetas cristal (muy transparentes) */
+  /* Tarjetas cristal (MUY transparentes) */
   .glass{
     margin:14px auto 0;
     width:calc(100vw - 32px); max-width:560px;
     padding:14px 12px;
     border-radius:22px;
-    background: rgba(255,255,255,.10);      /* MUY transparente */
+    background: rgba(255,255,255,var(--glass-alpha)); /* ← transparencia aquí */
     border: 1.5px solid rgba(255,255,255,.45);
     backdrop-filter: blur(6px);
-    box-shadow: 0 14px 28px rgba(0,0,0,.22), inset 0 0 16px rgba(255,255,255,.18);
+    box-shadow: 0 14px 28px rgba(0,0,0,.22), inset 0 0 16px rgba(255,255,255,.16);
   }
   .line{ margin:.3rem 0; }
-  .date-line{  font-size: clamp(22px, 6.2vw, 36px); }
-  .place-line{ font-size: clamp(22px, 6.2vw, 36px); }
-  .count-line{ font-size: clamp(30px, 7.6vw, 52px); }
-  .tagline{    font-size: clamp(21px, 5.8vw, 34px); }
+  .date-line{  font-size: clamp(22px, 6.4vw, 36px); }
+  .place-line{ font-size: clamp(22px, 6.4vw, 36px); }
+  .count-line{ font-size: clamp(32px, 8vw, 54px); }
+  .tagline{    font-size: clamp(22px, 6vw, 34px); }
 
   .safe-gap{ height: var(--gap-elsa); }
 
-  /* Botones chulos: más redondos, compactos, con color animado y flotado suave */
+  /* Botones redondos y compactos con color animado y flotado */
   .btn-ice{
     display:inline-block;
-    width: min(82vw, 460px);        /* más compactos */
+    width:min(80vw, 440px);
     margin:12px 8px 0;
     padding:14px 20px;
     border-radius:9999px;
     border:1.5px solid rgba(255,255,255,.75);
     color:#fff; font-weight:900; text-decoration:none;
     text-shadow:0 2px 10px rgba(0,0,0,.55);
-    background: linear-gradient(90deg, rgba(255,255,255,.18), rgba(140,205,255,.26), rgba(255,255,255,.18));
+    background: linear-gradient(90deg, rgba(255,255,255,.18), rgba(140,205,255,.28), rgba(255,255,255,.18));
     background-size: 200% 100%;
     backdrop-filter: blur(6px);
     box-shadow: 0 10px 22px rgba(0,0,0,.24);
     animation: btnShift 5.5s linear infinite, floatY 3.8s ease-in-out infinite;
     transition: transform .12s ease, background .2s ease;
-    font-size: clamp(18px, 5.2vw, 28px);
+    font-size: clamp(18px, 5.4vw, 28px);
   }
   @keyframes btnShift{ 0%{background-position:0% 0} 100%{background-position:100% 0} }
   @keyframes floatY{ 0%{transform:translateY(0)} 50%{transform:translateY(-2px)} 100%{transform:translateY(0)} }
   .btn-ice:active{ transform: scale(.97); }
 
   /* Abrazos + corazón */
-  .hug{ margin-top:18px; font-size:clamp(24px, 6.2vw, 38px); }
+  .hug{ margin-top:18px; font-size:clamp(24px, 6.4vw, 38px); }
   .big-heart{
     margin-top:6px; font-size:clamp(88px, 22vw, 160px); line-height:1;
     animation: heartThump 1.15s ease-in-out infinite;
@@ -138,7 +147,7 @@
   }
   @keyframes heartThump{ 0%{transform:scale(.9)}25%{transform:scale(1.08)}40%{transform:scale(.98)}60%{transform:scale(1.12)}100%{transform:scale(.9)} }
 
-  /* Emojis lluvia desde arriba (más LENTO) */
+  /* Emojis lluvia desde arriba (MUCHO más lenta) */
   .emoji-layer{ position:fixed; inset:0; pointer-events:none; overflow:hidden; }
   .emoji{
     position:absolute; font-size:clamp(22px, 6.2vw, 40px);
@@ -172,7 +181,7 @@
     <!-- Foto (jimena1.jpg) -->
     <div class="photo-wrap" id="photo" aria-label="Tocar para oír la invitación y ver la magia">
       <img src="jimena1.jpg" alt="Foto de Jimena" />
-      <div class="tap-hint ice">🎈 Toca la foto y verás la magia 🎉</div>
+      <div class="tap-hint ice">Toca aquí y verás la magia 🎉</div>
     </div>
 
     <!-- Tarjeta cristal 1: fecha + lugar -->
@@ -217,15 +226,20 @@
   const countdownEl = document.getElementById("countdown");
   const snowBottom = document.getElementById('snowBottom');
 
-  /* Tocar foto → lluvia (más lenta) + audio */
-  photo.addEventListener('click', () => { rainEmojis(160); playVoice(); });
+  /* Parámetros de velocidad de la lluvia (ajusto aquí si la quiero más lenta/rápida) */
+  const EMOJI_MIN_MS   = 3200;  // duración mínima de caída
+  const EMOJI_RANGE_MS = 3200;  // rango adicional aleatorio (total = min + aleatorio)
+  const EMOJI_DELAY_MS = 700;   // desfase máximo entre emojis
 
-  /* Desbloqueo audio primer toque */
+  /* Tocar foto → lluvia + audio */
+  photo.addEventListener('click', () => { rainEmojis(170); playVoice(); });
+
+  /* Desbloqueo audio primer toque (móviles) */
   window.addEventListener('pointerdown', ()=> { try{ audio.play().then(()=>audio.pause()); }catch(e){} }, { once:true });
 
   function playVoice(){ try{ audio.currentTime=0; audio.play().catch(()=>{}); }catch(e){} }
 
-  /* LLUVIA LENTA: 2.6–5.2s de caída */
+  /* LLUVIA (lenta) desde arriba por todo el ancho */
   function rainEmojis(count=160){
     const w = window.innerWidth;
     for(let i=0;i<count;i++){
@@ -233,8 +247,8 @@
       span.className = 'emoji';
       span.textContent = EMOJIS[Math.floor(Math.random()*EMOJIS.length)];
       const left  = Math.random()*w;
-      const delay = Math.random()*600;                 // mayor desfase
-      const dur   = 2600 + Math.random()*2600;         // 2.6s–5.2s
+      const delay = Math.random()*EMOJI_DELAY_MS;
+      const dur   = EMOJI_MIN_MS + Math.random()*EMOJI_RANGE_MS; /* 3.2s – 6.4s por defecto */
       span.style.left = left + 'px';
       span.style.top  = '-100px';
       span.style.setProperty('--r', (Math.random()*80-40) + 'deg');
@@ -245,7 +259,7 @@
     }
   }
 
-  /* Contador (ajusta fecha/hora aquí si cambia) */
+  /* Contador (ajusto fecha/hora aquí si cambia) */
   const targetDate = new Date("2025-09-27T17:00:00");
   function updateCountdown(){
     const now = new Date();
@@ -277,7 +291,5 @@
 </script>
 </body>
 </html>
-
-
 
 
