@@ -7,18 +7,17 @@
 <title>Invitación Cumple – Jimena 6 años</title>
 
 <style>
-  /* ——— MIS “RUEDITAS” PARA AJUSTAR EN 5s ———
-     Si aún veo franjas laterales, subo --bg-zoom (2.6 / 2.8).
-     Si quiero la foto más pequeña, bajo --photo-size (56vw / 52vw).
-     Si el texto se acerca a la ilustración de abajo, subo --gap-elsa (40–60px). */
+  /* ——— RUEDITAS DE AJUSTE RÁPIDO ——— */
   :root{
-    --bg-zoom: 2.60;   /* zoom del fondo respecto al ancho del móvil */
-    --photo-size: 58vw;/* tamaño de la foto circular */
-    --gap-elsa: 36px;  /* colchón antes del arte inferior */
+    --bg-zoom: 2.6;     /* sube si ves franjas (2.8, 3.0) */
+    --photo-size: 56vw; /* baja si quieres la foto más pequeña */
+    --gap-elsa: 36px;   /* colchón antes del arte inferior */
 
-    --ice-blue:#78c8ff; /* azul brillo */
-    --deep-blue:#0b3a66;/* azul contorno */
     --white:#ffffff;
+    --deep:#0b3a66;     /* azul oscuro para borde */
+    --ice1:#e8f7ff;     /* tonos de hielo para el relleno animado */
+    --ice2:#9fd1ff;
+    --ice3:#55a8ff;
   }
 
   /* ——— MOBILE FIRST ——— */
@@ -30,10 +29,10 @@
     -webkit-text-size-adjust: 100%;
     touch-action: manipulation;
     overflow-x:hidden;
-    background:#a8ccee; /* respaldo mientras carga la imagen */
+    background:#a8ccee;
   }
 
-  /* Fondo de copos a TODO lo ancho (zoom + repeat para matar franjas) */
+  /* Fondo a todo lo ancho (zoom + repeat) */
   .bg{
     position: fixed; inset:0;
     background-image: url("fondo_frozen_mobile.png");
@@ -44,162 +43,119 @@
   }
 
   .page{
-    width: 100vw; max-width:100vw;
-    margin: 0 auto;
-    padding: 18px 16px 110px;
+    width:100vw; max-width:100vw;
+    margin:0 auto;
+    padding:18px 16px 110px;
     text-align:center;
   }
 
-  /* ——— ESTILO HIELO CON REFLEJO AZUL ———
-     Truco: yo pinto el texto blanco y gordo con borde azul…
-     y le “pego” encima un reflejo animado con ::after (data-text) */
+  /* ——— TEXTO HIELO: relleno azul animado + borde ———
+     Lo uso en todos los textos importantes. */
   .ice{
-    position: relative;
-    font-weight: 900;
-    color: var(--white);
-    -webkit-text-stroke: 1.2px rgba(11,58,102,.55); /* borde azulado */
-    text-shadow:
-      0 0 0 rgba(11,58,102,.55),
-      0 0 12px rgba(120,200,255,.55),
-      0 0 28px rgba(120,200,255,.35),
-      0 3px 14px rgba(0,0,0,.65);
-    animation: softBeat 2.1s ease-in-out infinite;
-    transform-origin:center;
+    position:relative;
+    font-weight:900;
+    -webkit-text-stroke: 1.2px rgba(255,255,255,.95);  /* borde blanco para punch */
+    color: transparent;                                /* relleno por gradiente */
+    background: linear-gradient(90deg,var(--ice1),var(--ice2),var(--ice3),var(--ice2),var(--ice1));
+    background-size: 260% 100%;
+    -webkit-background-clip:text; background-clip:text;
+    text-shadow: 0 3px 16px rgba(0,0,0,.6);
+    animation: sheen 6s linear infinite, softBeat 2.1s ease-in-out infinite;
   }
-  /* Capa de reflejo azul que “respira” y se desplaza */
-  .ice[data-text]::after{
-    content: attr(data-text);
-    position:absolute; inset:0;
-    background: linear-gradient(115deg,
-        rgba(120,200,255,.15) 0%,
-        rgba(120,200,255,.75) 35%,
-        rgba(120,200,255,.15) 70%);
-    -webkit-background-clip: text;
-            background-clip: text;
-    color: transparent;
-    mix-blend-mode: screen;
-    animation: iceSheen 3.4s ease-in-out infinite alternate;
-    pointer-events:none;
-  }
+  @keyframes sheen{ 0%{background-position:0% 0} 100%{background-position:100% 0} }
   @keyframes softBeat{ 0%,100%{transform:scale(1)} 50%{transform:scale(1.03)} }
-  @keyframes iceSheen{
-    0%  { transform: translateX(-6px); opacity:.8; }
-    100%{ transform: translateX(6px);  opacity:1; }
-  }
 
   /* Títulos grandes */
   h1,h2{ margin:.35rem 0; line-height:1.05; }
-  h1{ font-size: clamp(64px, 12.8vw, 120px); }
-  h2{ font-size: clamp(34px, 8.2vw, 72px); }
+  h1{ font-size: clamp(64px, 12.6vw, 120px); }
+  h2{ font-size: clamp(32px, 8vw, 70px); }
 
   /* Texto base grande */
-  p, time{
-    font-size: clamp(20px, 5.6vw, 32px);
-    line-height:1.38;
-    margin:.6rem 0;
-  }
+  p, time{ font-size: clamp(20px, 5.6vw, 32px); margin:.6rem 0; line-height:1.38; }
 
-  /* Foto circular centrada (jimena1) */
+  /* Foto circular (usa jimena1.jpg) */
   .photo-wrap{
-    width: min(var(--photo-size), 270px);
-    height: min(var(--photo-size), 270px);
-    margin: 14px auto 10px;
-    border-radius: 50%;
-    position: relative;
-    overflow: hidden;
-    outline: 6px solid rgba(255,255,255,.95);
-    box-shadow: 0 12px 28px rgba(0,0,0,.35), inset 0 0 30px rgba(255,255,255,.35);
-    cursor: pointer;
+    width:min(var(--photo-size),268px);
+    height:min(var(--photo-size),268px);
+    margin:14px auto 10px;
+    border-radius:50%;
+    overflow:hidden;
+    outline:6px solid rgba(255,255,255,.95);
+    box-shadow:0 12px 28px rgba(0,0,0,.35), inset 0 0 30px rgba(255,255,255,.35);
+    position:relative;
+    cursor:pointer;
   }
-  .photo-wrap img{
-    width:100%; height:100%; display:block;
-    object-fit: cover;
-    object-position: 50% 35%;
-  }
-  /* “Toca mi foto…” más pequeño para que quepa entero */
-  .tap-hint{
-    position:absolute; left:0; right:0; bottom:10px;
-    font-size: clamp(14px, 4vw, 19px);
-    letter-spacing:.01em;
-    pointer-events:none;
-  }
+  .photo-wrap img{ width:100%; height:100%; object-fit:cover; object-position:50% 35%; display:block; }
+  .tap-hint{ position:absolute; left:0; right:0; bottom:10px; font-size:clamp(14px,4vw,19px); pointer-events:none; }
 
-  /* Tarjeta cristal para fecha/lugar/contador/frase */
+  /* Tarjetas cristal (muy transparentes) */
   .glass{
-    margin: 14px auto 0;
-    width: calc(100vw - 32px);
-    max-width: 560px;
-    padding: 16px 14px;
-    border-radius: 22px;
-    background:
-      linear-gradient(180deg, rgba(140,205,255,.18), rgba(255,255,255,.08));
-    border: 2px solid rgba(255,255,255,.55);
-    backdrop-filter: blur(10px);
-    box-shadow: 0 16px 30px rgba(0,0,0,.28), inset 0 0 22px rgba(255,255,255,.25);
+    margin:14px auto 0;
+    width:calc(100vw - 32px); max-width:560px;
+    padding:14px 12px;
+    border-radius:22px;
+    background: rgba(255,255,255,.10);      /* MUY transparente */
+    border: 1.5px solid rgba(255,255,255,.45);
+    backdrop-filter: blur(6px);
+    box-shadow: 0 14px 28px rgba(0,0,0,.22), inset 0 0 16px rgba(255,255,255,.18);
   }
-  .glass .line{ margin:.35rem 0; }
-  .date-line{   font-size: clamp(24px, 6.6vw, 38px); }
-  .place-line{  font-size: clamp(24px, 6.6vw, 38px); }
-  .count-line{  font-size: clamp(30px, 7.8vw, 52px); }
-  .tagline{     font-size: clamp(22px, 6vw, 34px); }
+  .line{ margin:.3rem 0; }
+  .date-line{  font-size: clamp(22px, 6.2vw, 36px); }
+  .place-line{ font-size: clamp(22px, 6.2vw, 36px); }
+  .count-line{ font-size: clamp(30px, 7.6vw, 52px); }
+  .tagline{    font-size: clamp(21px, 5.8vw, 34px); }
 
   .safe-gap{ height: var(--gap-elsa); }
 
-  /* Botones full-width */
-  .btn{
-    display:block;
-    width: calc(100vw - 32px);
-    max-width: 560px;
-    margin: 14px auto 0;
-    padding: 16px 18px;
-    border-radius: 999px;
-    border: 2px solid rgba(255,255,255,.85);
-    background: rgba(255,255,255,.18);
-    color: #fff;
-    font-weight: 900;
-    font-size: clamp(20px, 5.8vw, 32px);
-    text-decoration: none;
-    text-shadow: 0 2px 10px rgba(0,0,0,.6);
+  /* Botones chulos: más redondos, compactos, con color animado y flotado suave */
+  .btn-ice{
+    display:inline-block;
+    width: min(82vw, 460px);        /* más compactos */
+    margin:12px 8px 0;
+    padding:14px 20px;
+    border-radius:9999px;
+    border:1.5px solid rgba(255,255,255,.75);
+    color:#fff; font-weight:900; text-decoration:none;
+    text-shadow:0 2px 10px rgba(0,0,0,.55);
+    background: linear-gradient(90deg, rgba(255,255,255,.18), rgba(140,205,255,.26), rgba(255,255,255,.18));
+    background-size: 200% 100%;
     backdrop-filter: blur(6px);
-    box-shadow: 0 10px 26px rgba(0,0,0,.28), inset 0 0 18px rgba(255,255,255,.28);
+    box-shadow: 0 10px 22px rgba(0,0,0,.24);
+    animation: btnShift 5.5s linear infinite, floatY 3.8s ease-in-out infinite;
     transition: transform .12s ease, background .2s ease;
+    font-size: clamp(18px, 5.2vw, 28px);
   }
-  .btn:active{ transform: scale(.985); }
-  .btn:hover{ background: rgba(255,255,255,.26); }
+  @keyframes btnShift{ 0%{background-position:0% 0} 100%{background-position:100% 0} }
+  @keyframes floatY{ 0%{transform:translateY(0)} 50%{transform:translateY(-2px)} 100%{transform:translateY(0)} }
+  .btn-ice:active{ transform: scale(.97); }
 
   /* Abrazos + corazón */
-  .hug{ margin-top: 18px; font-size: clamp(24px, 6.4vw, 38px); }
+  .hug{ margin-top:18px; font-size:clamp(24px, 6.2vw, 38px); }
   .big-heart{
-    margin-top: 6px;
-    font-size: clamp(80px, 20vw, 150px);
-    line-height: 1;
-    animation: heartThump 1.1s ease-in-out infinite;
-    text-shadow: 0 0 16px rgba(120,200,255,.85), 0 6px 18px rgba(0,0,0,.45);
+    margin-top:6px; font-size:clamp(88px, 22vw, 160px); line-height:1;
+    animation: heartThump 1.15s ease-in-out infinite;
+    text-shadow:0 0 16px rgba(120,200,255,.85), 0 6px 18px rgba(0,0,0,.45);
   }
-  @keyframes heartThump{
-    0%{transform:scale(.9)}25%{transform:scale(1.08)}40%{transform:scale(.98)}60%{transform:scale(1.12)}100%{transform:scale(.9)}
-  }
+  @keyframes heartThump{ 0%{transform:scale(.9)}25%{transform:scale(1.08)}40%{transform:scale(.98)}60%{transform:scale(1.12)}100%{transform:scale(.9)} }
 
-  /* Emojis lluvia desde arriba */
-  .emoji-layer{ position: fixed; inset: 0; pointer-events: none; overflow: hidden; }
+  /* Emojis lluvia desde arriba (más LENTO) */
+  .emoji-layer{ position:fixed; inset:0; pointer-events:none; overflow:hidden; }
   .emoji{
-    position:absolute;
-    font-size: clamp(22px, 6.4vw, 40px);
+    position:absolute; font-size:clamp(22px, 6.2vw, 40px);
     filter: drop-shadow(0 3px 6px rgba(0,0,0,.5));
     will-change: transform, opacity;
   }
   @keyframes fallDown{
-    0%{ transform: translateY(-110px) rotate(var(--r,0deg)); opacity:0; }
-    10%{ opacity:1; }
-    100%{ transform: translateY(calc(100vh + 120px)) rotate(calc(var(--r,0deg) + 90deg)); opacity:0; }
+    0%   { transform: translateY(-110px) rotate(var(--r,0deg)); opacity:0; }
+    10%  { opacity:1; }
+    100% { transform: translateY(calc(100vh + 120px)) rotate(calc(var(--r,0deg) + 120deg)); opacity:0; }
   }
 
   /* Copitos/corazones al pie */
   .snow-bottom{
-    position: fixed; left:0; right:0; bottom: 8px;
-    pointer-events:none;
-    font-size: clamp(18px, 5.6vw, 26px);
-    text-shadow: 0 2px 8px rgba(0,0,0,.55);
+    position:fixed; left:0; right:0; bottom:8px; pointer-events:none;
+    font-size:clamp(18px, 5.6vw, 26px);
+    text-shadow:0 2px 8px rgba(0,0,0,.55);
   }
 </style>
 </head>
@@ -209,40 +165,41 @@
   <div class="bg" aria-hidden="true"></div>
 
   <div class="page">
-    <!-- Cabecera con reflejo azul (uso data-text para el brillo) -->
-    <h2 class="ice" data-text="¡Te invito a mi fiesta!">¡Te invito a mi fiesta!</h2>
-    <h1 class="ice" data-text="JIMENA CUMPLE 6 AÑOS">JIMENA CUMPLE 6 AÑOS</h1>
+    <!-- Cabecera con relleno azul animado -->
+    <h2 class="ice">¡Te invito a mi fiesta!</h2>
+    <h1 class="ice">JIMENA CUMPLE 6 AÑOS</h1>
 
     <!-- Foto (jimena1.jpg) -->
     <div class="photo-wrap" id="photo" aria-label="Tocar para oír la invitación y ver la magia">
       <img src="jimena1.jpg" alt="Foto de Jimena" />
-      <div class="tap-hint ice" data-text="🎈 Toca mi foto para ver la magia 🎉">🎈 Toca mi foto para ver la magia 🎉</div>
+      <div class="tap-hint ice">🎈 Toca la foto y verás la magia 🎉</div>
     </div>
 
-    <!-- Tarjeta cristal: fecha + lugar + contador + frase -->
+    <!-- Tarjeta cristal 1: fecha + lugar -->
     <div class="glass">
-      <div class="line date-line ice"  data-text="📅 27 de septiembre de 2025 — 🕔 17:00 h">📅 27 de septiembre de 2025 — 🕔 17:00 h</div>
-      <div class="line place-line ice" data-text="📍 Burbuja’s Park">📍 Burbuja’s Park</div>
-
-      <div class="safe-gap"></div>
-
-      <div id="countdown" class="line count-line ice" data-text="⏳ Faltan …">⏳ Faltan …</div>
-      <div class="line tagline ice" data-text="❄️ ¡Habrá risas y mucha diversión! ❄️">❄️ ¡Habrá risas y mucha diversión! ❄️</div>
+      <div class="line date-line ice">📅 <time datetime="2025-09-27">27 de septiembre de 2025</time> — 🕔 17:00 h</div>
+      <div class="line place-line ice">📍 <strong>Burbuja’s Park</strong></div>
     </div>
 
-    <!-- Botones -->
-    <a class="btn" href="https://www.google.com/maps/search/?api=1&query=Burbuja%27s+Park" target="_blank" rel="noopener">📍 Abrir ubicación</a>
-    <a class="btn" href="https://wa.me/34675311350?text=%C2%A1Hola%21%20Confirmo%20asistencia%20a%20la%20fiesta%20%F0%9F%8E%89" target="_blank" rel="noopener">💬 Confirmar por WhatsApp</a>
+    <!-- Tarjeta cristal 2: cuenta atrás + frase -->
+    <div class="glass">
+      <div id="countdown" class="line count-line ice">⏳ Faltan …</div>
+      <div class="line tagline ice">❄️ ¡Habrá risas y mucha diversión! ❄️</div>
+    </div>
+
+    <!-- Botones compactos -->
+    <a class="btn-ice" href="https://www.google.com/maps/search/?api=1&query=Burbuja%27s+Park" target="_blank" rel="noopener">📍 Abrir ubicación</a>
+    <a class="btn-ice" href="https://wa.me/34675311350?text=%C2%A1Hola%21%20Confirmo%20asistencia%20a%20la%20fiesta%20%F0%9F%8E%89" target="_blank" rel="noopener">💬 Confirmar por WhatsApp</a>
 
     <!-- Abrazos + corazón -->
-    <div class="hug ice" data-text="❄️💙☃️ Adoro los abrazos calentitos. Con cariño, Jimena ❄️💙☃️">❄️💙☃️ Adoro los abrazos calentitos. Con cariño, Jimena ❄️💙☃️</div>
+    <div class="hug ice">❄️💙☃️ Adoro los abrazos calentitos. Con cariño, Jimena ❄️💙☃️</div>
     <div class="big-heart" role="img" aria-label="corazón palpitante">💙</div>
   </div>
 
   <!-- Lluvia de emojis -->
   <div class="emoji-layer" id="emojiLayer" aria-hidden="true"></div>
 
-  <!-- Audio (asegúrate: voz.mp3) -->
+  <!-- Audio (asegúrate: voz.mp3 en el repo) -->
   <audio id="voice" preload="auto">
     <source src="voz.mp3" type="audio/mpeg">
   </audio>
@@ -251,7 +208,7 @@
   <div class="snow-bottom" id="snowBottom" aria-hidden="true"></div>
 
 <script>
-  /* Emojis para la lluvia */
+  /* Emojis (lluvia lenta y abundante) */
   const EMOJIS = ["🎉","🎈","🎂","🧁","🎁","✨","❄️","⛄","🪄","👑","💙","🌟","🍭","🎊","🧊"];
   const FINAL_FLAKES = ["❄️","💙","❄️","💙","❄️","💙"];
   const layer  = document.getElementById('emojiLayer');
@@ -260,17 +217,15 @@
   const countdownEl = document.getElementById("countdown");
   const snowBottom = document.getElementById('snowBottom');
 
-  /* Al tocar la foto: lluvia de emojis + audio */
-  photo.addEventListener('click', () => { rainEmojis(180); playVoice(); });
+  /* Tocar foto → lluvia (más lenta) + audio */
+  photo.addEventListener('click', () => { rainEmojis(160); playVoice(); });
 
-  /* Desbloqueo audio en primer toque (móviles) */
-  window.addEventListener('pointerdown', ()=> {
-    try{ audio.play().then(()=>audio.pause()); }catch(e){}
-  }, { once:true });
+  /* Desbloqueo audio primer toque */
+  window.addEventListener('pointerdown', ()=> { try{ audio.play().then(()=>audio.pause()); }catch(e){} }, { once:true });
 
-  function playVoice(){ try{ audio.currentTime = 0; audio.play().catch(()=>{}); }catch(e){} }
+  function playVoice(){ try{ audio.currentTime=0; audio.play().catch(()=>{}); }catch(e){} }
 
-  /* Lluvia desde arriba por todo el ancho */
+  /* LLUVIA LENTA: 2.6–5.2s de caída */
   function rainEmojis(count=160){
     const w = window.innerWidth;
     for(let i=0;i<count;i++){
@@ -278,11 +233,11 @@
       span.className = 'emoji';
       span.textContent = EMOJIS[Math.floor(Math.random()*EMOJIS.length)];
       const left  = Math.random()*w;
-      const delay = Math.random()*260;
-      const dur   = 1100 + Math.random()*1900; /* 1.1–3.0s */
+      const delay = Math.random()*600;                 // mayor desfase
+      const dur   = 2600 + Math.random()*2600;         // 2.6s–5.2s
       span.style.left = left + 'px';
-      span.style.top  = '-90px';
-      span.style.setProperty('--r', (Math.random()*60-30) + 'deg');
+      span.style.top  = '-100px';
+      span.style.setProperty('--r', (Math.random()*80-40) + 'deg');
       span.style.animation = `fallDown ${dur}ms ease-in forwards`;
       span.style.animationDelay = `${delay}ms`;
       layer.appendChild(span);
@@ -290,7 +245,7 @@
     }
   }
 
-  /* Contador (ajusto si cambia la fecha) */
+  /* Contador (ajusta fecha/hora aquí si cambia) */
   const targetDate = new Date("2025-09-27T17:00:00");
   function updateCountdown(){
     const now = new Date();
@@ -322,5 +277,7 @@
 </script>
 </body>
 </html>
+
+
 
 
