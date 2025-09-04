@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Invitación Cumple – Jimena 6 años</title>
+
+<style>
+  :root{
+    --blanco:#ffffff;
+    --azul-osc:#003366;
+  }
+
+  /* Aquí defino el fondo con la imagen que me mandaste de copos azules */
+  body{
+    margin:0;
+    font-family: "Poppins", Arial, sans-serif;
+    background: url("e3455712-656d-477e-8052-6e0f53bb5665.png") center/cover fixed no-repeat;
+    color: var(--blanco);
+    text-align:center;
+    overflow-x: hidden;
+  }
+
+  /* Le doy estilo a los títulos para que palpiten como un corazón */
+  h1,h2{
+    margin:.4rem 0;
+    font-weight:900;
+    color:#fff;
+    text-shadow: 2px 2px 8px var(--azul-osc);
+    animation: heartbeat 1.5s infinite;
+  }
+  h1{ font-size: clamp(38px, 7vw, 84px); }
+  h2{ font-size: clamp(22px, 4.5vw, 48px); }
+
+  /* Esta es la animación de “latido” */
+  @keyframes heartbeat {
+    0%, 40%, 80%, 100% { transform: scale(1); }
+    20%, 60% { transform: scale(1.15); }
+  }
+
+  /* Textos normales */
+  p,time{
+    font-size: clamp(16px, 3.5vw, 28px);
+    text-shadow:2px 2px 6px var(--azul-osc);
+  }
+
+  .page{
+    max-width: 820px;
+    margin: 0 auto;
+    padding: 28px 16px 64px;
+  }
+
+  /* Aquí va la foto de la cumpleañera, en un círculo bonito */
+  .photo-wrap{
+    width: clamp(180px, 42vw, 320px);
+    height: clamp(180px, 42vw, 320px);
+    margin: 24px auto;
+    border-radius: 50%;
+    position: relative;
+    box-shadow: 0 10px 30px rgba(0,0,0,.25), inset 0 0 30px rgba(255,255,255,.35);
+    overflow: hidden;
+    cursor: pointer;
+    outline: 4px solid rgba(255,255,255,.55);
+  }
+  .photo-wrap img{
+    width:100%; height:100%; object-fit:cover;
+  }
+  .tap-hint{
+    position:absolute; inset:auto 0 10px 0;
+    font-weight:700;
+    text-shadow:2px 2px 6px var(--azul-osc);
+  }
+
+  /* El contador regresivo con un brillito */
+  #countdown{
+    font-size: clamp(20px,4.5vw,40px);
+    margin-top:12px;
+    font-weight:700;
+    text-shadow:0 0 8px #00f, 0 0 16px #0ff;
+    animation: glow 1.5s infinite alternate;
+  }
+  @keyframes glow {
+    from { text-shadow: 0 0 6px #0ff, 0 0 12px #09f; }
+    to   { text-shadow: 0 0 14px #fff, 0 0 28px #0ff; }
+  }
+
+  /* Los botones: ubicación, WhatsApp y volver a escuchar */
+  .btn{
+    display:inline-block;
+    margin:14px 8px 0;
+    padding:12px 18px;
+    border-radius:999px;
+    border:2px solid rgba(255,255,255,.55);
+    background:rgba(255,255,255,.18);
+    color:var(--blanco);
+    font-weight:700;
+    text-decoration:none;
+    text-shadow: 0 0 8px #0ff, 0 0 16px #09f;
+    backdrop-filter: blur(4px);
+    cursor:pointer;
+    transition:transform .12s ease, background .2s ease;
+  }
+  .btn:active{ transform:scale(.98); }
+  .btn:hover{ background:rgba(255,255,255,.26); }
+
+  /* Los emojis que salen disparados */
+  .emoji-layer{ position: fixed; inset: 0; pointer-events: none; overflow: hidden; }
+  .emoji{
+    position:absolute;
+    font-size: clamp(20px, 5vw, 42px);
+    will-change: transform, opacity;
+    animation: floatUp 1.5s ease-out forwards;
+    filter: drop-shadow(0 3px 6px rgba(0,0,0,.35));
+  }
+  @keyframes floatUp{
+    0%{ transform: translate(var(--x,0), var(--y,0)) scale(0.6) rotate(var(--r,0deg)); opacity:0; }
+    10%{ opacity:1; }
+    100%{ transform: translate(var(--xEnd,0), var(--yEnd,-220px)) scale(1) rotate(calc(var(--r) + 25deg)); opacity:0; }
+  }
+
+  /* El mensaje final con copos y corazones */
+  .final-message{
+    margin-top:40px;
+    font-size: clamp(18px,4.5vw,36px);
+    font-weight:700;
+    text-shadow: 0 0 8px #000, 0 0 16px #0ff;
+    animation: heartbeat 2s infinite;
+  }
+</style>
+</head>
+
+<body>
+  <div class="page">
+    <h2>¡Te invito a mi fiesta!</h2>
+    <h1>JIMENA CUMPLE 6 AÑOS</h1>
+
+    <!-- Aquí está la foto. Si la cambias, pon tu archivo en lugar del link -->
+    <div class="photo-wrap" id="photo">
+      <img src="https://images.unsplash.com/photo-1541537103745-ea3429c65dc1?q=80&w=1200&auto=format&fit=crop" alt="Foto de Jimena" />
+      <div class="tap-hint">🎈 Toca mi foto para ver la magia 🎉</div>
+    </div>
+
+    <p>📅 <time datetime="2025-09-27">27 de septiembre de 2025</time> — 🕔 17:00 h</p>
+    <p>📍 <strong>Burbuja’s Park</strong></p>
+
+    <!-- Aquí aparece el contador -->
+    <div id="countdown">⏳ Cargando contador...</div>
+
+    <p>¡Habrá juegos, risas y mucha nieve imaginaria! ❄️</p>
+
+    <!-- Botón para abrir Google Maps en la ubicación -->
+    <a class="btn" href="https://www.google.com/maps/search/?api=1&query=Burbuja%27s+Park" target="_blank">📍 Abrir ubicación</a>
+
+    <!-- Botón de WhatsApp con mensaje predeterminado -->
+    <a class="btn" href="https://wa.me/34123456789?text=Hola%20Jimena!%20Confirmo%20que%20voy%20a%20tu%20cumple%20🥳" target="_blank">💬 Confirmar por WhatsApp</a>
+
+    <!-- Botón para volver a escuchar el audio -->
+    <button class="btn" id="replayBtn">🔊 Volver a escuchar</button>
+
+    <!-- Mensaje final con copos y corazones -->
+    <div class="final-message">
+      ❄️💙☃️ Adoro los abrazos calentitos. Con cariño, Jimena ❄️💙☃️
+    </div>
+  </div>
+
+  <!-- Aquí se generan los emojis -->
+  <div class="emoji-layer" id="emojiLayer"></div>
+
+  <!-- Este es el audio. Cambia voz.mp3 por tu grabación -->
+  <audio id="voice" preload="auto">
+    <source src="voz.mp3" type="audio/mpeg">
+  </audio>
+
+<script>
+  // Emojis que van a explotar en pantalla
+  const EMOJIS = ["🎉","🎈","🎂","🧁","🎁","✨","❄️","⛄","🪄","👑","💙","🌟","🍭","🎊","🧊"];
+
+  const photo = document.getElementById('photo');
+  const layer = document.getElementById('emojiLayer');
+  const audio = document.getElementById('voice');
+  const replay = document.getElementById('replayBtn');
+
+  // Cuando alguien hace click en la foto, salen emojis y suena el audio
+  photo.addEventListener('click', (ev) => {
+    burstEmojis(ev.clientX, ev.clientY);
+    playVoice();
+  });
+
+  // Cuando le dan al botón de volver a escuchar, pasa lo mismo
+  replay.addEventListener('click', () => {
+    playVoice();
+    burstEmojis(window.innerWidth/2, window.innerHeight*0.35, 28);
+  });
+
+  // Función para reproducir el audio
+  function playVoice(){
+    try{ audio.currentTime=0; audio.play().catch(()=>{});}catch(e){}
+  }
+
+  // Función que hace que exploten los emojis
+  function burstEmojis(x,y,count=40){
+    for(let i=0;i<count;i++){
+      const span=document.createElement('span');
+      span.className='emoji';
+      span.textContent=EMOJIS[Math.floor(Math.random()*EMOJIS.length)];
+      span.style.left=(x-10)+'px';
+      span.style.top=(y-10)+'px';
+
+      const angle=Math.random()*Math.PI*2;
+      const radius=40+Math.random()*120;
+      const xEnd=Math.cos(angle)*radius;
+      const yEnd=-(120+Math.random()*240);
+      const rot=(Math.random()*60-30)+'deg';
+
+      span.style.setProperty('--x',(Math.random()*20-10)+'px');
+      span.style.setProperty('--y',(Math.random()*20-10)+'px');
+      span.style.setProperty('--xEnd',xEnd+'px');
+      span.style.setProperty('--yEnd',yEnd+'px');
+      span.style.setProperty('--r',rot);
+      span.style.animationDuration=(1000+Math.random()*900)+'ms';
+
+      layer.appendChild(span);
+      span.addEventListener('animationend',()=>span.remove());
+    }
+  }
+
+  // Contador regresivo
+  const countdownEl = document.getElementById("countdown");
+  const targetDate = new Date("2025-09-27T17:00:00"); // Aquí cambio la fecha/hora exacta del cumple
+
+  function updateCountdown(){
+    const now = new Date();
+    const diff = targetDate - now;
+    if(diff <= 0){
+      countdownEl.textContent = "🎉 ¡Ya empezó la fiesta! 🎉";
+      clearInterval(timer);
+      return;
+    }
+    const d = Math.floor(diff/(1000*60*60*24));
+    const h = Math.floor((diff/(1000*60*60))%24);
+    const m = Math.floor((diff/(1000*60))%60);
+    const s = Math.floor((diff/1000)%60);
+    countdownEl.textContent = `⏳ Faltan ${d}d ${h}h ${m}m ${s}s`;
+  }
+  const timer=setInterval(updateCountdown,1000);
+  updateCountdown();
+</script>
+</body>
+</html>
