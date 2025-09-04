@@ -9,15 +9,15 @@
 <style>
   /* ——— MIS “RUEDITAS” PARA AJUSTAR RÁPIDO ———
      Si aún veo franjas laterales, subo --bg-zoom (2.2, 2.4…).
-     Si quiero la foto más chica, bajo --photo-size (58vw, 54vw…).
-     Si el texto se acerca a la ilustración, subo --gap-elsa (40px…). */
+     Si quiero la foto más chica, bajo --photo-size (56vw, 52vw…).
+     Si el texto se acerca a la ilustración de abajo, subo --gap-elsa (40–60px). */
   :root{
     --bg-zoom: 2.20;      /* zoom del fondo respecto al ancho del móvil */
-    --photo-size: 60vw;   /* tamaño de la foto circular (ancho/alto) */
-    --gap-elsa: 32px;     /* colchón antes del arte de princesas */
+    --photo-size: 58vw;   /* tamaño de la foto circular (ancho/alto) */
+    --gap-elsa: 36px;     /* colchón antes del arte inferior */
 
     --blanco:#ffffff;
-    --azul-osc:#0b3a66; /* azul para contornos */
+    --azul-osc:#0b3a66;   /* azul para contornos/brillo */
   }
 
   /* ——— MOBILE FIRST ——— */
@@ -29,10 +29,10 @@
     -webkit-text-size-adjust: 100%;
     touch-action: manipulation;
     overflow-x:hidden;
-    background:#a8ccee; /* color de respaldo mientras carga la imagen */
+    background:#a8ccee; /* respaldo mientras carga la imagen */
   }
 
-  /* Este es mi fondo REAL a todo lo ancho (lo “zoomeo” y además permito repeat para que nunca deje franjas) */
+  /* Fondo de copos a TODO lo ancho. Lo “zoomeo” y permito repeat para matar franjas. */
   .bg{
     position: fixed; inset:0;
     background-image: url("fondo_frozen_mobile.png");
@@ -50,35 +50,42 @@
     text-align:center;
   }
 
-  /* ——— UTILIDAD: texto blanco gordo, borde azulado y brillo suave ——— */
-  .outline-ice{
+  /* ——— ESTILO DE TEXTO “HIELO” PARA TODAS LAS LETRAS ———
+     Lo uso en títulos, párrafos, fecha, lugar y mensaje final. */
+  .ice-text{
     font-weight: 900;
     color:#fff;
-    -webkit-text-stroke: 1.1px rgba(11,58,102,.45); /* borde azul */
+    /* borde azul + brillo blanco/azul que “respira” */
+    -webkit-text-stroke: 1.1px rgba(11,58,102,.45);
     text-shadow:
       0 0 0 rgba(11,58,102,.45),
-      0 0 12px rgba(255,255,255,.35),
-      0 3px 12px rgba(0,0,0,.55); /* brillo + sombra */
+      0 0 10px rgba(140,205,255,.45),
+      0 3px 12px rgba(0,0,0,.6);
+    animation: softBeat 2.2s ease-in-out infinite, blueGlow 3.6s ease-in-out infinite alternate;
+    transform-origin:center;
+  }
+  @keyframes softBeat{ 0%,100%{transform:scale(1)} 50%{transform:scale(1.03)} }
+  @keyframes blueGlow{
+    from{ text-shadow: 0 0 0 rgba(11,58,102,.45), 0 0 10px rgba(140,205,255,.40), 0 3px 12px rgba(0,0,0,.6); }
+    to  { text-shadow: 0 0 0 rgba(11,58,102,.55), 0 0 18px rgba(120,200,255,.75), 0 4px 14px rgba(0,0,0,.65); }
   }
 
-  /* ——— TÍTULOS ——— */
+  /* Títulos grandes con el estilo de hielo */
   h1,h2{ margin:.35rem 0; line-height:1.06; }
-  h1{ font-size: clamp(54px, 11vw, 106px); }
+  h1{ font-size: clamp(56px, 11.5vw, 110px); }
   h2{ font-size: clamp(30px, 7.6vw, 64px); }
 
-  /* ——— Texto general ——— */
+  /* Texto general grande y legible */
   p, time{
-    font-size: clamp(19px, 5vw, 30px);
+    font-size: clamp(19px, 5.2vw, 30px);
     line-height:1.38;
     margin:.6rem 0;
-    -webkit-text-stroke: .8px rgba(11,58,102,.35);
-    text-shadow: 0 2px 9px rgba(0,0,0,.55), 0 0 12px rgba(255,255,255,.25);
   }
 
-  /* ——— Foto circular más pequeña y centrada ——— */
+  /* Foto circular centrada (uso jimena1.jpg como me pediste) */
   .photo-wrap{
-    width: min(var(--photo-size), 280px);
-    height: min(var(--photo-size), 280px);
+    width: min(var(--photo-size), 270px);
+    height: min(var(--photo-size), 270px);
     margin: 14px auto 10px;
     border-radius: 50%;
     position: relative;
@@ -90,39 +97,24 @@
   .photo-wrap img{
     width:100%; height:100%; display:block;
     object-fit: cover;
-    object-position: 50% 35%; /* si la carita queda alta/baja, muevo este % */
+    object-position: 50% 35%; /* si la carita queda alta/baja, toco este % */
   }
 
-  /* ——— “Toca mi foto…” ENORME y súper legible ——— */
+  /* “Toca mi foto…” más pequeño para que quepa entero, pero con el mismo estilo hielo */
   .tap-hint{
     position:absolute; left:0; right:0; bottom:10px;
-    font-size: clamp(18px, 5.4vw, 28px);
-    font-weight: 900;
+    font-size: clamp(15px, 4.2vw, 20px);
     letter-spacing:.01em;
-    -webkit-text-stroke: 1px rgba(11,58,102,.6);
-    text-shadow:
-      -1px -1px 0 rgba(11,58,102,.7),
-       1px -1px 0 rgba(11,58,102,.7),
-      -1px  1px 0 rgba(11,58,102,.7),
-       1px  1px 0 rgba(11,58,102,.7),
-       0  2px 8px rgba(0,0,0,.65),
-       0  0 14px rgba(255,255,255,.35);
     pointer-events:none;
   }
 
-  /* Colchón para no tapar la ilustración inferior */
+  /* Colchón para no tapar ilustración inferior */
   .safe-gap{ height: var(--gap-elsa); }
 
-  /* ——— Contador ——— */
-  #countdown{
-    font-weight: 900;
-    font-size: clamp(28px, 7vw, 48px);
-    -webkit-text-stroke: 1px rgba(11,58,102,.4);
-    text-shadow: 0 3px 12px rgba(0,0,0,.6), 0 0 18px rgba(255,255,255,.35);
-    margin-top: 6px;
-  }
+  /* Contador bien visible */
+  #countdown{ font-size: clamp(28px, 7vw, 48px); margin-top: 6px; }
 
-  /* ——— Botones a ancho completo ——— */
+  /* Botones a ancho completo */
   .btn{
     display:block;
     width: calc(100vw - 32px);
@@ -144,37 +136,22 @@
   .btn:active{ transform: scale(.985); }
   .btn:hover{ background: rgba(255,255,255,.26); }
 
-  /* (Opcional) Ventana para tu ilustración de princesas si subo 'princesas.jpg' al repo */
-  .princess-slot{
-    width: 100%;
-    height: 260px; /* si la quiero más alta, subo este valor */
-    background: url("princesas.jpg") center/contain no-repeat;
-    margin: 8px 0 0;
-  }
-
-  /* ——— Mensaje final ——— */
-  .final-message{
-    margin-top: 24px;
-    font-size: clamp(22px, 6vw, 36px);
-    font-weight: 900;
-    -webkit-text-stroke: 1px rgba(11,58,102,.35);
-    text-shadow: 0 3px 10px rgba(0,0,0,.65), 0 0 22px rgba(255,255,255,.35);
-  }
-
-  /* ——— Emojis ——— */
+  /* Emojis: ahora caen DESDE ARRIBA al tocar la foto */
   .emoji-layer{ position: fixed; inset: 0; pointer-events: none; overflow: hidden; }
   .emoji{
     position:absolute;
     font-size: clamp(22px, 6.4vw, 40px);
-    will-change: transform, opacity;
-    animation: floatUp 1400ms ease-out forwards;
     filter: drop-shadow(0 3px 6px rgba(0,0,0,.5));
+    will-change: transform, opacity;
   }
-  @keyframes floatUp{
-    0%{ transform: translate(var(--x,0), var(--y,0)) scale(.7) rotate(var(--r,0deg)); opacity:0; }
-    12%{ opacity:1; }
-    100%{ transform: translate(var(--xEnd,0), var(--yEnd,-230px)) scale(1) rotate(calc(var(--r) + 25deg)); opacity:0; }
+  @keyframes fallDown{
+    0%   { transform: translateY(-110px) rotate(var(--r,0deg)); opacity:0; }
+    10%  { opacity:1; }
+    100% { transform: translateY(calc(100vh + 120px)) rotate(calc(var(--r,0deg) + 90deg)); opacity:0; }
   }
+
+  /* Mensaje final */
+  .final-message{ font-size: clamp(22px, 6vw, 36px); margin-top:24px; }
 
   /* Copitos/corazones al pie */
   .snow-bottom{
@@ -191,39 +168,36 @@
   <div class="bg" aria-hidden="true"></div>
 
   <div class="page">
-    <!-- Cabecera grande con estilo “hielo” -->
-    <h2 class="outline-ice">¡Te invito a mi fiesta!</h2>
-    <h1 class="outline-ice">JIMENA CUMPLE 6 AÑOS</h1>
+    <!-- Cabecera grande con estilo hielo -->
+    <h2 class="ice-text">¡Te invito a mi fiesta!</h2>
+    <h1 class="ice-text">JIMENA CUMPLE 6 AÑOS</h1>
 
-    <!-- Foto (más pequeña y centrada) -->
-    <div class="photo-wrap" id="photo" aria-label="Tocar para ver la magia y oír la invitación">
+    <!-- Foto (usa jimena1.jpg como me pediste) -->
+    <div class="photo-wrap" id="photo" aria-label="Tocar para oír la invitación y ver la magia">
       <img src="jimena1.jpg" alt="Foto de Jimena" />
-      <div class="tap-hint">🎈 Toca mi foto para ver la magia 🎉</div>
+      <div class="tap-hint ice-text">🎈 Toca mi foto para ver la magia 🎉</div>
     </div>
 
-    <!-- Fecha y lugar con letra gorda/blanca/borde azul -->
-    <p class="outline-ice">📅 <time datetime="2025-09-27">27 de septiembre de 2025</time> — 🕔 17:00 h</p>
-    <p class="outline-ice">📍 <strong>Burbuja’s Park</strong></p>
+    <!-- Fecha y lugar, con letra gorda/blanca/borde azul -->
+    <p class="ice-text">📅 <time datetime="2025-09-27">27 de septiembre de 2025</time> — 🕔 17:00 h</p>
+    <p class="ice-text">📍 <strong>Burbuja’s Park</strong></p>
 
-    <!-- Colchón para no tapar ilustración -->
+    <!-- Colchón para no tapar ilustración inferior -->
     <div class="safe-gap"></div>
 
-    <!-- Contador bien visible -->
-    <div id="countdown" class="outline-ice">⏳ Faltan …</div>
+    <!-- Contador -->
+    <div id="countdown" class="ice-text">⏳ Faltan …</div>
 
-    <p class="outline-ice">¡Habrá juegos, risas y mucha nieve imaginaria! ❄️</p>
+    <p class="ice-text">¡Habrá juegos, risas y mucha nieve imaginaria! ❄️</p>
 
     <!-- Botones -->
     <a class="btn" href="https://www.google.com/maps/search/?api=1&query=Burbuja%27s+Park" target="_blank" rel="noopener">📍 Abrir ubicación</a>
 
-    <!-- WhatsApp con tu número (asumo España +34). Si tu país no es España, cambio el 34 por el prefijo correcto. -->
-    <a class="btn" href="https://wa.me/34675311350?text=Hola%20Jimena%21%20Confirmo%20que%20voy%20a%20tu%20cumple%20%F0%9F%A5%B3" target="_blank" rel="noopener">💬 Confirmar por WhatsApp</a>
-
-    <!-- (Opcional) Ventana para la imagen de princesas -->
-    <div class="princess-slot" aria-hidden="true"></div>
+    <!-- WhatsApp: número tuyo (España +34) con mensaje corto y chulo -->
+    <a class="btn" href="https://wa.me/34675311350?text=%C2%A1Hola%21%20Confirmo%20asistencia%20a%20la%20fiesta%20%F0%9F%8E%89" target="_blank" rel="noopener">💬 Confirmar por WhatsApp</a>
 
     <!-- Mensaje final -->
-    <div class="final-message outline-ice" id="finalMsg">
+    <div class="final-message ice-text" id="finalMsg">
       ❄️💙☃️ Adoro los abrazos calentitos. Con cariño, Jimena ❄️💙☃️
     </div>
   </div>
@@ -240,22 +214,22 @@
   <div class="snow-bottom" id="snowBottom" aria-hidden="true"></div>
 
 <script>
-  /* Mi set de emojis (cumple + Frozen) */
+  /* Emojis para la lluvia desde arriba */
   const EMOJIS = ["🎉","🎈","🎂","🧁","🎁","✨","❄️","⛄","🪄","👑","💙","🌟","🍭","🎊","🧊"];
   const FINAL_FLAKES = ["❄️","💙","❄️","💙","❄️","💙"];
-
-  const photo  = document.getElementById('photo');
   const layer  = document.getElementById('emojiLayer');
+  const photo  = document.getElementById('photo');
   const audio  = document.getElementById('voice');
+  const countdownEl = document.getElementById("countdown");
   const snowBottom = document.getElementById('snowBottom');
 
-  /* Click en la foto → emojis + audio */
-  photo.addEventListener('click', (ev) => {
-    burstEmojis(ev.clientX, ev.clientY, 42);
+  /* Cuando toco la foto: hago llover emojis DESDE ARRIBA y reproduzco el audio */
+  photo.addEventListener('click', () => {
+    rainEmojis(120);   // ← cantidad de emojis que caen; si quieres “muchísimos”, sube a 180–220
     playVoice();
   });
 
-  /* Desbloqueo del audio con el primer toque (regla de móviles) */
+  /* Desbloqueo del audio con el primer toque (norma de móviles) */
   window.addEventListener('pointerdown', ()=> {
     try{ audio.play().then(()=>audio.pause()); }catch(e){}
   }, { once:true });
@@ -264,35 +238,27 @@
     try{ audio.currentTime = 0; audio.play().catch(()=>{}); }catch(e){}
   }
 
-  /* Explosión de emojis */
-  function burstEmojis(x,y,count=36){
+  /* Lluvia de emojis desde arriba: reparto por todo el ancho, duraciones aleatorias y los elimino al final */
+  function rainEmojis(count=120){
+    const w = window.innerWidth;
     for(let i=0;i<count;i++){
-      const span=document.createElement('span');
-      span.className='emoji';
-      span.textContent=EMOJIS[Math.floor(Math.random()*EMOJIS.length)];
-      span.style.left=(x-10)+'px';
-      span.style.top=(y-10)+'px';
-
-      const angle=Math.random()*Math.PI*2;
-      const radius=40+Math.random()*120;
-      const xEnd=Math.cos(angle)*radius;
-      const yEnd=-(140+Math.random()*240);
-      const rot=(Math.random()*60-30)+'deg';
-
-      span.style.setProperty('--x',(Math.random()*18-9)+'px');
-      span.style.setProperty('--y',(Math.random()*18-9)+'px');
-      span.style.setProperty('--xEnd',xEnd+'px');
-      span.style.setProperty('--yEnd',yEnd+'px');
-      span.style.setProperty('--r',rot);
-      span.style.animationDuration=(1100+Math.random()*900)+'ms';
-
+      const span = document.createElement('span');
+      span.className = 'emoji';
+      span.textContent = EMOJIS[Math.floor(Math.random()*EMOJIS.length)];
+      const left = Math.random()*w;
+      const delay = Math.random()*200;                 // pequeñísimo desfase
+      const dur = 1100 + Math.random()*1500;           // 1.1s–2.6s
+      span.style.left = left + 'px';
+      span.style.top  = '-80px';
+      span.style.setProperty('--r', (Math.random()*60-30) + 'deg');
+      span.style.animation = `fallDown ${dur}ms ease-in forwards`;
+      span.style.animationDelay = `${delay}ms`;
       layer.appendChild(span);
-      span.addEventListener('animationend',()=> span.remove());
+      span.addEventListener('animationend', ()=> span.remove());
     }
   }
 
-  /* Contador (si cambia la fecha, lo edito abajo) */
-  const countdownEl = document.getElementById("countdown");
+  /* Contador (si cambia la fecha/hora, edito esta línea) */
   const targetDate = new Date("2025-09-27T17:00:00");
   function updateCountdown(){
     const now = new Date();
@@ -306,7 +272,7 @@
   }
   const timer=setInterval(updateCountdown,1000); updateCountdown();
 
-  /* Tira de copitos/corazones al pie */
+  /* Tira de copitos/corazones al pie, proporcional al ancho */
   function sprinkleFinal(){
     snowBottom.innerHTML = "";
     const width = window.innerWidth;
@@ -324,4 +290,5 @@
 </script>
 </body>
 </html>
+
 
