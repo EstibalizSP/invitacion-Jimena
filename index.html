@@ -9,16 +9,22 @@
 <style>
   /* ——— RUEDITAS DE AJUSTE RÁPIDO ——— */
   :root{
-    --bg-zoom: 2.8;      /* subo si aún veo franjas (3.0) */
-    --photo-size: 56vw;  /* bajo si quiero la foto más pequeña (54vw, 52vw) */
+    --bg-zoom: 2.8;      /* sube si ves franjas (3.0) */
+    --photo-size: 56vw;  /* baja si quieres la foto más pequeña (54vw, 52vw) */
     --gap-elsa: 36px;    /* colchón antes del arte inferior */
 
-    /* paleta hielo */
-    --white:#ffffff;
-    --deep:#0b3a66;      /* azul contorno */
-    --ice1:#e8f7ff;      /* gradiente del relleno animado */
-    --ice2:#9fd1ff;
-    --ice3:#55a8ff;
+    /* Color letra */
+    --brand1:#4ba3ff;   /* azul principal del botón y reflejos */
+    --brand2:#8fd3ff;   /* azul claro del degradado */
+
+    /* Verde oficial WhatsApp para el botón de WhatsApp */
+    --wa1:#25D366; 
+    --wa2:#128C7E;
+
+    /* paleta hielo del texto (si quieres más azul, baja un poco el primero y sube el tercero) */
+    --ice1:#dff1ff;
+    --ice2:#7ec6ff;
+    --ice3:#2d89ff;
 
     /* transparencia de las tarjetas cristal (más bajo = más transparente) */
     --glass-alpha: .08;
@@ -29,8 +35,8 @@
   body{
     margin:0;
     font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-    color: var(--white);
-    -webkit-text-size-adjust: 100%;
+    color:#fff;
+    -webkit-text-size-adjust:100%;
     touch-action: manipulation;
     overflow-x:hidden;
     background:#a8ccee;
@@ -38,11 +44,11 @@
 
   /* Fondo a todo lo ancho (zoom + repeat) */
   .bg{
-    position: fixed; inset:0;
-    background-image: url("fondo_frozen_mobile.png");
-    background-position: center top;
-    background-size: calc(var(--bg-zoom) * 100vw) auto;
-    background-repeat: repeat;
+    position:fixed; inset:0;
+    background-image:url("fondo_frozen_mobile.png");
+    background-position:center top;
+    background-size:calc(var(--bg-zoom)*100vw) auto;
+    background-repeat:repeat;
     z-index:-1;
   }
 
@@ -53,26 +59,22 @@
     text-align:center;
   }
 
-  /* ——— TEXTO HIELO PRO ———
-     Relleno azul animado + contorno azul oscuro con sombra para legibilidad. */
+  /* ——— TEXTO HIELO (relleno azul animado + contorno) ——— */
   .ice{
     position:relative;
     font-weight:900;
-    color: transparent; /* el color viene del gradiente */
-    background: linear-gradient(90deg,var(--ice1),var(--ice2),var(--ice3),var(--ice2),var(--ice1));
-    background-size: 260% 100%;
+    color:transparent;
+    background:linear-gradient(90deg,var(--ice1),var(--ice2),var(--ice3),var(--ice2),var(--ice1));
+    background-size:260% 100%;
     -webkit-background-clip:text; background-clip:text;
-    /* contorno "real" con sombras a los 4 lados + sombra global */
     text-shadow:
-      -1px -1px 0 var(--deep),
-       1px -1px 0 var(--deep),
-      -1px  1px 0 var(--deep),
-       1px  1px 0 var(--deep),
-       0   3px 16px rgba(0,0,0,.6);
-    animation: sheen 6s linear infinite, softBeat 2.1s ease-in-out infinite;
+      -1px -1px 0 #0b3a66, 1px -1px 0 #0b3a66,
+      -1px  1px 0 #0b3a66, 1px  1px 0 #0b3a66,
+      0 3px 16px rgba(0,0,0,.6);
+    animation:sheen 6s linear infinite, softBeat 2.1s ease-in-out infinite;
   }
-  @keyframes sheen{ 0%{background-position:0% 0} 100%{background-position:100% 0} }
-  @keyframes softBeat{ 0%,100%{transform:scale(1)} 50%{transform:scale(1.03)} }
+  @keyframes sheen{0%{background-position:0% 0}100%{background-position:100% 0}}
+  @keyframes softBeat{0%,100%{transform:scale(1)}50%{transform:scale(1.03)}}
 
   /* Títulos grandes */
   h1,h2{ margin:.35rem 0; line-height:1.05; }
@@ -80,9 +82,9 @@
   h2{ font-size: clamp(34px, 8.2vw, 72px); }
 
   /* Texto base grande */
-  p, time{ font-size: clamp(20px, 5.8vw, 34px); margin:.6rem 0; line-height:1.38; }
+  p, time{ font-size:clamp(20px, 5.8vw, 34px); margin:.6rem 0; line-height:1.38; }
 
-  /* Foto circular (jimena1.jpg) */
+  /* Foto circular */
   .photo-wrap{
     width:min(var(--photo-size),268px);
     height:min(var(--photo-size),268px);
@@ -91,8 +93,7 @@
     overflow:hidden;
     outline:6px solid rgba(255,255,255,.95);
     box-shadow:0 12px 28px rgba(0,0,0,.35), inset 0 0 30px rgba(255,255,255,.35);
-    position:relative;
-    cursor:pointer;
+    position:relative; cursor:pointer;
   }
   .photo-wrap img{ width:100%; height:100%; object-fit:cover; object-position:50% 35%; display:block; }
   .tap-hint{ position:absolute; left:0; right:0; bottom:10px; font-size:clamp(14px,3.9vw,18px); pointer-events:none; }
@@ -103,40 +104,64 @@
     width:calc(100vw - 32px); max-width:560px;
     padding:14px 12px;
     border-radius:22px;
-    background: rgba(255,255,255,var(--glass-alpha)); /* ← transparencia aquí */
-    border: 1.5px solid rgba(255,255,255,.45);
+    background:rgba(255,255,255,var(--glass-alpha));
+    border:1.5px solid rgba(255,255,255,.45);
     backdrop-filter: blur(6px);
-    box-shadow: 0 14px 28px rgba(0,0,0,.22), inset 0 0 16px rgba(255,255,255,.16);
+    box-shadow:0 14px 28px rgba(0,0,0,.22), inset 0 0 16px rgba(255,255,255,.16);
   }
   .line{ margin:.3rem 0; }
-  .date-line{  font-size: clamp(22px, 6.4vw, 36px); }
-  .place-line{ font-size: clamp(22px, 6.4vw, 36px); }
-  .count-line{ font-size: clamp(32px, 8vw, 54px); }
-  .tagline{    font-size: clamp(22px, 6vw, 34px); }
+  .date-line{  font-size:clamp(22px, 6.4vw, 36px); }
+  .place-line{ font-size:clamp(22px, 6.4vw, 36px); }
+  .count-line{ font-size:clamp(32px, 8vw, 54px); }
+  .tagline{    font-size:clamp(22px, 6vw, 34px); }
+  .safe-gap{ height:var(--gap-elsa); }
 
-  .safe-gap{ height: var(--gap-elsa); }
-
-  /* Botones redondos y compactos con color animado y flotado */
-  .btn-ice{
-    display:inline-block;
+  /* ——— BOTONES NUEVOS “CHULOS” ——— */
+  .cta{
+    display:inline-flex; align-items:center; justify-content:center;
+    gap:10px;
     width:min(80vw, 440px);
     margin:12px 8px 0;
-    padding:14px 20px;
+    padding:14px 18px;
     border-radius:9999px;
-    border:1.5px solid rgba(255,255,255,.75);
     color:#fff; font-weight:900; text-decoration:none;
     text-shadow:0 2px 10px rgba(0,0,0,.55);
-    background: linear-gradient(90deg, rgba(255,255,255,.18), rgba(140,205,255,.28), rgba(255,255,255,.18));
-    background-size: 200% 100%;
-    backdrop-filter: blur(6px);
-    box-shadow: 0 10px 22px rgba(0,0,0,.24);
-    animation: btnShift 5.5s linear infinite, floatY 3.8s ease-in-out infinite;
-    transition: transform .12s ease, background .2s ease;
-    font-size: clamp(18px, 5.4vw, 28px);
+    box-shadow:0 10px 22px rgba(0,0,0,.24), inset 0 0 18px rgba(255,255,255,.18);
+    transition: transform .15s ease;
+    animation: floatY 3.6s ease-in-out infinite;
+    font-size:clamp(18px, 5.2vw, 28px);
   }
-  @keyframes btnShift{ 0%{background-position:0% 0} 100%{background-position:100% 0} }
   @keyframes floatY{ 0%{transform:translateY(0)} 50%{transform:translateY(-2px)} 100%{transform:translateY(0)} }
-  .btn-ice:active{ transform: scale(.97); }
+
+  /* Botón de Ubicación — azul “brand” con brillo y shimmer */
+  .cta-map{
+    background: linear-gradient(135deg, var(--brand1), var(--brand2));
+    position:relative; overflow:hidden;
+  }
+  .cta-map::after{
+    content:""; position:absolute; inset:-2px; 
+    background: linear-gradient(120deg, transparent, rgba(255,255,255,.35), transparent);
+    transform: translateX(-100%);
+    animation: shimmer 2.8s infinite;
+  }
+  @keyframes shimmer{ 0%{transform:translateX(-100%)} 100%{transform:translateX(100%)} }
+
+  /* Botón de WhatsApp — verde oficial con un toque de hielo */
+  .cta-wa{
+    background: linear-gradient(135deg, var(--wa1), var(--wa2));
+    box-shadow: 0 10px 22px rgba(0,0,0,.24), 0 0 22px rgba(37,211,102,.35);
+  }
+
+  /* Icono circular a la izquierda del texto */
+  .cta .ico{
+    display:inline-grid; place-items:center;
+    width:34px; height:34px; border-radius:50%;
+    background: rgba(255,255,255,.2);
+    box-shadow: inset 0 0 10px rgba(255,255,255,.35);
+    font-size: 20px;
+  }
+
+  .cta:active{ transform:scale(.97); }
 
   /* Abrazos + corazón */
   .hug{ margin-top:18px; font-size:clamp(24px, 6.4vw, 38px); }
@@ -147,17 +172,13 @@
   }
   @keyframes heartThump{ 0%{transform:scale(.9)}25%{transform:scale(1.08)}40%{transform:scale(.98)}60%{transform:scale(1.12)}100%{transform:scale(.9)} }
 
-  /* Emojis lluvia desde arriba (MUCHO más lenta) */
+  /* Emojis lluvia desde arriba (lenta) */
   .emoji-layer{ position:fixed; inset:0; pointer-events:none; overflow:hidden; }
-  .emoji{
-    position:absolute; font-size:clamp(22px, 6.2vw, 40px);
-    filter: drop-shadow(0 3px 6px rgba(0,0,0,.5));
-    will-change: transform, opacity;
-  }
+  .emoji{ position:absolute; font-size:clamp(22px, 6.2vw, 40px); filter:drop-shadow(0 3px 6px rgba(0,0,0,.5)); }
   @keyframes fallDown{
-    0%   { transform: translateY(-110px) rotate(var(--r,0deg)); opacity:0; }
-    10%  { opacity:1; }
-    100% { transform: translateY(calc(100vh + 120px)) rotate(calc(var(--r,0deg) + 120deg)); opacity:0; }
+    0%{ transform: translateY(-110px) rotate(var(--r,0deg)); opacity:0; }
+    10%{ opacity:1; }
+    100%{ transform: translateY(calc(100vh + 120px)) rotate(calc(var(--r,0deg) + 120deg)); opacity:0; }
   }
 
   /* Copitos/corazones al pie */
@@ -174,14 +195,14 @@
   <div class="bg" aria-hidden="true"></div>
 
   <div class="page">
-    <!-- Cabecera con relleno azul animado -->
+    <!-- Cabecera -->
     <h2 class="ice">¡Te invito a mi fiesta!</h2>
     <h1 class="ice">JIMENA CUMPLE 6 AÑOS</h1>
 
-    <!-- Foto (jimena1.jpg) -->
+    <!-- Foto -->
     <div class="photo-wrap" id="photo" aria-label="Tocar para oír la invitación y ver la magia">
       <img src="jimena1.jpg" alt="Foto de Jimena" />
-      <div class="tap-hint ice">Toca aquí y verás la magia 🎉</div>
+      <div class="tap-hint ice">🎈 Toca la foto y verás la magia 🎉</div>
     </div>
 
     <!-- Tarjeta cristal 1: fecha + lugar -->
@@ -196,9 +217,14 @@
       <div class="line tagline ice">❄️ ¡Habrá risas y mucha diversión! ❄️</div>
     </div>
 
-    <!-- Botones compactos -->
-    <a class="btn-ice" href="https://www.google.com/maps/search/?api=1&query=Burbuja%27s+Park" target="_blank" rel="noopener">📍 Abrir ubicación</a>
-    <a class="btn-ice" href="https://wa.me/34675311350?text=%C2%A1Hola%21%20Confirmo%20asistencia%20a%20la%20fiesta%20%F0%9F%8E%89" target="_blank" rel="noopener">💬 Confirmar por WhatsApp</a>
+    <!-- Botones NUEVOS -->
+    <a class="cta cta-map" href="https://www.google.com/maps/search/?api=1&query=Burbuja%27s+Park" target="_blank" rel="noopener">
+      <span class="ico">📍</span> Abrir ubicación
+    </a>
+
+    <a class="cta cta-wa" href="https://wa.me/34675311350?text=%C2%A1Hola%21%20Confirmo%20asistencia%20a%20la%20fiesta%20%F0%9F%8E%89" target="_blank" rel="noopener">
+      <span class="ico">🟢</span> Confirmar por WhatsApp
+    </a>
 
     <!-- Abrazos + corazón -->
     <div class="hug ice">❄️💙☃️ Adoro los abrazos calentitos. Con cariño, Jimena ❄️💙☃️</div>
@@ -208,7 +234,7 @@
   <!-- Lluvia de emojis -->
   <div class="emoji-layer" id="emojiLayer" aria-hidden="true"></div>
 
-  <!-- Audio (asegúrate: voz.mp3 en el repo) -->
+  <!-- Audio (voz.mp3 en el repo) -->
   <audio id="voice" preload="auto">
     <source src="voz.mp3" type="audio/mpeg">
   </audio>
@@ -217,29 +243,28 @@
   <div class="snow-bottom" id="snowBottom" aria-hidden="true"></div>
 
 <script>
-  /* Emojis (lluvia lenta y abundante) */
+  /* Emojis (lluvia lenta) */
   const EMOJIS = ["🎉","🎈","🎂","🧁","🎁","✨","❄️","⛄","🪄","👑","💙","🌟","🍭","🎊","🧊"];
   const FINAL_FLAKES = ["❄️","💙","❄️","💙","❄️","💙"];
+
   const layer  = document.getElementById('emojiLayer');
   const photo  = document.getElementById('photo');
   const audio  = document.getElementById('voice');
   const countdownEl = document.getElementById("countdown");
   const snowBottom = document.getElementById('snowBottom');
 
-  /* Parámetros de velocidad de la lluvia (ajusto aquí si la quiero más lenta/rápida) */
-  const EMOJI_MIN_MS   = 3200;  // duración mínima de caída
-  const EMOJI_RANGE_MS = 3200;  // rango adicional aleatorio (total = min + aleatorio)
-  const EMOJI_DELAY_MS = 700;   // desfase máximo entre emojis
+  /* Velocidad de lluvia (más lento/fuerte editando aquí) */
+  const EMOJI_MIN_MS   = 3200;  // duración mínima
+  const EMOJI_RANGE_MS = 3200;  // extra aleatorio (total = min + aleatorio)
+  const EMOJI_DELAY_MS = 700;   // desfase máximo
 
   /* Tocar foto → lluvia + audio */
   photo.addEventListener('click', () => { rainEmojis(170); playVoice(); });
 
-  /* Desbloqueo audio primer toque (móviles) */
   window.addEventListener('pointerdown', ()=> { try{ audio.play().then(()=>audio.pause()); }catch(e){} }, { once:true });
 
   function playVoice(){ try{ audio.currentTime=0; audio.play().catch(()=>{}); }catch(e){} }
 
-  /* LLUVIA (lenta) desde arriba por todo el ancho */
   function rainEmojis(count=160){
     const w = window.innerWidth;
     for(let i=0;i<count;i++){
@@ -248,7 +273,7 @@
       span.textContent = EMOJIS[Math.floor(Math.random()*EMOJIS.length)];
       const left  = Math.random()*w;
       const delay = Math.random()*EMOJI_DELAY_MS;
-      const dur   = EMOJI_MIN_MS + Math.random()*EMOJI_RANGE_MS; /* 3.2s – 6.4s por defecto */
+      const dur   = EMOJI_MIN_MS + Math.random()*EMOJI_RANGE_MS;
       span.style.left = left + 'px';
       span.style.top  = '-100px';
       span.style.setProperty('--r', (Math.random()*80-40) + 'deg');
@@ -259,7 +284,7 @@
     }
   }
 
-  /* Contador (ajusto fecha/hora aquí si cambia) */
+  /* Contador (ajusta fecha/hora aquí si cambia) */
   const targetDate = new Date("2025-09-27T17:00:00");
   function updateCountdown(){
     const now = new Date();
