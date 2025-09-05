@@ -235,26 +235,29 @@
     try{ audio.currentTime = 0; audio.play().catch(()=>{}); }catch(e){}
   }
 
-  function rainEmojis(count=150){
-    const w = document.body.clientWidth;
-    for(let i=0;i<count;i++){
-      const span = document.createElement('span');
-      span.className = 'emoji';
-      span.textContent = EMOJIS[Math.floor(Math.random()*EMOJIS.length)];
-      const left  = Math.random() * w;
-      const delay = Math.random() * 900;
-      const dur   = 3200 + Math.random()*3600;
-      span.style.left = left + 'px';
-      span.style.setProperty('--r', (Math.random()*80-40) + 'deg');
-      span.style.animation = `fallDown ${dur}ms ease-in forwards`;
-      span.style.animationDelay = `${delay}ms`;
-      layer.appendChild(span);
-      span.addEventListener('animationend', ()=> span.remove());
-    }
+  function rainEmojis(count=80){   // menos cantidad, más elegante
+  const w = document.body.clientWidth;
+  for(let i=0;i<count;i++){
+    const span = document.createElement('span');
+    span.className = 'emoji';
+    span.textContent = EMOJIS[Math.floor(Math.random()*EMOJIS.length)];
+    const left  = Math.random() * w;
+    const delay = Math.random() * 2000; // hasta 2s de espera
+    const dur   = 6000 + Math.random()*4000; // 6–10s más lento
+    span.style.left = left + 'px';
+    span.style.setProperty('--r', (Math.random()*80-40) + 'deg');
+    span.style.animation = `fallDown ${dur}ms ease-in forwards`;
+    span.style.animationDelay = `${delay}ms`;
+    layer.appendChild(span);
+    span.addEventListener('animationend', ()=> span.remove());
   }
+}
+
+
 </script>
 </body>
 </html>
+
 
 
 
