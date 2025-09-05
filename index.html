@@ -8,13 +8,12 @@
 
 <style>
   :root{
-    --brand: #a3d8f4;
-    --brand-dark: #3c8dbc;
-    --brand-light: #d8f0ff;
+    --blue-ice: #3aa0ff;     /* azul hielo principal */
+    --blue-ice-dark:#0e3a7a; /* azul oscuro para contorno */
+    --blue-soft: #8fd0ff;    /* azul suave brillo */
     --maxw: 480px;
   }
 
-  /* ——— Base móvil ——— */
   body{
     margin:0;
     font-family: 'Segoe UI', sans-serif;
@@ -26,33 +25,32 @@
   }
   .page{ padding:18px 16px 100px; text-align:center; }
 
-  /* ——— Títulos Frozen ——— */
+  /* Títulos Frozen */
   .title{
     margin:.35rem 0; font-weight:1000; letter-spacing:.6px; line-height:1.04;
     background: linear-gradient(180deg, #ffffff 0%, #cfe8ff 35%, #8abff0 70%, #ddefff 100%);
     -webkit-background-clip: text; background-clip: text; color: transparent;
     text-shadow: 0 1px 0 rgba(0,0,0,.65), 0 2px 12px rgba(0,0,0,.55), 0 0 20px rgba(120,200,255,.75);
-    position:relative;
   }
   h1.title{ font-size: clamp(40px, 10vw, 60px); }
   h2.title{ font-size: clamp(22px, 7vw, 30px); }
 
-  /* ——— Foto redonda ——— */
+  /* Foto */
   .photo-wrap{
     width:200px; height:200px;
     margin:14px auto 8px; border-radius:50%;
     overflow:hidden; position:relative; cursor:pointer;
     border:6px solid #fff;
-    box-shadow: 0 8px 22px rgba(0,0,0,.4), 0 0 20px var(--brand);
+    box-shadow: 0 8px 22px rgba(0,0,0,.4), 0 0 20px var(--blue-ice);
   }
   .photo-wrap img{ width:100%; height:100%; object-fit:cover; }
 
-  /* ——— Botón “toca aquí” ——— */
+  /* Botón toca aquí */
   .tap-hint{
     display:inline-block;
-    margin:6px auto 8px;
+    margin:8px auto;
     font-weight:900;
-    font-size:clamp(12px,3.6vw,15px);
+    font-size:clamp(13px,3.8vw,16px);
     color:#fff;
     padding:6px 12px;
     border-radius:999px;
@@ -61,89 +59,87 @@
     text-shadow:0 2px 4px rgba(0,0,0,.65);
     box-shadow:0 6px 14px rgba(0,0,0,.45), 0 0 12px rgba(160,220,255,.9);
     animation: pulse 1.6s ease-in-out infinite;
-    user-select:none;
   }
   @keyframes pulse{ 0%{transform:scale(1)} 50%{transform:scale(1.08)} 100%{transform:scale(1)} }
 
-  /* ——— SOLO DOS CAJAS MINIMALISTAS ——— */
-  .frost-card{
+  /* Caja minimalista */
+  .glass{
     margin:14px auto 0;
-    padding:14px 12px;
-    width: min(92%, 460px);
-    border-radius:18px;
-    background:
-      linear-gradient(180deg, rgba(255,255,255,.18), rgba(255,255,255,.10));
+    padding:12px 10px;
+    border-radius:14px;
+    background: rgba(255,255,255,0.12); /* casi transparente */
     backdrop-filter: blur(6px) saturate(120%);
     -webkit-backdrop-filter: blur(6px) saturate(120%);
-    border:1px solid rgba(255,255,255,.45);
-    box-shadow: 0 10px 22px rgba(0,30,60,.28), inset 0 1px 0 rgba(255,255,255,.55);
-  }
-  .row{
-    display:block;
-    padding:8px 4px;
-  }
-  .row + .row{
-    border-top:1px dashed rgba(255,255,255,.28);
+    box-shadow: 0 4px 14px rgba(0,0,0,.25), inset 0 1px 0 rgba(255,255,255,.4);
+    max-width: 360px;
   }
 
-  /* Texto gordito azul/blanco brillante */
-  .frost-text{
+  /* Texto Frozen gordito */
+  .frozen-text{
     font-weight:1000;
-    font-size: clamp(18px, 5.4vw, 26px);
-    background: linear-gradient(180deg, #ffffff 0%, #bfe2ff 55%, #68b3ff 100%);
-    -webkit-background-clip:text; background-clip:text; color:transparent;
-    text-shadow: 0 2px 6px rgba(0,0,0,.55), 0 0 12px rgba(150,210,255,.85);
-    letter-spacing:.3px;
-    line-height:1.15;
-    animation: frostGlow 4s ease-in-out infinite;
+    font-size: clamp(18px, 5.4vw, 24px);
+    background: linear-gradient(180deg, #ffffff 0%, #cfe8ff 50%, #3aa0ff 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    text-shadow: 0 1px 0 var(--blue-ice-dark), 0 0 14px var(--blue-soft);
   }
-  .count-strong{ font-size: clamp(22px, 6.6vw, 30px); }
-
-  @keyframes frostGlow{
-    0%{ text-shadow: 0 2px 6px rgba(0,0,0,.55), 0 0 10px rgba(150,210,255,.8); }
-    50%{ text-shadow: 0 2px 8px rgba(0,0,0,.6), 0 0 20px rgba(200,235,255,1); }
-    100%{ text-shadow: 0 2px 6px rgba(0,0,0,.55), 0 0 10px rgba(150,210,255,.8); }
+  .count-line{
+    font-weight:1000;
+    font-size: clamp(22px, 6.6vw, 28px);
+    background: linear-gradient(180deg, #ffffff 0%, #3aa0ff 80%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    text-shadow: 0 1px 0 var(--blue-ice-dark), 0 0 16px var(--blue-soft);
   }
 
-  /* ——— Botones Frozen ——— */
+  /* Botones */
   .cta{
-    display:block; margin:14px auto 0; padding:14px 18px; width:90%;
-    border-radius:16px; font-weight:900; text-decoration:none;
-    font-size: clamp(16px, 4.8vw, 22px); color:#fff; text-shadow:0 2px 6px rgba(0,0,0,.6);
-    position:relative; overflow:hidden; backdrop-filter: blur(10px) saturate(130%);
+    display:block;
+    margin:14px auto 0;
+    padding:14px 18px;
+    width:90%;
+    border-radius:16px;
+    font-weight:900;
+    text-decoration:none;
+    font-size: clamp(16px, 4.8vw, 22px);
+    color:#fff;
+    text-shadow:0 2px 6px rgba(0,0,0,.6);
+    backdrop-filter: blur(10px) saturate(130%);
     border:1px solid rgba(255,255,255,0.4);
     box-shadow: 0 8px 20px rgba(0,40,80,.45), inset 0 1px 0 rgba(255,255,255,.6), inset 0 -4px 8px rgba(0,0,0,.25);
     transition: transform .15s ease, filter .3s ease;
   }
   .cta:hover{ transform:scale(1.03); filter:brightness(1.1); }
-  .cta::after{
-    content:""; position:absolute; inset:-2px;
-    background: linear-gradient(120deg, transparent, rgba(255,255,255,.5), transparent);
-    transform:translateX(-120%); animation: shimmer 4s infinite;
+  .cta-map, .cta-wa{
+    background: linear-gradient(135deg, #5ba8ff 0%, #a3d8f4 45%, #d8f0ff 100%);
   }
-  @keyframes shimmer{ 0%{ transform:translateX(-120%);} 100%{ transform:translateX(120%);} }
-  .cta-map, .cta-wa{ background: linear-gradient(135deg, #5ba8ff 0%, #a3d8f4 45%, #d8f0ff 100%); }
 
-  /* ——— Cierre ——— */
+  /* Con cariño */
   .hug{ margin-top:18px; font-size:clamp(20px, 5.4vw, 26px); font-weight:900; }
+  .hug span{ background: linear-gradient(180deg, #ffffff 0%, #cfe8ff 35%, #3aa0ff 100%); -webkit-background-clip:text; background-clip:text; color:transparent; text-shadow:0 1px 0 rgba(0,0,0,.6), 0 0 14px var(--blue-soft); }
+
+  /* Corazón */
   .big-heart{
-    margin-top:6px; font-size:clamp(50px, 18vw, 100px);
+    margin-top:6px;
+    font-size:clamp(50px, 18vw, 90px);
     animation: heartThump 1.2s ease-in-out infinite;
-    text-shadow:0 0 16px var(--brand-light), 0 8px 20px rgba(0,0,0,.5);
+    text-shadow:0 0 16px var(--blue-soft), 0 8px 20px rgba(0,0,0,.5);
   }
   @keyframes heartThump{ 0%{transform:scale(.9)}50%{transform:scale(1.1)}100%{transform:scale(.9)} }
 
-  /* ——— Confeti elegante ——— */
+  /* Confeti */
   .emoji-layer{ position:fixed; inset:0; max-width:var(--maxw); margin:0 auto; pointer-events:none; overflow:hidden; }
   .emoji{
     position:absolute; top:-100px;
-    font-size:clamp(22px, 6.2vw, 36px);
+    font-size:clamp(22px, 6.2vw, 34px);
     filter: drop-shadow(0 3px 6px rgba(0,0,0,.6));
   }
   @keyframes fallDown{
-    0%   { transform: translateY(-110px) rotate(var(--r,0deg)); opacity:0; }
-    10%  { opacity:1; }
-    100% { transform: translateY(100vh) rotate(calc(var(--r,0deg) + 160deg)); opacity:0; }
+    0%   { transform: translateY(-120px) rotate(var(--r,0deg)); opacity:0; }
+    15%  { opacity:1; }
+    100% { transform: translateY(calc(100vh + 150px)) rotate(calc(var(--r,0deg) + 180deg)); opacity:0; }
   }
 </style>
 </head>
@@ -158,29 +154,33 @@
     </div>
     <button id="tapHint" class="tap-hint" type="button">👉 ¡Toca aquí para la magia! ❄️</button>
 
-    <!-- CAJA 1: Fecha + hora + lugar -->
-    <div class="frost-card">
-      <div class="row"><span class="frost-text">📅 27 de septiembre de 2025</span></div>
-      <div class="row"><span class="frost-text">🕔 17:00 h</span></div>
-      <div class="row"><span class="frost-text">📍 Burbuja’s Park</span></div>
+    <!-- Caja 1: fecha y lugar -->
+    <div class="glass">
+      <div class="frozen-text">📅 27 de septiembre de 2025</div>
+      <div class="frozen-text">🕔 17:00 h</div>
+      <div class="frozen-text">📍 Burbuja’s Park</div>
     </div>
 
-    <!-- CAJA 2: Cuenta atrás + frase -->
-    <div class="frost-card">
-      <div class="row"><span id="countdown" class="frost-text count-strong">⏳ Faltan …</span></div>
-      <div class="row"><span class="frost-text">❄️ ¡Habrá risas y mucha diversión! ❄️</span></div>
+    <!-- Caja 2: cuenta atrás -->
+    <div class="glass">
+      <div id="countdown" class="count-line">⏳ Faltan …</div>
+      <div class="frozen-text">❄️ ¡Habrá risas y mucha diversión! ❄️</div>
     </div>
 
-    <a class="cta cta-map" href="https://www.google.com/maps/search/?api=1&query=Burbuja%27s+Park" target="_blank" rel="noopener">📍 Abrir ubicación</a>
-    <a class="cta cta-wa" href="https://wa.me/34675311350?text=%C2%A1Hola!%20Confirmo%20asistencia%20a%20la%20fiesta%20%F0%9F%8E%89" target="_blank" rel="noopener">💬 Confirmar por WhatsApp</a>
+    <a class="cta cta-map" href="https://www.google.com/maps/search/?api=1&query=Burbuja%27s+Park" target="_blank">📍 Abrir ubicación</a>
+    <a class="cta cta-wa" href="https://wa.me/34675311350?text=¡Hola! Confirmo asistencia a la fiesta 🎉" target="_blank">💬 Confirmar por WhatsApp</a>
 
-    <div class="hug"><span class="title">❄️💙 Con cariño, Jimena 💙❄️</span></div>
-    <div class="big-heart" role="img" aria-label="corazón palpitante">💙</div>
+    <div class="hug"><span>❄️💙 Con cariño, Jimena 💙❄️</span></div>
+    <div class="big-heart">💙</div>
   </div>
 
-  <!-- Confeti + Audio -->
-  <div class="emoji-layer" id="emojiLayer" aria-hidden="true"></div>
-  <audio id="voice" preload="auto"><source src="voz.mp3" type="audio/mpeg"></audio>
+  <!-- Confeti -->
+  <div class="emoji-layer" id="emojiLayer"></div>
+
+  <!-- Audio -->
+  <audio id="voice" preload="auto">
+    <source src="voz.mp3" type="audio/mpeg">
+  </audio>
 
 <script>
   // Cuenta atrás
@@ -198,36 +198,35 @@
   }
   const timer=setInterval(updateCountdown,1000); updateCountdown();
 
-  // Confeti + audio
-  const layer   = document.getElementById('emojiLayer');
-  const photo   = document.getElementById('photo');
-  const tapHint = document.getElementById('tapHint');
-  const audio   = document.getElementById('voice');
-  const EMOJIS  = ["❄️","💙","✨","🎉","🎈","🎂","🎊","🌟","🧁","🎁","⛄"];
+  // Magia
+  const layer=document.getElementById('emojiLayer');
+  const photo=document.getElementById('photo');
+  const tapHint=document.getElementById('tapHint');
+  const audio=document.getElementById('voice');
+  const EMOJIS=["❄️","💙","✨","👑","🧊","🎉","🎈","🎂","🎊","🧁","🎁","⛄"];
 
-  // Desbloqueo audio en primer toque
   window.addEventListener('pointerdown', ()=>{ try{ audio.play().then(()=>audio.pause()); }catch(e){} }, { once:true });
 
-  function triggerMagic(){ rainEmojis(60); playVoice(); }
+  function triggerMagic(){ rainEmojis(80); playVoice(); }
   photo.addEventListener('click', triggerMagic);
   tapHint.addEventListener('click', triggerMagic);
 
-  function playVoice(){ try{ audio.currentTime = 0; audio.play().catch(()=>{}); }catch(e){} }
+  function playVoice(){ try{ audio.currentTime=0; audio.play().catch(()=>{});}catch(e){} }
 
-  function rainEmojis(count=60){
-    const w = document.body.clientWidth;
+  function rainEmojis(count=80){
+    const w=document.body.clientWidth;
     for(let i=0;i<count;i++){
-      const span = document.createElement('span');
-      span.className = 'emoji';
-      span.textContent = EMOJIS[Math.floor(Math.random()*EMOJIS.length)];
-      span.style.left = (Math.random()*w) + 'px';
-      span.style.setProperty('--r', (Math.random()*80-40) + 'deg');
-      const delay = Math.random()*2000;
-      const dur   = 7000 + Math.random()*4000; // 7–11s, suave
-      span.style.animation = `fallDown ${dur}ms ease-in-out forwards`;
-      span.style.animationDelay = `${delay}ms`;
+      const span=document.createElement('span');
+      span.className='emoji';
+      span.textContent=EMOJIS[Math.floor(Math.random()*EMOJIS.length)];
+      span.style.left=(Math.random()*w)+'px';
+      span.style.setProperty('--r',(Math.random()*80-40)+'deg');
+      const delay=Math.random()*2000;
+      const dur=6000+Math.random()*4000;
+      span.style.animation=`fallDown ${dur}ms ease-in forwards`;
+      span.style.animationDelay=`${delay}ms`;
       layer.appendChild(span);
-      span.addEventListener('animationend', ()=> span.remove());
+      span.addEventListener('animationend', ()=>span.remove());
     }
   }
 </script>
