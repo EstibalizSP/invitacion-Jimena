@@ -3,31 +3,41 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<meta name="theme-color" content="#6bb3ff" />
+<!-- Yo pongo el mismo color del brand aquí para que la barra del navegador combine -->
+<meta name="theme-color" content="#3DA5FF" />
 <title>Invitación Cumple – Jimena 6 años</title>
 
 <style>
-  /* ——— RUEDITAS DE AJUSTE RÁPIDO ——— */
+  /* ——— AQUÍ meto mis “rueditas” ———
+     Solo tengo que pegar mi color en --brand y todo (botones, brillos, texto hielo) se tiñe */
   :root{
-    --bg-zoom: 2.8;      /* sube si ves franjas (3.0) */
-    --photo-size: 56vw;  /* baja si quieres la foto más pequeña (54vw, 52vw) */
-    --gap-elsa: 36px;    /* colchón antes del arte inferior */
+    --bg-zoom: 2.6;     /* subo si veo franjas (2.8 / 3.0) */
+    --photo-size: 56vw; /* bajo si quiero la foto más pequeña */
+    --gap-elsa: 36px;   /* colchón antes del arte inferior */
 
-    /* Color letra */
-    --brand1:#4ba3ff;   /* azul principal del botón y reflejos */
-    --brand2:#8fd3ff;   /* azul claro del degradado */
+    /*  COLOR */
+    --brand: #3DA5FF;
 
-    /* Verde oficial WhatsApp para el botón de WhatsApp */
-    --wa1:#25D366; 
-    --wa2:#128C7E;
+    /* Valores derivados (pongo fallback y, si el navegador soporta color-mix, los recalcula más finos) */
+    --brand-300: #8FD3FF; /* claro */
+    --brand-500: #318BE0; /* oscuro */
 
-    /* paleta hielo del texto (si quieres más azul, baja un poco el primero y sube el tercero) */
-    --ice1:#dff1ff;
-    --ice2:#7ec6ff;
-    --ice3:#2d89ff;
+    /* Paleta del texto “hielo” (fallback) */
+    --ice1:#e8f7ff;
+    --ice2:#9fd1ff;
+    --ice3:#55a8ff;
 
-    /* transparencia de las tarjetas cristal (más bajo = más transparente) */
-    --glass-alpha: .08;
+    /* Transparencia de las tarjetas cristal (más bajo = más transparente) */
+    --glass-alpha: .10;
+  }
+  @supports (color: color-mix(in srgb, red, white)) {
+    :root{
+      --brand-300: color-mix(in srgb, var(--brand), white 35%);
+      --brand-500: color-mix(in srgb, var(--brand), black 12%);
+      --ice1:      color-mix(in srgb, var(--brand), white 78%);
+      --ice2:      color-mix(in srgb, var(--brand), white 42%);
+      --ice3:      color-mix(in srgb, var(--brand), black  6%);
+    }
   }
 
   /* ——— MOBILE FIRST ——— */
@@ -44,11 +54,11 @@
 
   /* Fondo a todo lo ancho (zoom + repeat) */
   .bg{
-    position:fixed; inset:0;
-    background-image:url("fondo_frozen_mobile.png");
-    background-position:center top;
-    background-size:calc(var(--bg-zoom)*100vw) auto;
-    background-repeat:repeat;
+    position: fixed; inset:0;
+    background-image: url("fondo_frozen_mobile.png");
+    background-position: center top;
+    background-size: calc(var(--bg-zoom) * 100vw) auto;
+    background-repeat: repeat;
     z-index:-1;
   }
 
@@ -59,32 +69,31 @@
     text-align:center;
   }
 
-  /* ——— TEXTO HIELO (relleno azul animado + contorno) ——— */
+  /* ——— TEXTO HIELO: relleno azul animado + contorno ——— */
   .ice{
-    position:relative;
     font-weight:900;
-    color:transparent;
-    background:linear-gradient(90deg,var(--ice1),var(--ice2),var(--ice3),var(--ice2),var(--ice1));
-    background-size:260% 100%;
+    color: transparent; /* el relleno lo da el gradiente */
+    background: linear-gradient(90deg,var(--ice1),var(--ice2),var(--ice3),var(--ice2),var(--ice1));
+    background-size: 260% 100%;
     -webkit-background-clip:text; background-clip:text;
     text-shadow:
       -1px -1px 0 #0b3a66, 1px -1px 0 #0b3a66,
       -1px  1px 0 #0b3a66, 1px  1px 0 #0b3a66,
       0 3px 16px rgba(0,0,0,.6);
-    animation:sheen 6s linear infinite, softBeat 2.1s ease-in-out infinite;
+    animation: sheen 6s linear infinite, softBeat 2.1s ease-in-out infinite;
   }
-  @keyframes sheen{0%{background-position:0% 0}100%{background-position:100% 0}}
-  @keyframes softBeat{0%,100%{transform:scale(1)}50%{transform:scale(1.03)}}
+  @keyframes sheen{ 0%{background-position:0% 0} 100%{background-position:100% 0} }
+  @keyframes softBeat{ 0%,100%{transform:scale(1)} 50%{transform:scale(1.03)} }
 
   /* Títulos grandes */
   h1,h2{ margin:.35rem 0; line-height:1.05; }
-  h1{ font-size: clamp(66px, 13vw, 122px); }
-  h2{ font-size: clamp(34px, 8.2vw, 72px); }
+  h1{ font-size: clamp(64px, 12.6vw, 120px); }
+  h2{ font-size: clamp(32px, 8vw, 70px); }
 
   /* Texto base grande */
-  p, time{ font-size:clamp(20px, 5.8vw, 34px); margin:.6rem 0; line-height:1.38; }
+  p, time{ font-size: clamp(20px, 5.6vw, 32px); margin:.6rem 0; line-height:1.38; }
 
-  /* Foto circular */
+  /* Foto circular (jimena1.jpg) */
   .photo-wrap{
     width:min(var(--photo-size),268px);
     height:min(var(--photo-size),268px);
@@ -96,31 +105,31 @@
     position:relative; cursor:pointer;
   }
   .photo-wrap img{ width:100%; height:100%; object-fit:cover; object-position:50% 35%; display:block; }
-  .tap-hint{ position:absolute; left:0; right:0; bottom:10px; font-size:clamp(14px,3.9vw,18px); pointer-events:none; }
+  .tap-hint{ position:absolute; left:0; right:0; bottom:10px; font-size:clamp(14px,4vw,19px); pointer-events:none; }
 
-  /* Tarjetas cristal (MUY transparentes) */
+  /* Tarjetas cristal (muy transparentes) */
   .glass{
     margin:14px auto 0;
     width:calc(100vw - 32px); max-width:560px;
     padding:14px 12px;
     border-radius:22px;
-    background:rgba(255,255,255,var(--glass-alpha));
-    border:1.5px solid rgba(255,255,255,.45);
+    background: rgba(255,255,255,var(--glass-alpha));
+    border: 1.5px solid rgba(255,255,255,.45);
     backdrop-filter: blur(6px);
-    box-shadow:0 14px 28px rgba(0,0,0,.22), inset 0 0 16px rgba(255,255,255,.16);
+    box-shadow: 0 14px 28px rgba(0,0,0,.22), inset 0 0 16px rgba(255,255,255,.18);
   }
   .line{ margin:.3rem 0; }
-  .date-line{  font-size:clamp(22px, 6.4vw, 36px); }
-  .place-line{ font-size:clamp(22px, 6.4vw, 36px); }
-  .count-line{ font-size:clamp(32px, 8vw, 54px); }
-  .tagline{    font-size:clamp(22px, 6vw, 34px); }
-  .safe-gap{ height:var(--gap-elsa); }
+  .date-line{  font-size: clamp(22px, 6.2vw, 36px); }
+  .place-line{ font-size: clamp(22px, 6.2vw, 36px); }
+  .count-line{ font-size: clamp(30px, 7.6vw, 52px); }
+  .tagline{    font-size: clamp(21px, 5.8vw, 34px); }
 
-  /* ——— BOTONES NUEVOS “CHULOS” ——— */
+  .safe-gap{ height: var(--gap-elsa); }
+
+  /* ——— BOTONES  con color ——— */
   .cta{
-    display:inline-flex; align-items:center; justify-content:center;
-    gap:10px;
-    width:min(80vw, 440px);
+    display:inline-flex; align-items:center; justify-content:center; gap:10px;
+    width: min(82vw, 460px);
     margin:12px 8px 0;
     padding:14px 18px;
     border-radius:9999px;
@@ -129,30 +138,32 @@
     box-shadow:0 10px 22px rgba(0,0,0,.24), inset 0 0 18px rgba(255,255,255,.18);
     transition: transform .15s ease;
     animation: floatY 3.6s ease-in-out infinite;
-    font-size:clamp(18px, 5.2vw, 28px);
+    font-size: clamp(18px, 5.2vw, 28px);
   }
   @keyframes floatY{ 0%{transform:translateY(0)} 50%{transform:translateY(-2px)} 100%{transform:translateY(0)} }
+  .cta:active{ transform:scale(.97); }
 
-  /* Botón de Ubicación — azul “brand” con brillo y shimmer */
+  /* Ubicación: degradado con mi brand + brillo */
   .cta-map{
-    background: linear-gradient(135deg, var(--brand1), var(--brand2));
+    background: linear-gradient(135deg, var(--brand-500), var(--brand-300));
     position:relative; overflow:hidden;
+    box-shadow: 0 10px 22px rgba(0,0,0,.24),
+                0 0 22px color-mix(in srgb, var(--brand), white 40%);
   }
   .cta-map::after{
-    content:""; position:absolute; inset:-2px; 
+    content:""; position:absolute; inset:-2px;
     background: linear-gradient(120deg, transparent, rgba(255,255,255,.35), transparent);
-    transform: translateX(-100%);
-    animation: shimmer 2.8s infinite;
+    transform: translateX(-100%); animation: shimmer 2.8s infinite;
   }
   @keyframes shimmer{ 0%{transform:translateX(-100%)} 100%{transform:translateX(100%)} }
 
-  /* Botón de WhatsApp — verde oficial con un toque de hielo */
+  /* WhatsApp: verde */
   .cta-wa{
-    background: linear-gradient(135deg, var(--wa1), var(--wa2));
+    background: linear-gradient(135deg, #25D366, #128C7E);
     box-shadow: 0 10px 22px rgba(0,0,0,.24), 0 0 22px rgba(37,211,102,.35);
   }
 
-  /* Icono circular a la izquierda del texto */
+  /* iconito redondo dentro del botón */
   .cta .ico{
     display:inline-grid; place-items:center;
     width:34px; height:34px; border-radius:50%;
@@ -161,10 +172,8 @@
     font-size: 20px;
   }
 
-  .cta:active{ transform:scale(.97); }
-
   /* Abrazos + corazón */
-  .hug{ margin-top:18px; font-size:clamp(24px, 6.4vw, 38px); }
+  .hug{ margin-top:18px; font-size:clamp(24px, 6.2vw, 38px); }
   .big-heart{
     margin-top:6px; font-size:clamp(88px, 22vw, 160px); line-height:1;
     animation: heartThump 1.15s ease-in-out infinite;
@@ -174,11 +183,11 @@
 
   /* Emojis lluvia desde arriba (lenta) */
   .emoji-layer{ position:fixed; inset:0; pointer-events:none; overflow:hidden; }
-  .emoji{ position:absolute; font-size:clamp(22px, 6.2vw, 40px); filter:drop-shadow(0 3px 6px rgba(0,0,0,.5)); }
+  .emoji{ position:absolute; font-size:clamp(22px, 6.2vw, 40px); filter: drop-shadow(0 3px 6px rgba(0,0,0,.5)); }
   @keyframes fallDown{
-    0%{ transform: translateY(-110px) rotate(var(--r,0deg)); opacity:0; }
-    10%{ opacity:1; }
-    100%{ transform: translateY(calc(100vh + 120px)) rotate(calc(var(--r,0deg) + 120deg)); opacity:0; }
+    0%   { transform: translateY(-110px) rotate(var(--r,0deg)); opacity:0; }
+    10%  { opacity:1; }
+    100% { transform: translateY(calc(100vh + 120px)) rotate(calc(var(--r,0deg) + 120deg)); opacity:0; }
   }
 
   /* Copitos/corazones al pie */
@@ -199,7 +208,7 @@
     <h2 class="ice">¡Te invito a mi fiesta!</h2>
     <h1 class="ice">JIMENA CUMPLE 6 AÑOS</h1>
 
-    <!-- Foto -->
+    <!-- Foto (jimena1.jpg) -->
     <div class="photo-wrap" id="photo" aria-label="Tocar para oír la invitación y ver la magia">
       <img src="jimena1.jpg" alt="Foto de Jimena" />
       <div class="tap-hint ice">🎈 Toca la foto y verás la magia 🎉</div>
@@ -217,7 +226,7 @@
       <div class="line tagline ice">❄️ ¡Habrá risas y mucha diversión! ❄️</div>
     </div>
 
-    <!-- Botones NUEVOS -->
+    <!-- Botones -->
     <a class="cta cta-map" href="https://www.google.com/maps/search/?api=1&query=Burbuja%27s+Park" target="_blank" rel="noopener">
       <span class="ico">📍</span> Abrir ubicación
     </a>
@@ -234,7 +243,7 @@
   <!-- Lluvia de emojis -->
   <div class="emoji-layer" id="emojiLayer" aria-hidden="true"></div>
 
-  <!-- Audio (voz.mp3 en el repo) -->
+  <!-- Audio  -->
   <audio id="voice" preload="auto">
     <source src="voz.mp3" type="audio/mpeg">
   </audio>
@@ -243,7 +252,7 @@
   <div class="snow-bottom" id="snowBottom" aria-hidden="true"></div>
 
 <script>
-  /* Emojis (lluvia lenta) */
+  /* Emojis (lluvia lenta y abundante) */
   const EMOJIS = ["🎉","🎈","🎂","🧁","🎁","✨","❄️","⛄","🪄","👑","💙","🌟","🍭","🎊","🧊"];
   const FINAL_FLAKES = ["❄️","💙","❄️","💙","❄️","💙"];
 
@@ -253,18 +262,20 @@
   const countdownEl = document.getElementById("countdown");
   const snowBottom = document.getElementById('snowBottom');
 
-  /* Velocidad de lluvia (más lento/fuerte editando aquí) */
-  const EMOJI_MIN_MS   = 3200;  // duración mínima
-  const EMOJI_RANGE_MS = 3200;  // extra aleatorio (total = min + aleatorio)
-  const EMOJI_DELAY_MS = 700;   // desfase máximo
+  /* Parámetros de velocidad (lo dejo lento y bonito) */
+  const EMOJI_MIN_MS   = 3200;
+  const EMOJI_RANGE_MS = 3200;
+  const EMOJI_DELAY_MS = 700;
 
   /* Tocar foto → lluvia + audio */
   photo.addEventListener('click', () => { rainEmojis(170); playVoice(); });
 
+  /* Desbloqueo audio primer toque (móviles) */
   window.addEventListener('pointerdown', ()=> { try{ audio.play().then(()=>audio.pause()); }catch(e){} }, { once:true });
 
   function playVoice(){ try{ audio.currentTime=0; audio.play().catch(()=>{}); }catch(e){} }
 
+  /* LLUVIA LENTA desde arriba por todo el ancho */
   function rainEmojis(count=160){
     const w = window.innerWidth;
     for(let i=0;i<count;i++){
@@ -273,10 +284,11 @@
       span.textContent = EMOJIS[Math.floor(Math.random()*EMOJIS.length)];
       const left  = Math.random()*w;
       const delay = Math.random()*EMOJI_DELAY_MS;
-      const dur   = EMOJI_MIN_MS + Math.random()*EMOJI_RANGE_MS;
+      const dur   = EMOJI_MIN_MS + Math.random()*EMOJI_RANGE_MS; /* 3.2–6.4s */
       span.style.left = left + 'px';
       span.style.top  = '-100px';
       span.style.setProperty('--r', (Math.random()*80-40) + 'deg');
+      /* >>> aquí antes te faltaban las comillas invertidas <<< */
       span.style.animation = `fallDown ${dur}ms ease-in forwards`;
       span.style.animationDelay = `${delay}ms`;
       layer.appendChild(span);
@@ -284,7 +296,7 @@
     }
   }
 
-  /* Contador (ajusta fecha/hora aquí si cambia) */
+  /* Contador (si cambia la fecha/hora, la edito arriba) */
   const targetDate = new Date("2025-09-27T17:00:00");
   function updateCountdown(){
     const now = new Date();
@@ -294,6 +306,7 @@
     const h = Math.floor((diff/(1000*60*60))%24);
     const m = Math.floor((diff/(1000*60))%60);
     const s = Math.floor((diff/1000)%60);
+    /* >>> y aquí también faltaban las comillas invertidas <<< */
     countdownEl.textContent = `⏳ Faltan ${d}d ${h}h ${m}m ${s}s`;
   }
   const timer=setInterval(updateCountdown,1000); updateCountdown();
@@ -316,5 +329,7 @@
 </script>
 </body>
 </html>
+
+
 
 
