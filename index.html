@@ -8,11 +8,9 @@
 
 <style>
   :root{
-    --brand: #a3d8f4;        /* azul Frozen */
-    --brand-dark: #3c8dbc;   /* más intenso */
-    --brand-light: #d8f0ff;  /* más claro */
-    --glass: rgba(255,255,255,0.28);
-    --shadow: rgba(0,40,80,0.45);
+    --brand: #a3d8f4;        
+    --brand-dark: #3c8dbc;   
+    --brand-light: #d8f0ff;  
     --maxw: 480px;
   }
 
@@ -73,58 +71,50 @@
   }
   @keyframes pulse{ 0%{transform:scale(1)} 50%{transform:scale(1.08)} 100%{transform:scale(1)} }
 
-  /* ——— TARJETAS “FROZEN” MEJORADAS ——— */
+  /* TARJETAS nítidas (fecha/hora/lugar y cuenta atrás) */
   .glass{
     position:relative;
     margin:18px auto 0;
     padding:16px 14px;
     border-radius:18px;
     background:
-      linear-gradient(180deg, rgba(255,255,255,.22), rgba(255,255,255,.10)); /* velo suave */
-    backdrop-filter: blur(14px) saturate(130%);
-    -webkit-backdrop-filter: blur(14px) saturate(130%);
+      linear-gradient(180deg, rgba(15,35,70,0.20), rgba(15,35,70,0.08)),
+      rgba(255,255,255,0.34);
+    backdrop-filter: blur(6px) saturate(120%);
+    -webkit-backdrop-filter: blur(6px) saturate(120%);
+    border:1px solid rgba(255,255,255,0.65);
     box-shadow:
-      0 18px 32px rgba(0,30,60,.35),
-      inset 0 1px 0 rgba(255,255,255,.55);
-    border:1px solid rgba(255,255,255,.55);
+      0 12px 26px rgba(0,30,60,0.30),
+      inset 0 1px 0 rgba(255,255,255,0.60);
     overflow:hidden;
   }
-  /* Brillo que cruza el borde */
-  .glass::after{
-    content:""; position:absolute; inset:-2px;
-    background: radial-gradient(120% 50% at -20% -20%, rgba(255,255,255,.45), transparent 40%),
-                radial-gradient(120% 60% at 120% 20%, rgba(255,255,255,.25), transparent 50%);
-    pointer-events:none;
-  }
-
-  /* Filas y separadores suaves */
   .card-row{ 
     font-weight:900;
     font-size: clamp(18px, 5.4vw, 24px);
-    padding:6px 4px;
+    padding:8px 4px;
   }
-  .card-row + .card-row{
-    border-top:1px solid rgba(255,255,255,.28);
-  }
+  .card-row + .card-row{ border-top:1px solid rgba(255,255,255,0.30); }
 
-  /* Texto con degradado plata-azul y sombra para leer siempre */
+  /* Texto blanco con sombra fuerte */
   .frozen-text{
-    background: linear-gradient(180deg, #ffffff 10%, #dff1ff 40%, #8abff0 85%);
-    -webkit-background-clip:text; background-clip:text; color:transparent;
-    text-shadow: 0 2px 6px rgba(0,0,0,.45);
+    color:#fff !important;
+    background:none !important;
+    -webkit-text-fill-color:#fff;
+    text-shadow:
+      0 1px 0 rgba(0,0,0,0.85),
+      0 3px 10px rgba(0,0,0,0.55);
   }
 
-  /* Cuenta atrás destacada */
+  /* Cuenta atrás */
   .count-line{
-    font-size: clamp(22px, 6.6vw, 28px);
+    font-size: clamp(22px, 6.6vw, 30px);
     font-weight:1000;
+    color:#fff;
+    text-shadow:
+      0 1px 0 rgba(0,0,0,0.85),
+      0 3px 10px rgba(0,0,0,0.55);
   }
-
-  .tagline{
-    margin-top:6px;
-    font-weight:900;
-    opacity:.95;
-  }
+  .tagline{ margin-top:6px; font-weight:900; }
 
   /* Botones Frozen */
   .cta{
@@ -169,7 +159,7 @@
   }
   @keyframes heartThump{ 0%{transform:scale(.9)}50%{transform:scale(1.1)}100%{transform:scale(.9)} }
 
-  /* Confeti elegante */
+  /* Confeti */
   .emoji-layer{ position:fixed; inset:0; max-width:var(--maxw); margin:0 auto; pointer-events:none; overflow:hidden; }
   .emoji{
     position:absolute; top:-100px;
@@ -196,17 +186,17 @@
     </div>
     <button id="tapHint" class="tap-hint" type="button">👉 ¡Toca aquí para la magia! ❄️</button>
 
-    <!-- TARJETA 1: Fecha/Hora/Lugar más bonita -->
+    <!-- Fecha / Hora / Lugar -->
     <div class="glass">
       <div class="card-row frozen-text">📅 <time datetime="2025-09-27">27 de septiembre de 2025</time></div>
       <div class="card-row frozen-text">🕔 17:00 h</div>
       <div class="card-row frozen-text">📍 <strong>Burbuja’s Park</strong></div>
     </div>
 
-    <!-- TARJETA 2: Cuenta atrás con presencia -->
+    <!-- Cuenta atrás -->
     <div class="glass">
-      <div id="countdown" class="count-line frozen-text">⏳ Faltan …</div>
-      <div class="tagline">❄️ ¡Habrá risas y mucha diversión! ❄️</div>
+      <div id="countdown" class="count-line">⏳ Faltan …</div>
+      <div class="tagline frozen-text">❄️ ¡Habrá risas y mucha diversión! ❄️</div>
     </div>
 
     <a class="cta cta-map" href="https://www.google.com/maps/search/?api=1&query=Burbuja%27s+Park" target="_blank" rel="noopener">📍 Abrir ubicación</a>
@@ -258,7 +248,7 @@
     try{ audio.currentTime = 0; audio.play().catch(()=>{}); }catch(e){}
   }
 
-  // Confeti elegante y fluido
+  // Confeti elegante
   function rainEmojis(count=60){
     const w = document.body.clientWidth;
     for(let i=0;i<count;i++){
