@@ -3,33 +3,37 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<!-- Yo pongo el mismo color del brand aquí para que la barra del navegador combine -->
-<meta name="theme-color" content="#3DA5FF" />
+
+<!-- Uso el mismo color maestro del tema -->
+<meta name="theme-color" content="#6bb3ff" />
 <title>Invitación Cumple – Jimena 6 años</title>
 
 <style>
-  /* ——— AQUÍ meto mis “rueditas” ———
-     Solo tengo que pegar mi color en --brand y todo (botones, brillos, texto hielo) se tiñe */
+  /* ——— AJUSTES RÁPIDOS ———
+     Si ves franjas en los laterales, sube --bg-zoom (2.8 / 3.0).
+     Si quieres la foto más pequeña, baja --photo-size.
+     El color maestro lo controlo con --brand. */
   :root{
-    --bg-zoom: 2.6;     /* subo si veo franjas (2.8 / 3.0) */
-    --photo-size: 56vw; /* bajo si quiero la foto más pequeña */
-    --gap-elsa: 36px;   /* colchón antes del arte inferior */
+    --bg-zoom: 2.6;
+    --photo-size: 56vw;
+    --gap-elsa: 36px;
 
-    /*  COLOR */
-    --brand: #3DA5FF;
+    /* 🔵 Color maestro (el tuyo actual) */
+    --brand: #6bb3ff;
 
-    /* Valores derivados (pongo fallback y, si el navegador soporta color-mix, los recalcula más finos) */
-    --brand-300: #8FD3FF; /* claro */
-    --brand-500: #318BE0; /* oscuro */
+    /* Derivados (fallback si no hay color-mix) */
+    --brand-300: #a6d4ff;  /* claro */
+    --brand-500: #4692e8;  /* oscuro */
 
-    /* Paleta del texto “hielo” (fallback) */
-    --ice1:#e8f7ff;
-    --ice2:#9fd1ff;
-    --ice3:#55a8ff;
+    /* Paleta de “hielo” (fallback) */
+    --ice1:#e6f4ff; 
+    --ice2:#a7d6ff; 
+    --ice3:#6bb3ff;
 
-    /* Transparencia de las tarjetas cristal (más bajo = más transparente) */
+    /* Transparencia de las tarjetas cristal */
     --glass-alpha: .10;
   }
+  /* Si el navegador soporta color-mix, todo se ajusta mejor a tu brand */
   @supports (color: color-mix(in srgb, red, white)) {
     :root{
       --brand-300: color-mix(in srgb, var(--brand), white 35%);
@@ -46,7 +50,7 @@
     margin:0;
     font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
     color:#fff;
-    -webkit-text-size-adjust:100%;
+    -webkit-text-size-adjust: 100%;
     touch-action: manipulation;
     overflow-x:hidden;
     background:#a8ccee;
@@ -69,10 +73,11 @@
     text-align:center;
   }
 
-  /* ——— TEXTO HIELO: relleno azul animado + contorno ——— */
+  /* ——— TEXTO HIELO: relleno animado del brand + contorno ——— */
   .ice{
+    position:relative;
     font-weight:900;
-    color: transparent; /* el relleno lo da el gradiente */
+    color: transparent;
     background: linear-gradient(90deg,var(--ice1),var(--ice2),var(--ice3),var(--ice2),var(--ice1));
     background-size: 260% 100%;
     -webkit-background-clip:text; background-clip:text;
@@ -102,7 +107,8 @@
     overflow:hidden;
     outline:6px solid rgba(255,255,255,.95);
     box-shadow:0 12px 28px rgba(0,0,0,.35), inset 0 0 30px rgba(255,255,255,.35);
-    position:relative; cursor:pointer;
+    position:relative;
+    cursor:pointer;
   }
   .photo-wrap img{ width:100%; height:100%; object-fit:cover; object-position:50% 35%; display:block; }
   .tap-hint{ position:absolute; left:0; right:0; bottom:10px; font-size:clamp(14px,4vw,19px); pointer-events:none; }
@@ -126,7 +132,7 @@
 
   .safe-gap{ height: var(--gap-elsa); }
 
-  /* ——— BOTONES  con color ——— */
+  /* ——— BOTONES CHULOS con tu color ——— */
   .cta{
     display:inline-flex; align-items:center; justify-content:center; gap:10px;
     width: min(82vw, 460px);
@@ -142,8 +148,15 @@
   }
   @keyframes floatY{ 0%{transform:translateY(0)} 50%{transform:translateY(-2px)} 100%{transform:translateY(0)} }
   .cta:active{ transform:scale(.97); }
+  .cta .ico{
+    display:inline-grid; place-items:center;
+    width:34px; height:34px; border-radius:50%;
+    background: rgba(255,255,255,.2);
+    box-shadow: inset 0 0 10px rgba(255,255,255,.35);
+    font-size:20px;
+  }
 
-  /* Ubicación: degradado con mi brand + brillo */
+  /* Ubicación → degradado del brand + shimmer */
   .cta-map{
     background: linear-gradient(135deg, var(--brand-500), var(--brand-300));
     position:relative; overflow:hidden;
@@ -157,19 +170,10 @@
   }
   @keyframes shimmer{ 0%{transform:translateX(-100%)} 100%{transform:translateX(100%)} }
 
-  /* WhatsApp: verde */
+  /* WhatsApp → verde oficial (si lo quieres a juego en azul, te lo pongo también) */
   .cta-wa{
     background: linear-gradient(135deg, #25D366, #128C7E);
     box-shadow: 0 10px 22px rgba(0,0,0,.24), 0 0 22px rgba(37,211,102,.35);
-  }
-
-  /* iconito redondo dentro del botón */
-  .cta .ico{
-    display:inline-grid; place-items:center;
-    width:34px; height:34px; border-radius:50%;
-    background: rgba(255,255,255,.2);
-    box-shadow: inset 0 0 10px rgba(255,255,255,.35);
-    font-size: 20px;
   }
 
   /* Abrazos + corazón */
@@ -183,7 +187,11 @@
 
   /* Emojis lluvia desde arriba (lenta) */
   .emoji-layer{ position:fixed; inset:0; pointer-events:none; overflow:hidden; }
-  .emoji{ position:absolute; font-size:clamp(22px, 6.2vw, 40px); filter: drop-shadow(0 3px 6px rgba(0,0,0,.5)); }
+  .emoji{
+    position:absolute; font-size:clamp(22px, 6.2vw, 40px);
+    filter: drop-shadow(0 3px 6px rgba(0,0,0,.5));
+    will-change: transform, opacity;
+  }
   @keyframes fallDown{
     0%   { transform: translateY(-110px) rotate(var(--r,0deg)); opacity:0; }
     10%  { opacity:1; }
@@ -204,14 +212,14 @@
   <div class="bg" aria-hidden="true"></div>
 
   <div class="page">
-    <!-- Cabecera -->
+    <!-- Cabecera con el color maestro -->
     <h2 class="ice">¡Te invito a mi fiesta!</h2>
     <h1 class="ice">JIMENA CUMPLE 6 AÑOS</h1>
 
     <!-- Foto (jimena1.jpg) -->
     <div class="photo-wrap" id="photo" aria-label="Tocar para oír la invitación y ver la magia">
       <img src="jimena1.jpg" alt="Foto de Jimena" />
-      <div class="tap-hint ice">🎈 Toca la foto y verás la magia 🎉</div>
+      <div class="tap-hint ice">🎈 Toca mi foto para ver la magia 🎉</div>
     </div>
 
     <!-- Tarjeta cristal 1: fecha + lugar -->
@@ -226,7 +234,7 @@
       <div class="line tagline ice">❄️ ¡Habrá risas y mucha diversión! ❄️</div>
     </div>
 
-    <!-- Botones -->
+    <!-- Botones chulos -->
     <a class="cta cta-map" href="https://www.google.com/maps/search/?api=1&query=Burbuja%27s+Park" target="_blank" rel="noopener">
       <span class="ico">📍</span> Abrir ubicación
     </a>
@@ -243,7 +251,7 @@
   <!-- Lluvia de emojis -->
   <div class="emoji-layer" id="emojiLayer" aria-hidden="true"></div>
 
-  <!-- Audio  -->
+  <!-- Audio -->
   <audio id="voice" preload="auto">
     <source src="voz.mp3" type="audio/mpeg">
   </audio>
@@ -255,27 +263,21 @@
   /* Emojis (lluvia lenta y abundante) */
   const EMOJIS = ["🎉","🎈","🎂","🧁","🎁","✨","❄️","⛄","🪄","👑","💙","🌟","🍭","🎊","🧊"];
   const FINAL_FLAKES = ["❄️","💙","❄️","💙","❄️","💙"];
-
   const layer  = document.getElementById('emojiLayer');
   const photo  = document.getElementById('photo');
   const audio  = document.getElementById('voice');
   const countdownEl = document.getElementById("countdown");
   const snowBottom = document.getElementById('snowBottom');
 
-  /* Parámetros de velocidad (lo dejo lento y bonito) */
-  const EMOJI_MIN_MS   = 3200;
-  const EMOJI_RANGE_MS = 3200;
-  const EMOJI_DELAY_MS = 700;
-
-  /* Tocar foto → lluvia + audio */
-  photo.addEventListener('click', () => { rainEmojis(170); playVoice(); });
+  /* Tocar foto → lluvia (lenta) + audio */
+  photo.addEventListener('click', () => { rainEmojis(160); playVoice(); });
 
   /* Desbloqueo audio primer toque (móviles) */
   window.addEventListener('pointerdown', ()=> { try{ audio.play().then(()=>audio.pause()); }catch(e){} }, { once:true });
 
   function playVoice(){ try{ audio.currentTime=0; audio.play().catch(()=>{}); }catch(e){} }
 
-  /* LLUVIA LENTA desde arriba por todo el ancho */
+  /* LLUVIA LENTA: 2.6–5.2s de caída */
   function rainEmojis(count=160){
     const w = window.innerWidth;
     for(let i=0;i<count;i++){
@@ -283,20 +285,19 @@
       span.className = 'emoji';
       span.textContent = EMOJIS[Math.floor(Math.random()*EMOJIS.length)];
       const left  = Math.random()*w;
-      const delay = Math.random()*EMOJI_DELAY_MS;
-      const dur   = EMOJI_MIN_MS + Math.random()*EMOJI_RANGE_MS; /* 3.2–6.4s */
+      const delay = Math.random()*600;
+      const dur   = 2600 + Math.random()*2600;  // 2.6s–5.2s
       span.style.left = left + 'px';
       span.style.top  = '-100px';
       span.style.setProperty('--r', (Math.random()*80-40) + 'deg');
-      /* >>> aquí antes te faltaban las comillas invertidas <<< */
       span.style.animation = `fallDown ${dur}ms ease-in forwards`;
       span.style.animationDelay = `${delay}ms`;
       layer.appendChild(span);
-      span.addEventListener('animationend', ()=> span.remove());
+      span.addEventListener('animationend',()=> span.remove());
     }
   }
 
-  /* Contador (si cambia la fecha/hora, la edito arriba) */
+  /* Contador (ajusta la fecha si cambia) */
   const targetDate = new Date("2025-09-27T17:00:00");
   function updateCountdown(){
     const now = new Date();
@@ -306,7 +307,6 @@
     const h = Math.floor((diff/(1000*60*60))%24);
     const m = Math.floor((diff/(1000*60))%60);
     const s = Math.floor((diff/1000)%60);
-    /* >>> y aquí también faltaban las comillas invertidas <<< */
     countdownEl.textContent = `⏳ Faltan ${d}d ${h}h ${m}m ${s}s`;
   }
   const timer=setInterval(updateCountdown,1000); updateCountdown();
@@ -329,6 +329,7 @@
 </script>
 </body>
 </html>
+
 
 
 
