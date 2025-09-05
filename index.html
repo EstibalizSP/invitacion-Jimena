@@ -14,25 +14,29 @@
      Si el dibujo de abajo me queda cerca, subo --gap-elsa.
   */
   :root{
-    --bg-zoom: 2.8;
+    --bg-zoom: 2.9;        /* subo un poco para tapar aún mejor los laterales */
     --photo-size: 54vw;
-    --gap-elsa: 40px;
+    --gap-elsa: 42px;
 
     /* Mi color maestro (azul hielo plateado) */
     --brand: #B8DFFF;
-    --brand-300: #D5EAFF;  /* claro */
-    --brand-500: #7FBFFF;  /* más intenso */
+    --brand-300: #D5EAFF;   /* claro */
+    --brand-500: #7FBFFF;   /* más intenso */
 
-    /* Letras “hielo” (relleno animado azulado pero texto BLANCO para máxima lectura) */
+    /* Paleta de brillo azul para detalles */
     --ice1: #EAF7FF;
     --ice2: #C8E8FF;
     --ice3: #7FBFFF;
 
-    /* Fondo de las tarjetas de cristal (más alto = más sólido) */
-    --glass-alpha: .22; /* subo porque antes estaba demasiado tenue */
+    /* Yo subo la “solidez” del cristal y añado tinte oscuro para sombra */
+    --glass-alpha: .28;     /* antes .22 → ahora un poco más sólida */
+    --glass-tint:  rgba(8,25,54,.26); /* azul marino transparente para sombrear */
+
+    /* Sombra base fuerte para paneles/botones */
+    --shadow-strong: rgba(0,20,40,.46);
   }
 
-  /* ——— BASE SOLO MÓVIL ——— */
+  /* ——— SOLO MÓVIL (pero lo centro en escritorio para que no se vea gigante) ——— */
   html,body{ height:100%; }
   body{
     margin:0;
@@ -43,7 +47,7 @@
     background:#a8ccee; /* respaldo mientras carga el fondo */
   }
 
-  /* Fondo de copos a todo lo ancho (con zoom y repeat para tapar bordes) */
+  /* Fondo de copos a todo lo ancho (zoom+repeat) */
   .bg{
     position: fixed; inset:0;
     background-image: url("fondo_frozen_mobile.png");
@@ -51,15 +55,9 @@
     background-size: calc(var(--bg-zoom) * 100vw) auto;
     background-repeat: repeat;
     z-index:-1;
-    filter: none;
   }
 
-  /* Yo fuerzo un “ancho de móvil” también cuando se abre en ordenador */
-  .phone{
-    max-width: 460px;
-    margin: 0 auto;
-  }
-
+  .phone{ max-width: 460px; margin: 0 auto; }
   .page{
     width:100vw; max-width:460px;
     margin:0 auto;
@@ -67,77 +65,87 @@
     text-align:center;
   }
 
-  /* ——— TÍTULOS LEGIBLES ———
-     Ahora uso letras BLANCAS gordas con brillo azul suave y un contorno sutil.
-     (Así no se oscurecen sobre el fondo.) */
+  /* ——— TÍTULOS CON SOMBRA ———
+     Yo uso blanco gordo + sombra doble y un destello azul suave. */
   .title{
     margin:.35rem 0; line-height:1.03; font-weight:900;
     color:#fff;
     text-shadow:
-      0 0 10px rgba(127,191,255,.9),
-      0 4px 22px rgba(0,0,0,.38);
+      0 1px 0 rgba(0,0,0,.55),
+      0 4px 18px rgba(0,0,0,.55),
+      0 0 18px rgba(127,191,255,.75);
     position:relative;
+    letter-spacing:.5px;
   }
   .title::after{
-    /* Yo paso un destello azulado muy suave para el efecto “hielo brillante” */
-    content:"";
-    position:absolute; inset:0;
-    background: linear-gradient(90deg, transparent, rgba(184,223,255,.35), transparent);
+    content:""; position:absolute; inset:0; pointer-events:none;
+    background: linear-gradient(90deg, transparent, rgba(184,223,255,.30), transparent);
     mix-blend-mode: screen;
     animation: shine 6s linear infinite;
-    pointer-events:none;
   }
   @keyframes shine{ 0%{transform:translateX(-100%)} 100%{transform:translateX(100%)} }
 
-  h1.title{ font-size: clamp(44px, 11.6vw, 64px); letter-spacing:.5px; }
+  h1.title{ font-size: clamp(44px, 11.6vw, 64px); }
   h2.title{ font-size: clamp(22px, 6.8vw, 34px); }
 
-  /* Texto grande común */
+  /* Texto general cómodo de leer */
   p, time{ font-size: clamp(18px, 5.2vw, 28px); margin:.5rem 0; }
 
-  /* Foto circular (yo uso jimena1.jpg) */
+  /* Foto redonda */
   .photo-wrap{
     width:min(var(--photo-size),240px);
     height:min(var(--photo-size),240px);
     margin:14px auto 10px; border-radius:50%; overflow:hidden; position:relative; cursor:pointer;
     outline:6px solid rgba(255,255,255,.98);
-    box-shadow:0 12px 28px rgba(0,0,0,.35), inset 0 0 30px rgba(255,255,255,.35);
+    box-shadow:
+      0 12px 28px rgba(0,0,0,.45),
+      inset 0 0 30px rgba(255,255,255,.35);
   }
   .photo-wrap img{ width:100%; height:100%; object-fit:cover; object-position:50% 38%; display:block; }
 
-  /* El aviso de “toca mi foto” ahora lo pongo en una pastilla para que SIEMPRE se lea */
+  /* Aviso de la foto: ahora más oscuro para que SIEMPRE se lea */
   .tap-hint{
     position:absolute; left:50%; bottom:10px; transform:translateX(-50%);
     font-weight:900; font-size:clamp(13px,3.8vw,16px);
-    color:#fff; padding:6px 10px; border-radius:999px;
-    background: rgba(0,0,0,.35);
-    box-shadow:0 6px 14px rgba(0,0,0,.35);
+    color:#fff; padding:7px 12px; border-radius:999px;
+    background: rgba(0,0,0,.58);
+    box-shadow:0 8px 18px rgba(0,0,0,.45);
     white-space:nowrap;
   }
 
-  /* Tarjetas cristal: subo la opacidad para que el texto blanco se lea sin esfuerzo */
+  /* Tarjetas cristal SOMBREADAS:
+     mezclo un tinte oscuro + blanco translúcido y subo las sombras. */
   .glass{
-    margin:14px auto 0; width:calc(100% - 8px);
-    padding:14px 14px;
+    margin:16px auto 0; width:calc(100% - 6px);
+    padding:16px 14px;
     border-radius:18px;
-    background: rgba(255,255,255,var(--glass-alpha));
-    border: 1px solid rgba(255,255,255,.55);
-    backdrop-filter: blur(8px);
-    box-shadow: 0 18px 34px rgba(0,0,0,.28), inset 0 0 18px rgba(255,255,255,.22);
-    color:#fff; text-shadow: 0 2px 10px rgba(0,0,0,.35);
+    background:
+      linear-gradient(180deg, var(--glass-tint), rgba(8,25,54,.18)),
+      rgba(255,255,255,var(--glass-alpha));
+    border: 1px solid rgba(255,255,255,.58);
+    backdrop-filter: blur(10px) saturate(115%);
+    box-shadow:
+      0 22px 42px var(--shadow-strong),
+      0 10px 26px rgba(0,0,0,.28),
+      inset 0 1px 0 rgba(255,255,255,.4);
+    color:#fff;
+    text-shadow: 0 1px 0 rgba(0,0,0,.75), 0 3px 10px rgba(0,0,0,.6);
   }
   .date-line, .place-line{ font-size: clamp(18px, 5.6vw, 26px); font-weight:800; }
   .count-line{ font-size: clamp(24px, 7.2vw, 34px); font-weight:900; }
   .tagline{    font-size: clamp(18px, 5.4vw, 24px); font-weight:800; }
 
-  /* Botones chulos y compactos */
+  /* Botones chulos CON SOMBRA exterior e interior */
   .cta{
     display:inline-flex; align-items:center; justify-content:center; gap:10px;
     width: min(88vw, 420px);
     margin:12px 4px 0; padding:13px 16px;
     border-radius:9999px; color:#fff; font-weight:900; text-decoration:none;
     text-shadow:0 2px 10px rgba(0,0,0,.55);
-    box-shadow:0 10px 22px rgba(0,0,0,.24), inset 0 0 18px rgba(255,255,255,.18);
+    box-shadow:
+      0 18px 36px var(--shadow-strong),
+      inset 0 -6px 14px rgba(0,0,0,.22),
+      inset 0 2px 12px rgba(255,255,255,.22);
     transition: transform .15s ease, filter .2s ease;
     animation: floatY 3.6s ease-in-out infinite;
     font-size: clamp(16px, 4.8vw, 22px);
@@ -150,37 +158,43 @@
     font-size:18px;
   }
 
-  /* Ubicación en mi azul hielo (degradado + brillo) */
+  /* Ubicación en mi azul hielo con brillo */
   .cta-map{
     background: linear-gradient(135deg, var(--brand-500), var(--brand-300));
     position:relative; overflow:hidden;
-    box-shadow: 0 10px 22px rgba(0,0,0,.24), 0 0 22px rgba(184,223,255,.55);
+    box-shadow:
+      0 18px 36px var(--shadow-strong),
+      inset 0 -6px 14px rgba(0,0,0,.20),
+      inset 0 2px 12px rgba(255,255,255,.22);
   }
   .cta-map::after{
     content:""; position:absolute; inset:-2px;
-    background: linear-gradient(120deg, transparent, rgba(255,255,255,.35), transparent);
+    background: linear-gradient(120deg, transparent, rgba(255,255,255,.33), transparent);
     transform: translateX(-100%); animation: shimmer 2.8s infinite;
   }
   @keyframes shimmer{ 0%{transform:translateX(-100%)} 100%{transform:translateX(100%)} }
 
-  /* WhatsApp en su verde oficial (si lo quiero a juego azul, cambio gradiente) */
+  /* WhatsApp oficial (también con sombras) */
   .cta-wa{
     background: linear-gradient(135deg, #25D366, #128C7E);
-    box-shadow: 0 10px 22px rgba(0,0,0,.24), 0 0 22px rgba(37,211,102,.35);
+    box-shadow:
+      0 18px 36px var(--shadow-strong),
+      inset 0 -6px 14px rgba(0,0,0,.20),
+      inset 0 2px 12px rgba(255,255,255,.22);
   }
 
-  /* Abrazos + corazón */
-  .hug{ margin-top:18px; font-size:clamp(20px, 5.4vw, 26px); font-weight:900; text-shadow:0 2px 10px rgba(0,0,0,.45); }
+  /* Frase final + corazón palpitante */
+  .hug{ margin-top:18px; font-size:clamp(20px, 5.4vw, 26px); font-weight:900; text-shadow: 0 2px 10px rgba(0,0,0,.6); }
   .big-heart{
     margin-top:6px; font-size:clamp(70px, 20vw, 140px); line-height:1;
     animation: heartThump 1.15s ease-in-out infinite;
-    text-shadow:0 0 16px rgba(120,200,255,.85), 0 6px 18px rgba(0,0,0,.45);
+    text-shadow:0 0 16px rgba(120,200,255,.9), 0 10px 24px rgba(0,0,0,.55);
   }
   @keyframes heartThump{ 0%{transform:scale(.9)}25%{transform:scale(1.08)}40%{transform:scale(.98)}60%{transform:scale(1.12)}100%{transform:scale(.9)} }
 
   /* Emojis cayendo (lento y bonito) */
   .emoji-layer{ position:fixed; inset:0; pointer-events:none; overflow:hidden; }
-  .emoji{ position:absolute; font-size:clamp(22px, 6.2vw, 38px); filter: drop-shadow(0 3px 6px rgba(0,0,0,.5)); }
+  .emoji{ position:absolute; font-size:clamp(22px, 6.2vw, 38px); filter: drop-shadow(0 3px 6px rgba(0,0,0,.6)); }
   @keyframes fallDown{
     0%   { transform: translateY(-110px) rotate(var(--r,0deg)); opacity:0; }
     10%  { opacity:1; }
@@ -198,7 +212,7 @@
 
   <div class="phone">
     <div class="page">
-      <!-- Cabecera: ahora sí se lee siempre -->
+      <!-- Cabecera con sombra real -->
       <h2 class="title">¡Te invito a mi fiesta!</h2>
       <h1 class="title">JIMENA CUMPLE 6 AÑOS</h1>
 
@@ -208,7 +222,7 @@
         <div class="tap-hint">🎈 Toca mi foto para ver la magia 🎉</div>
       </div>
 
-      <!-- Tarjeta 1: fecha y lugar (cristal más nítido) -->
+      <!-- Tarjeta 1: fecha y lugar (cristal sombreado) -->
       <div class="glass">
         <div class="date-line">📅 <time datetime="2025-09-27">27 de septiembre de 2025</time> — 🕔 17:00 h</div>
         <div class="place-line">📍 <strong>Burbuja’s Park</strong></div>
@@ -220,7 +234,7 @@
         <div class="tagline">❄️ ¡Habrá risas y mucha diversión! ❄️</div>
       </div>
 
-      <!-- Botones chulos -->
+      <!-- Botones chulos y sombreados -->
       <a class="cta cta-map" href="https://www.google.com/maps/search/?api=1&query=Burbuja%27s+Park" target="_blank" rel="noopener">
         <span class="ico">📍</span> Abrir ubicación
       </a>
@@ -256,7 +270,7 @@
   const countdownEl = document.getElementById("countdown");
   const snowBottom = document.getElementById('snowBottom');
 
-  /* Lluvia más lenta y disfrutable */
+  /* Lluvia lenta y visible */
   const EMOJI_MIN_MS   = 3600;
   const EMOJI_RANGE_MS = 3600;
   const EMOJI_DELAY_MS = 900;
@@ -320,4 +334,3 @@
 </script>
 </body>
 </html>
-
