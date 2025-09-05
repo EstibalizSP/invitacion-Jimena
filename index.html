@@ -25,18 +25,26 @@
   }
   .page{ padding:18px 16px 40px; text-align:center; }
 
-  /* Títulos Frozen con borde azul + resplandor */
+  /* Títulos Frozen */
   .title{
-    margin:.35rem 0; font-weight:1000; letter-spacing:.6px; line-height:1.1;
-    font-size: clamp(28px, 8vw, 62px);
+    margin:.35rem 0; font-weight:1000; letter-spacing:.6px; line-height:1.04;
+    background: linear-gradient(180deg, #ffffff 0%, #cfe8ff 35%, #8abff0 70%, #ddefff 100%);
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+    text-shadow: 0 1px 0 rgba(0,0,0,.65), 0 2px 12px rgba(0,0,0,.55), 0 0 20px rgba(120,200,255,.75);
+  }
+  h1.title{ font-size: clamp(40px, 10vw, 60px); }
+  h2.title{ font-size: clamp(22px, 7vw, 30px); }
+
+  /* Solo para “¡Te invito a mi fiesta!”: blanco + borde azul + glow */
+  .title-invite{
+    background: none !important;
     color:#fff;
+    -webkit-text-fill-color:#fff;
+    -webkit-text-stroke:2px #2f85ff;
     text-shadow:
-      -2px -2px 0 var(--blue-ice),
-       2px -2px 0 var(--blue-ice),
-      -2px  2px 0 var(--blue-ice),
-       2px  2px 0 var(--blue-ice),
-       0 0 12px var(--blue-soft),
-       0 0 22px rgba(80,160,255,.9);
+      0 2px 0 rgba(0,0,0,.25),
+      0 0 12px #8fd0ff,
+      0 0 24px rgba(80,160,255,.95);
   }
 
   /* Foto redonda */
@@ -104,7 +112,7 @@
     background: linear-gradient(135deg, #5ba8ff 0%, #a3d8f4 45%, #d8f0ff 100%);
   }
 
-  /* Con cariño */
+  /* Cierre */
   .hug{ margin-top:18px; font-size:clamp(20px, 5.4vw, 26px); font-weight:900; }
   .hug .title{ font-size: inherit; }
 
@@ -137,7 +145,7 @@
 
 <body>
   <div class="page">
-    <h2 class="title">¡Te invito a mi fiesta!</h2>
+    <h2 class="title title-invite">¡Te invito a mi fiesta!</h2>
     <h1 class="title">JIMENA CUMPLE 6 AÑOS</h1>
 
     <div class="photo-wrap" id="photo">
@@ -232,3 +240,4 @@
 </script>
 </body>
 </html>
+
