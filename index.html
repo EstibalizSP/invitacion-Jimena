@@ -3,38 +3,38 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<!-- Yo sincronizo esta barra del navegador con mi color principal -->
-<meta name="theme-color" content="#7FA6C9" />
+<!-- Yo sincronizo esta barra con mi color “azul hielo plateado” -->
+<meta name="theme-color" content="#B8DFFF" />
 <title>Invitación Cumple – Jimena 6 años</title>
 
 <style>
   /* ——— AQUÍ PONGO MIS “RUEDITAS” ———
-     Si veo franjas laterales del fondo, subo --bg-zoom (2.8 / 3.0).
+     Si veo franjas laterales del fondo, subo --bg-zoom (yo ya lo dejo en 2.8).
      Si quiero la foto más pequeña, bajo --photo-size (54vw / 52vw).
-     Si el arte inferior se me acerca, subo --gap-elsa (48px / 60px).
+     Si el dibujo de abajo (Elsa) se me acerca, subo --gap-elsa (48px / 60px).
   */
   :root{
-    --bg-zoom: 2.6;
-    --photo-size: 56vw;
-    --gap-elsa: 36px;
+    --bg-zoom: 2.8;        /* lo subo un pelín para matar franjas laterales */
+    --photo-size: 56vw;    /* reduciendo este valor hago la foto más pequeña */
+    --gap-elsa: 36px;      /* colchón antes del arte inferior */
 
-    /* Aquí fijo mi color maestro (azul plateado). Si más tarde quiero otro, cambio solo esta línea. */
-    --brand: #7FA6C9;
+    /* Aquí fijo mi color maestro (AZUL HIELO PLATEADO) */
+    --brand: #B8DFFF;
 
-    /* Derivados por si el navegador no soporta color-mix (así todo sigue viéndose bien). */
-    --brand-300: #AFC4DA; /* más clarito de mi color */
-    --brand-500: #628DB2; /* más oscuro de mi color */
+    /* Derivados por si el navegador no soporta color-mix (fallbacks dignos) */
+    --brand-300: #D3E9FF;  /* clarito del brand */
+    --brand-500: #7FBFFF;  /* oscurito del brand */
 
-    /* Con estos tres tiño el “efecto hielo” del texto (relleno animado). */
-    --ice1:#EAF2F9;
-    --ice2:#AFC4DA;
-    --ice3:#7FA6C9;
+    /* Con estos tiño el “efecto hielo” del texto (relleno animado) */
+    --ice1: #EAF7FF;       /* casi blanco */
+    --ice2: #C8E8FF;       /* muy claro */
+    --ice3: #7FBFFF;       /* más vivo para profundidad */
 
-    /* Hago las tarjetas de cristal muy transparentes (si quiero aún más, bajo este número). */
+    /* Tarjetas de cristal muy transparentes (bajo para más transparencia) */
     --glass-alpha: .10;
   }
 
-  /* Si el navegador soporta color-mix, dejo los tonos derivados aún más precisos a partir de mi brand. */
+  /* Si el navegador soporta color-mix, dejo todo más fiel a mi --brand */
   @supports (color: color-mix(in srgb, red, white)) {
     :root{
       --brand-300: color-mix(in srgb, var(--brand), white 35%);
@@ -45,20 +45,20 @@
     }
   }
 
-  /* ——— MOBILE FIRST ——— */
+  /* ——— SOLO MÓVIL (mobile first) ——— */
   html,body{ height:100%; }
   body{
-    /* Yo dejo el body limpio y listo para móvil */
+    /* Yo dejo el body limpio y listo para ver en móvil */
     margin:0;
     font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
     color:#fff;
     -webkit-text-size-adjust:100%;
     touch-action: manipulation;
     overflow-x:hidden;
-    background:#a8ccee; /* Dejo un color de respaldo mientras carga la imagen del fondo */
+    background:#a8ccee; /* respaldo mientras carga el fondo */
   }
 
-  /* Aquí pinto el fondo de copos a todo lo ancho con zoom y repetición para matar franjas. */
+  /* Aquí pinto el fondo de copos a todo lo ancho con zoom y repeat para matar franjas. */
   .bg{
     position: fixed; inset:0;
     background-image: url("fondo_frozen_mobile.png");
@@ -69,7 +69,7 @@
   }
 
   .page{
-    /* Yo centro el contenido y doy aire inferior para que quepa el corazón */
+    /* Yo centro el contenido y dejo aire abajo para el corazón */
     width:100vw; max-width:100vw;
     margin:0 auto;
     padding:18px 16px 110px;
@@ -77,7 +77,7 @@
   }
 
   /* ——— TEXTO “HIELO” ———
-     Yo relleno con un gradiente animado (hielo ↔ azul) y le doy contorno + sombra para que se lea siempre. */
+     Yo relleno con un gradiente animado (hielo ↔ azul) y le doy contorno + sombras para que se lea SIEMPRE. */
   .ice{
     position:relative;
     font-weight:900;
@@ -91,9 +91,9 @@
       0 3px 16px rgba(0,0,0,.6);
     animation: sheen 6s linear infinite, softBeat 2.1s ease-in-out infinite;
   }
-  /* Aquí hago que el brillo “se deslice” por las letras. */
+  /* Aquí hago que el brillo “pasee” por las letras. */
   @keyframes sheen{ 0%{background-position:0% 0} 100%{background-position:100% 0} }
-  /* Y aquí les doy un “latido” suave para que se sientan vivas. */
+  /* Y aquí les doy un “latido” suave para que vibren sin marear. */
   @keyframes softBeat{ 0%,100%{transform:scale(1)} 50%{transform:scale(1.03)} }
 
   /* Yo dejo los títulos bien grandes para móvil. */
@@ -101,10 +101,10 @@
   h1{ font-size: clamp(64px, 12.6vw, 120px); }
   h2{ font-size: clamp(32px, 8vw, 70px); }
 
-  /* Y el resto de textos también grandecitos. */
+  /* Y el resto de textos también grandecitos para no forzar la vista. */
   p, time{ font-size: clamp(20px, 5.6vw, 32px); margin:.6rem 0; line-height:1.38; }
 
-  /* Aquí maqueto la foto circular (yo uso jimena1.jpg). */
+  /* Aquí maqueto la foto circular (yo uso jimena1.jpg) */
   .photo-wrap{
     width:min(var(--photo-size),268px);
     height:min(var(--photo-size),268px);
@@ -119,7 +119,7 @@
   .photo-wrap img{ width:100%; height:100%; object-fit:cover; object-position:50% 35%; display:block; }
   .tap-hint{ position:absolute; left:0; right:0; bottom:10px; font-size:clamp(14px,4vw,19px); pointer-events:none; }
 
-  /* Estas son mis tarjetas de cristal (muy transparentes). */
+  /* Mis tarjetas de cristal (separadas y muy transparentes) */
   .glass{
     margin:14px auto 0;
     width:calc(100vw - 32px); max-width:560px;
@@ -138,9 +138,9 @@
 
   .safe-gap{ height: var(--gap-elsa); }
 
-  /* Aquí diseño mis botones chulos:
-     — Ubicación usa mi color (degradado + brillo).
-     — WhatsApp lo dejo en su verde oficial (si lo quiero a juego, lo cambio en 2 líneas). */
+  /* Aquí diseño mis BOTONES CHULOS:
+     — Ubicación usa mi color (degradado + shimmer + flotado).
+     — WhatsApp lo dejo en verde oficial (reconocible). */
   .cta{
     display:inline-flex; align-items:center; justify-content:center; gap:10px;
     width: min(82vw, 460px);
@@ -165,7 +165,7 @@
   }
 
   .cta-map{
-    /* Aquí uso mi color azul plateado en degradado y le doy un “shimmer” sutil. */
+    /* Aquí uso mi azul hielo en degradado y le doy un “shimmer” sutil. */
     background: linear-gradient(135deg, var(--brand-500), var(--brand-300));
     position:relative; overflow:hidden;
     box-shadow: 0 10px 22px rgba(0,0,0,.24),
@@ -180,7 +180,7 @@
   @keyframes shimmer{ 0%{transform:translateX(-100%)} 100%{transform:translateX(100%)} }
 
   .cta-wa{
-    /* Aquí dejo WhatsApp en su verde oficial (mejor reconocimiento). */
+    /* Yo dejo WhatsApp en su verde oficial (si quiero azul a juego, lo cambio en 2 líneas) */
     background: linear-gradient(135deg, #25D366, #128C7E);
     box-shadow: 0 10px 22px rgba(0,0,0,.24), 0 0 22px rgba(37,211,102,.35);
   }
@@ -194,7 +194,7 @@
   }
   @keyframes heartThump{ 0%{transform:scale(.9)}25%{transform:scale(1.08)}40%{transform:scale(.98)}60%{transform:scale(1.12)}100%{transform:scale(.9)} }
 
-  /* Yo hago que los emojis caigan más lentos para que disfruten el vuelo. */
+  /* Yo hago que los emojis caigan MÁS LENTO para que luzcan en pantalla. */
   .emoji-layer{ position:fixed; inset:0; pointer-events:none; overflow:hidden; }
   .emoji{
     position:absolute; font-size:clamp(22px, 6.2vw, 40px);
@@ -278,9 +278,9 @@
   const countdownEl = document.getElementById("countdown");
   const snowBottom = document.getElementById('snowBottom');
 
-  /* Yo decido la velocidad de la lluvia aquí (lenta y agradable). */
-  const EMOJI_MIN_MS   = 3400;  // duración mínima de caída
-  const EMOJI_RANGE_MS = 3400;  // aleatorio adicional (total = min + aleatorio)
+  /* Yo decido la velocidad de la lluvia aquí (más lenta y agradable). */
+  const EMOJI_MIN_MS   = 3600;  // duración mínima de caída
+  const EMOJI_RANGE_MS = 3600;  // aleatorio adicional (total = min + aleatorio)
   const EMOJI_DELAY_MS = 900;   // desfase máximo entre emojis
 
   /* Cuando tocan la foto, yo suelto la lluvia y reproduzco el audio. */
@@ -305,7 +305,7 @@
       span.textContent = EMOJIS[Math.floor(Math.random()*EMOJIS.length)];
       const left  = Math.random()*w;
       const delay = Math.random()*EMOJI_DELAY_MS;
-      const dur   = EMOJI_MIN_MS + Math.random()*EMOJI_RANGE_MS; /* 3.4–6.8s */
+      const dur   = EMOJI_MIN_MS + Math.random()*EMOJI_RANGE_MS; /* 3.6–7.2s */
       span.style.left = left + 'px';
       span.style.top  = '-100px';
       span.style.setProperty('--r', (Math.random()*80-40) + 'deg');
@@ -353,3 +353,4 @@
 </script>
 </body>
 </html>
+
