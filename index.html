@@ -3,104 +3,82 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+<!-- Yo sincronizo el color de la barra del navegador -->
 <meta name="theme-color" content="#a3d8f4" />
 <title>Invitación Frozen – Jimena 6 años</title>
 
 <style>
   :root{
-    --brand: #a3d8f4;
-    --brand-dark: #3c8dbc;
-    --brand-light: #d8f0ff;
+    --brand: #a3d8f4;        /* azul Frozen */
+    --brand-dark: #3c8dbc;   /* más intenso */
+    --brand-light: #d8f0ff;  /* más claro */
     --glass: rgba(255,255,255,0.28);
     --shadow: rgba(0,40,80,0.45);
+    --maxw: 480px;
   }
 
+  /* Yo fuerzo modo móvil centrado */
   body{
     margin:0;
     font-family: 'Segoe UI', sans-serif;
     background: url("fondo_frozen_mobile.png") no-repeat center top / cover;
     color:#fff;
-    max-width:480px;
+    max-width:var(--maxw);
     margin:0 auto;
     overflow-x:hidden;
   }
 
-  .page{ padding:18px 16px 100px; text-align:center; }
+  .page{
+    padding:18px 16px 100px;
+    text-align:center;
+  }
 
+  /* Títulos con degradado plata-azul y destello */
   .title{
     margin:.35rem 0; font-weight:1000; letter-spacing:.6px; line-height:1.04;
     background: linear-gradient(180deg, #ffffff 0%, #cfe8ff 35%, #8abff0 70%, #ddefff 100%);
     -webkit-background-clip: text; background-clip: text; color: transparent;
-    text-shadow: 0 1px 0 rgba(0,0,0,.65),
-                 0 2px 12px rgba(0,0,0,.55),
-                 0 0 20px rgba(120,200,255,.75);
+    text-shadow: 0 1px 0 rgba(0,0,0,.65), 0 2px 12px rgba(0,0,0,.55), 0 0 20px rgba(120,200,255,.75);
     position:relative;
   }
   .title::after{
     content:""; position:absolute; inset:0; pointer-events:none;
     background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,.55) 45%, transparent 60%);
-    mix-blend-mode: screen;
-    animation: shine 4.5s linear infinite;
+    mix-blend-mode: screen; animation: shine 4.5s linear infinite;
   }
   @keyframes shine{ 0%{transform:translateX(-120%)} 100%{transform:translateX(120%)} }
   h1.title{ font-size: clamp(40px, 10vw, 60px); }
   h2.title{ font-size: clamp(22px, 7vw, 30px); }
 
-  /* Versión pequeña para la firma */
-  .title-slim{
-    display:inline-block;
-    background: linear-gradient(180deg, #ffffff 0%, #cfe8ff 35%, #8abff0 70%, #ddefff 100%);
-    -webkit-background-clip: text; background-clip: text; color: transparent;
-    text-shadow: 0 1px 0 rgba(0,0,0,.65),
-                 0 0 16px rgba(130,200,255,.85);
-    font-weight:1000;
-    font-size:clamp(20px, 5.6vw, 26px);
-    position:relative;
-  }
-  .title-slim::after{
-    content:""; position:absolute; inset:0; pointer-events:none;
-    background: linear-gradient(90deg, transparent, rgba(255,255,255,.55), transparent);
-    mix-blend-mode: screen;
-    animation: shine 5s linear infinite;
-  }
-
+  /* Foto redonda */
   .photo-wrap{
     width:200px; height:200px;
-    margin:14px auto 10px; border-radius:50%;
+    margin:14px auto 8px; border-radius:50%;
     overflow:hidden; position:relative; cursor:pointer;
     border:6px solid #fff;
     box-shadow: 0 8px 22px rgba(0,0,0,.4), 0 0 20px var(--brand);
   }
   .photo-wrap img{ width:100%; height:100%; object-fit:cover; }
-  .photo-wrap::after{
-    content:""; position:absolute; left:0; right:0; bottom:0; height:34%;
-    background: linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(10,25,50,0.55) 65%, rgba(10,25,50,0.75) 100%);
-    pointer-events:none;
-  }
 
+  /* ——— Botón “toca aquí” DEBAJO de la foto ——— */
   .tap-hint{
-    position:absolute; left:50%; bottom:12px; transform:translateX(-50%);
-    font-weight:1000; font-size:clamp(13px,3.8vw,16px);
-    color:#fff; padding:7px 12px; border-radius:999px; white-space:nowrap;
+    display:inline-block;
+    margin:6px auto 4px;
+    font-weight:900;
+    font-size:clamp(12px,3.6vw,15px);
+    color:#fff;
+    padding:6px 12px;
+    border-radius:999px;
     background: linear-gradient(135deg, #3c8dbc, #6fc3ff);
-    border:2px solid rgba(255,255,255,.97);
-    box-shadow: 0 8px 18px rgba(0,0,0,.55),
-                0 0 14px rgba(160,220,255,.9);
-    text-shadow:0 2px 4px rgba(0,0,0,.7);
-    backdrop-filter: blur(6px) saturate(120%);
-    animation: hintPulse 1.6s ease-in-out infinite;
-    pointer-events:none;
-    overflow:hidden;
+    border:2px solid rgba(255,255,255,.95);
+    text-shadow:0 2px 4px rgba(0,0,0,.65);
+    box-shadow:0 6px 14px rgba(0,0,0,.45), 0 0 12px rgba(160,220,255,.9);
+    animation: pulse 1.6s ease-in-out infinite;
+    user-select:none;
   }
-  .tap-hint::after{
-    content:""; position:absolute; inset:-2px;
-    background: linear-gradient(120deg, transparent, rgba(255,255,255,.85), transparent);
-    transform: translateX(-120%);
-    animation: hintShimmer 2.8s ease-in-out infinite 1.2s;
-  }
-  @keyframes hintPulse{ 0%{transform:translateX(-50%) scale(1)} 50%{transform:translateX(-50%) scale(1.08)} 100%{transform:translateX(-50%) scale(1)} }
-  @keyframes hintShimmer{ 0%{ transform:translateX(-120%)} 100%{ transform:translateX(120%)} }
+  @keyframes pulse{ 0%{transform:scale(1)} 50%{transform:scale(1.08)} 100%{transform:scale(1)} }
 
+  /* Tarjetas de cristal */
   .glass{
     margin:18px auto 0;
     padding:16px 14px;
@@ -110,25 +88,23 @@
     box-shadow: 0 10px 22px var(--shadow), inset 0 1px 0 rgba(255,255,255,.4);
     font-weight:700;
   }
+
+  /* Cuenta atrás */
   .count-line{ font-size: clamp(20px, 6vw, 28px); font-weight:900; }
 
+  /* Botones */
   .cta{
-    display:block;
-    margin:14px auto 0;
-    padding:14px 18px;
-    width:90%;
-    border-radius:9999px;
-    color:#fff;
-    font-weight:900;
-    text-decoration:none;
+    display:block; margin:14px auto 0; padding:14px 18px; width:90%;
+    border-radius:9999px; color:#fff; font-weight:900; text-decoration:none;
     text-shadow:0 2px 6px rgba(0,0,0,.6);
     box-shadow:0 8px 20px var(--shadow), inset 0 -4px 8px rgba(0,0,0,.25);
     font-size: clamp(16px, 4.8vw, 22px);
   }
   .cta-map{ background: linear-gradient(135deg, var(--brand-dark), var(--brand)); }
-  .cta-wa{ background: linear-gradient(135deg, #25D366, #128C7E); }
+  .cta-wa { background: linear-gradient(135deg, #25D366, #128C7E); }
 
-  .hug{ margin-top:18px; }
+  /* Cierre */
+  .hug{ margin-top:18px; font-size:clamp(20px, 5.4vw, 26px); font-weight:900; }
   .big-heart{
     margin-top:6px; font-size:clamp(70px, 22vw, 130px);
     animation: heartThump 1.2s ease-in-out infinite;
@@ -136,7 +112,8 @@
   }
   @keyframes heartThump{ 0%{transform:scale(.9)}50%{transform:scale(1.1)}100%{transform:scale(.9)} }
 
-  .emoji-layer{ position:fixed; inset:0; max-width:480px; margin:0 auto; pointer-events:none; overflow:hidden; }
+  /* Confeti */
+  .emoji-layer{ position:fixed; inset:0; max-width:var(--maxw); margin:0 auto; pointer-events:none; overflow:hidden; }
   .emoji{
     position:absolute; top:-100px;
     font-size:clamp(22px, 6.2vw, 36px);
@@ -156,10 +133,11 @@
     <h2 class="title">¡Te invito a mi fiesta!</h2>
     <h1 class="title">JIMENA CUMPLE 6 AÑOS</h1>
 
-    <div class="photo-wrap" id="photo">
+    <div class="photo-wrap" id="photo" aria-label="Toca la foto para oír la invitación y ver la magia">
       <img src="jimena1.jpg" alt="Foto de Jimena" />
-      <div class="tap-hint">👉 ¡Toca mi foto para ver la magia! ❄️</div>
     </div>
+    <!-- Yo coloco el botón fuera del círculo para que nunca tape la cara -->
+    <button id="tapHint" class="tap-hint" type="button">👉 ¡Toca aquí para la magia! ❄️</button>
 
     <div class="glass">
       📅 <time datetime="2025-09-27">27 de septiembre de 2025</time><br>
@@ -172,20 +150,23 @@
       ❄️ ¡Habrá risas y mucha diversión! ❄️
     </div>
 
-    <a class="cta cta-map" href="https://www.google.com/maps/search/?api=1&query=Burbuja%27s+Park" target="_blank">📍 Abrir ubicación</a>
-    <a class="cta cta-wa" href="https://wa.me/34675311350?text=%C2%A1Hola!%20Confirmo%20asistencia%20a%20la%20fiesta%20%F0%9F%8E%89" target="_blank">💬 Confirmar por WhatsApp</a>
+    <a class="cta cta-map" href="https://www.google.com/maps/search/?api=1&query=Burbuja%27s+Park" target="_blank" rel="noopener">📍 Abrir ubicación</a>
+    <a class="cta cta-wa"  href="https://wa.me/34675311350?text=%C2%A1Hola!%20Confirmo%20asistencia%20a%20la%20fiesta%20%F0%9F%8E%89" target="_blank" rel="noopener">💬 Confirmar por WhatsApp</a>
 
-    <div class="hug"><span class="title-slim">❄️💙 Con cariño, Jimena 💙❄️</span></div>
-    <div class="big-heart">💙</div>
+    <div class="hug">❄️💙☃️ Con cariño, Jimena ❄️💙☃️</div>
+    <div class="big-heart" role="img" aria-label="corazón palpitante">💙</div>
   </div>
 
+  <!-- Capa de confeti -->
   <div class="emoji-layer" id="emojiLayer" aria-hidden="true"></div>
 
+  <!-- Audio -->
   <audio id="voice" preload="auto">
     <source src="voz.mp3" type="audio/mpeg">
   </audio>
 
 <script>
+  // Cuenta atrás
   const countdownEl = document.getElementById("countdown");
   const targetDate = new Date("2025-09-27T17:00:00");
   function updateCountdown(){
@@ -200,26 +181,25 @@
   }
   const timer=setInterval(updateCountdown,1000); updateCountdown();
 
-  const layer  = document.getElementById('emojiLayer');
-  const photo  = document.getElementById('photo');
-  const audio  = document.getElementById('voice');
+  // Magia: confeti + audio
+  const layer   = document.getElementById('emojiLayer');
+  const photo   = document.getElementById('photo');
+  const tapHint = document.getElementById('tapHint');
+  const audio   = document.getElementById('voice');
 
   const EMOJIS = ["❄️","💙","✨","🪄","👑","🧊","🎉","🎈","🎂","🎊","🌟","🧁","🎁","⛄"];
 
+  // Yo desbloqueo el audio en el primer toque (móvil)
   window.addEventListener('pointerdown', ()=> {
     try{ audio.play().then(()=>audio.pause()); }catch(e){}
   }, { once:true });
 
-  photo.addEventListener('click', () => {
-    rainEmojis(160);
-    playVoice();
-  });
+  function triggerMagic(){ rainEmojis(160); playVoice(); }
+  photo.addEventListener('click', triggerMagic);
+  tapHint.addEventListener('click', triggerMagic);
 
   function playVoice(){
-    try{
-      audio.currentTime = 0;
-      audio.play().catch(()=>{});
-    }catch(e){}
+    try{ audio.currentTime = 0; audio.play().catch(()=>{}); }catch(e){}
   }
 
   function rainEmojis(count=150){
@@ -242,3 +222,4 @@
 </script>
 </body>
 </html>
+
