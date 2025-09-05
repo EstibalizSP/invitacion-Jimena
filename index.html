@@ -8,9 +8,9 @@
 
 <style>
   :root{
-    --brand: #a3d8f4;        
-    --brand-dark: #3c8dbc;   
-    --brand-light: #d8f0ff;  
+    --brand: #a3d8f4;
+    --brand-dark: #3c8dbc;
+    --brand-light: #d8f0ff;
     --maxw: 480px;
   }
 
@@ -71,49 +71,34 @@
   }
   @keyframes pulse{ 0%{transform:scale(1)} 50%{transform:scale(1.08)} 100%{transform:scale(1)} }
 
-  /* TARJETAS nítidas (fecha/hora/lugar y cuenta atrás) */
+  /* Tarjetas MINIMALISTAS */
   .glass{
-    position:relative;
+    background:none;
+    border:none;
+    box-shadow:none;
     margin:18px auto 0;
-    padding:16px 14px;
-    border-radius:18px;
-    background:
-      linear-gradient(180deg, rgba(15,35,70,0.20), rgba(15,35,70,0.08)),
-      rgba(255,255,255,0.34);
-    backdrop-filter: blur(6px) saturate(120%);
-    -webkit-backdrop-filter: blur(6px) saturate(120%);
-    border:1px solid rgba(255,255,255,0.65);
-    box-shadow:
-      0 12px 26px rgba(0,30,60,0.30),
-      inset 0 1px 0 rgba(255,255,255,0.60);
-    overflow:hidden;
-  }
-  .card-row{ 
-    font-weight:900;
-    font-size: clamp(18px, 5.4vw, 24px);
-    padding:8px 4px;
-  }
-  .card-row + .card-row{ border-top:1px solid rgba(255,255,255,0.30); }
-
-  /* Texto blanco con sombra fuerte */
-  .frozen-text{
-    color:#fff !important;
-    background:none !important;
-    -webkit-text-fill-color:#fff;
-    text-shadow:
-      0 1px 0 rgba(0,0,0,0.85),
-      0 3px 10px rgba(0,0,0,0.55);
+    padding:10px 0;
   }
 
-  /* Cuenta atrás */
-  .count-line{
-    font-size: clamp(22px, 6.6vw, 30px);
+  /* Texto brillante Frozen */
+  .frozen-text, .count-line, .tagline{
     font-weight:1000;
-    color:#fff;
-    text-shadow:
-      0 1px 0 rgba(0,0,0,0.85),
-      0 3px 10px rgba(0,0,0,0.55);
+    font-size: clamp(20px, 6vw, 28px);
+    background: linear-gradient(180deg, #ffffff 0%, #a3d8f4 60%, #6bb7ff 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    text-shadow: 0 2px 6px rgba(0,0,0,.5), 0 0 12px rgba(160,220,255,.85);
+    animation: shimmerText 4s linear infinite;
   }
+
+  @keyframes shimmerText {
+    0% { text-shadow: 0 0 8px rgba(160,220,255,.9), 0 0 18px rgba(80,150,255,.7); }
+    50%{ text-shadow: 0 0 14px rgba(255,255,255,.95), 0 0 28px rgba(80,150,255,.9); }
+    100%{ text-shadow: 0 0 8px rgba(160,220,255,.9), 0 0 18px rgba(80,150,255,.7); }
+  }
+
+  .count-line{ font-size: clamp(22px, 6.6vw, 30px); }
   .tagline{ margin-top:6px; font-weight:900; }
 
   /* Botones Frozen */
@@ -188,14 +173,14 @@
 
     <!-- Fecha / Hora / Lugar -->
     <div class="glass">
-      <div class="card-row frozen-text">📅 <time datetime="2025-09-27">27 de septiembre de 2025</time></div>
-      <div class="card-row frozen-text">🕔 17:00 h</div>
-      <div class="card-row frozen-text">📍 <strong>Burbuja’s Park</strong></div>
+      <div class="frozen-text">📅 <time datetime="2025-09-27">27 de septiembre de 2025</time></div>
+      <div class="frozen-text">🕔 17:00 h</div>
+      <div class="frozen-text">📍 <strong>Burbuja’s Park</strong></div>
     </div>
 
     <!-- Cuenta atrás -->
     <div class="glass">
-      <div id="countdown" class="count-line">⏳ Faltan …</div>
+      <div id="countdown" class="count-line frozen-text">⏳ Faltan …</div>
       <div class="tagline frozen-text">❄️ ¡Habrá risas y mucha diversión! ❄️</div>
     </div>
 
@@ -248,7 +233,6 @@
     try{ audio.currentTime = 0; audio.play().catch(()=>{}); }catch(e){}
   }
 
-  // Confeti elegante
   function rainEmojis(count=60){
     const w = document.body.clientWidth;
     for(let i=0;i<count;i++){
@@ -257,7 +241,7 @@
       span.textContent = EMOJIS[Math.floor(Math.random()*EMOJIS.length)];
       const left  = Math.random() * w;
       const delay = Math.random() * 2000;
-      const dur   = 7000 + Math.random()*4000; // 7–11s
+      const dur   = 7000 + Math.random()*4000;
       span.style.left = left + 'px';
       span.style.setProperty('--r', (Math.random()*80-40) + 'deg');
       span.style.animation = `fallDown ${dur}ms ease-in-out forwards`;
@@ -269,3 +253,5 @@
 </script>
 </body>
 </html>
+
+
