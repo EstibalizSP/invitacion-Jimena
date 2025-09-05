@@ -8,11 +8,9 @@
 
 <style>
   :root{
-    --brand: #a3d8f4;        /* azul Frozen */
-    --brand-dark: #3c8dbc;   /* más intenso */
-    --brand-light: #d8f0ff;  /* más claro */
-    --glass: rgba(255,255,255,0.28);
-    --shadow: rgba(0,40,80,0.45);
+    --brand: #a3d8f4;
+    --brand-dark: #3c8dbc;
+    --brand-light: #d8f0ff;
     --maxw: 480px;
   }
 
@@ -26,36 +24,30 @@
     overflow-x:hidden;
   }
 
-  .page{
-    padding:18px 16px 100px;
-    text-align:center;
+  .page{ padding:18px 16px 100px; text-align:center; }
+
+  /* 🔹 Títulos con borde azul y parpadeo */
+  .title-glow{
+    margin:.35rem 0; 
+    font-weight:1000; 
+    letter-spacing:.6px; 
+    line-height:1.04;
+    color:#fff;
+    -webkit-text-stroke:3px #1c6fff;   /* borde azul más fuerte */
+    text-shadow:
+      0 0 6px #8fd0ff,
+      0 0 16px #5ba8ff,
+      0 0 28px #2f85ff;
+    animation: glowPulse 1.8s ease-in-out infinite;
   }
+  h1.title-glow{ font-size: clamp(40px, 10vw, 60px); }
+  h2.title-glow{ font-size: clamp(22px, 7vw, 30px); }
 
-  /* 🔹 Títulos con borde azul y parpadeo FUERTE */
-.title-glow{
-  margin:.35rem 0; 
-  font-weight:1000; 
-  letter-spacing:.6px; 
-  line-height:1.04;
-  color:#fff;
-  -webkit-text-stroke:3px #1c6fff;   /* borde azul más fuerte */
-  text-shadow:
-    0 0 6px #8fd0ff,
-    0 0 16px #5ba8ff,
-    0 0 28px #2f85ff;
-  animation: glowPulse 1.8s ease-in-out infinite;
-}
-
-h1.title-glow{ font-size: clamp(40px, 10vw, 60px); }
-h2.title-glow{ font-size: clamp(22px, 7vw, 30px); }
-
-/* Parpadeo más intenso */
-@keyframes glowPulse {
-  0%   { text-shadow:0 0 6px #8fd0ff,0 0 16px #5ba8ff,0 0 28px #2f85ff; }
-  50%  { text-shadow:0 0 12px #b5e3ff,0 0 30px #3aa0ff,0 0 60px #1c6fff; }
-  100% { text-shadow:0 0 6px #8fd0ff,0 0 16px #5ba8ff,0 0 28px #2f85ff; }
-}
-
+  @keyframes glowPulse {
+    0%   { text-shadow:0 0 6px #8fd0ff,0 0 16px #5ba8ff,0 0 28px #2f85ff; }
+    50%  { text-shadow:0 0 12px #b5e3ff,0 0 30px #3aa0ff,0 0 60px #1c6fff; }
+    100% { text-shadow:0 0 6px #8fd0ff,0 0 16px #5ba8ff,0 0 28px #2f85ff; }
+  }
 
   /* Foto redonda */
   .photo-wrap{
@@ -90,9 +82,9 @@ h2.title-glow{ font-size: clamp(22px, 7vw, 30px); }
     margin:18px auto 0;
     padding:16px 14px;
     border-radius:18px;
-    background: var(--glass);
-    backdrop-filter: blur(12px);
-    box-shadow: 0 10px 22px var(--shadow), inset 0 1px 0 rgba(255,255,255,.4);
+    background: rgba(255,255,255,0.65);
+    border:2px solid rgba(80,160,255,0.55);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.25);
     font-weight:700;
   }
   .count-line{ font-size: clamp(20px, 6vw, 28px); font-weight:900; }
@@ -134,8 +126,17 @@ h2.title-glow{ font-size: clamp(22px, 7vw, 30px); }
     background: linear-gradient(135deg, #5ba8ff 0%, #a3d8f4 45%, #d8f0ff 100%);
   }
 
-  /* Cierre */
+  /* Frase final */
   .hug{ margin-top:18px; font-size:clamp(20px, 5.4vw, 26px); font-weight:900; }
+  .hug-text{
+    color:#fff;
+    -webkit-text-stroke:1.5px #2f85ff; /* borde azul más fino */
+    text-shadow:0 0 6px #5ba8ff, 0 0 12px #a3d8f4;
+    font-weight:1000;
+    letter-spacing:.5px;
+  }
+
+  /* Corazón */
   .big-heart{
     margin-top:6px;
     font-size:clamp(50px, 18vw, 100px);
@@ -144,7 +145,7 @@ h2.title-glow{ font-size: clamp(22px, 7vw, 30px); }
   }
   @keyframes heartThump{ 0%{transform:scale(.9)}50%{transform:scale(1.1)}100%{transform:scale(.9)} }
 
-  /* Confeti elegante */
+  /* Confeti */
   .emoji-layer{ position:fixed; inset:0; max-width:var(--maxw); margin:0 auto; pointer-events:none; overflow:hidden; }
   .emoji{
     position:absolute; top:-100px;
@@ -185,7 +186,7 @@ h2.title-glow{ font-size: clamp(22px, 7vw, 30px); }
     <a class="cta cta-map" href="https://www.google.com/maps/search/?api=1&query=Burbuja%27s+Park" target="_blank" rel="noopener">📍 Abrir ubicación</a>
     <a class="cta cta-wa" href="https://wa.me/34675311350?text=%C2%A1Hola!%20Confirmo%20asistencia%20a%20la%20fiesta%20%F0%9F%8E%89" target="_blank" rel="noopener">💬 Confirmar por WhatsApp</a>
 
-    <div class="hug"><span class="title-glow">❄️💙 Con cariño, Jimena 💙❄️</span></div>
+    <div class="hug"><span class="hug-text">❄️💙 Con cariño, Jimena 💙❄️</span></div>
     <div class="big-heart">💙</div>
   </div>
 
@@ -251,4 +252,5 @@ h2.title-glow{ font-size: clamp(22px, 7vw, 30px); }
 </script>
 </body>
 </html>
+
 
