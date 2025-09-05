@@ -3,128 +3,118 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+<!-- Yo sincronizo el color de la barra del navegador -->
 <meta name="theme-color" content="#a3d8f4" />
 <title>Invitación Frozen – Jimena 6 años</title>
 
 <style>
-  /* Yo preparo mis variables frías */
+  /* Yo preparo mis variables principales */
   :root{
-    --brand: #a3d8f4;
-    --brand-dark: #3c8dbc;
-    --brand-light: #e6f6ff;
-    --glass: rgba(255,255,255,.28);
-    --shadow: rgba(0,40,80,.45);
-    --maxw: 480px; /* yo fuerzo modo móvil */
+    --brand: #a3d8f4;        /* azul Frozen */
+    --brand-dark: #3c8dbc;   /* más intenso */
+    --brand-light: #d8f0ff;  /* más claro */
+    --glass: rgba(255,255,255,0.28);
+    --shadow: rgba(0,40,80,0.45);
   }
 
-  /* Yo fijo modo teléfono y centro en escritorio */
-  html,body{height:100%}
+  /* Yo fuerzo a que todo se vea como móvil (máx 480px) */
   body{
     margin:0;
-    font-family: 'Segoe UI', system-ui, -apple-system, Roboto, Arial, sans-serif;
+    font-family: 'Segoe UI', sans-serif;
     background: url("fondo_frozen_mobile.png") no-repeat center top / cover;
     color:#fff;
-    max-width: var(--maxw);
-    margin: 0 auto;
+    max-width:480px;
+    margin:0 auto;
     overflow-x:hidden;
   }
-  .page{ padding:18px 16px 110px; text-align:center; }
 
-  /* ——— TÍTULOS CON CONTRASTE ———
-     Yo uso un degradado plata-azul + contorno con sombras.
-     Además, yo animo un “destello” suave (no parpadeo fuerte). */
+  .page{
+    padding:18px 16px 100px;
+    text-align:center;
+  }
+
+  /* ——— Yo doy contraste a los títulos (plata-azul con destello) ——— */
   .title{
     margin:.35rem 0; font-weight:1000; letter-spacing:.6px; line-height:1.04;
     background: linear-gradient(180deg, #ffffff 0%, #cfe8ff 35%, #8abff0 70%, #ddefff 100%);
     -webkit-background-clip: text; background-clip: text; color: transparent;
     text-shadow:
-      0 1px 0 rgba(0,0,0,.65),       /* contorno base */
-      0 2px 12px rgba(0,0,0,.55),    /* sombra suave */
-      0 0 20px rgba(120,200,255,.75);/* halo frío */
+      0 1px 0 rgba(0,0,0,.65),
+      0 2px 12px rgba(0,0,0,.55),
+      0 0 20px rgba(120,200,255,.75);
     position:relative;
   }
-  /* Yo añado un brillo móvil que cruza el texto (contraste extra) */
   .title::after{
+    /* yo pongo un brillo suave que cruza el texto */
     content:""; position:absolute; inset:0; pointer-events:none;
     background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,.55) 45%, transparent 60%);
     mix-blend-mode: screen;
     animation: shine 4.5s linear infinite;
   }
   @keyframes shine{ 0%{transform:translateX(-120%)} 100%{transform:translateX(120%)} }
-  @media (prefers-reduced-motion: reduce){
-    .title::after{ animation:none; }
-  }
-  h1.title{ font-size: clamp(44px, 11.6vw, 64px); }
-  h2.title{ font-size: clamp(22px, 7.2vw, 32px); }
+  h1.title{ font-size: clamp(40px, 10vw, 60px); }
+  h2.title{ font-size: clamp(22px, 7vw, 30px); }
 
-  /* Yo diseño la foto redonda con aviso */
+  /* Yo pongo la foto de Jimena redonda y brillante */
   .photo-wrap{
-    width:200px; height:200px; margin:14px auto 10px;
-    border-radius:50%; overflow:hidden; position:relative; cursor:pointer;
+    width:200px; height:200px;
+    margin:14px auto 10px; border-radius:50%;
+    overflow:hidden; position:relative; cursor:pointer;
     border:6px solid #fff;
-    box-shadow: 0 10px 26px rgba(0,0,0,.45), 0 0 22px var(--brand);
+    box-shadow: 0 8px 22px rgba(0,0,0,.4), 0 0 20px var(--brand);
   }
   .photo-wrap img{ width:100%; height:100%; object-fit:cover; }
   .tap-hint{
+    /* yo dejo una pista opcional para tocar */
     position:absolute; left:50%; bottom:10px; transform:translateX(-50%);
     font-weight:900; font-size:clamp(12px,3.6vw,15px);
     color:#fff; padding:7px 12px; border-radius:999px; white-space:nowrap;
-    background: rgba(0,0,0,.58);
-    box-shadow:0 8px 18px rgba(0,0,0,.45);
+    background: rgba(0,0,0,.58); box-shadow:0 8px 18px rgba(0,0,0,.45);
     pointer-events:none;
   }
 
-  /* Yo creo tarjetas de cristal */
+  /* Yo preparo mis tarjetas de cristal */
   .glass{
-    margin:18px auto 0; padding:16px 14px; border-radius:18px;
-    background: var(--glass); backdrop-filter: blur(12px);
-    box-shadow: 0 12px 24px var(--shadow), inset 0 1px 0 rgba(255,255,255,.4);
-    font-weight:800;
-    color:#f7fbff;
-    text-shadow: 0 1px 0 rgba(0,0,0,.75);
+    margin:18px auto 0;
+    padding:16px 14px;
+    border-radius:18px;
+    background: var(--glass);
+    backdrop-filter: blur(12px);
+    box-shadow: 0 10px 22px var(--shadow), inset 0 1px 0 rgba(255,255,255,.4);
+    font-weight:700;
   }
-  .count-line{ font-size: clamp(20px, 6vw, 28px); font-weight:1000; }
 
-  /* Yo hago botones Frozen */
+  /* Yo estilizo la cuenta atrás */
+  .count-line{ font-size: clamp(20px, 6vw, 28px); font-weight:900; }
+
+  /* Yo diseño mis botones estilo Frozen */
   .cta{
-    display:block; margin:14px auto 0; padding:14px 18px; width:90%;
-    border-radius:9999px; color:#fff; font-weight:1000; text-decoration:none;
+    display:block;
+    margin:14px auto 0;
+    padding:14px 18px;
+    width:90%;
+    border-radius:9999px;
+    color:#fff;
+    font-weight:900;
+    text-decoration:none;
     text-shadow:0 2px 6px rgba(0,0,0,.6);
-    box-shadow:0 10px 22px var(--shadow), inset 0 -4px 8px rgba(0,0,0,.25);
+    box-shadow:0 8px 20px var(--shadow), inset 0 -4px 8px rgba(0,0,0,.25);
     font-size: clamp(16px, 4.8vw, 22px);
   }
   .cta-map{ background: linear-gradient(135deg, var(--brand-dark), var(--brand)); }
   .cta-wa{ background: linear-gradient(135deg, #25D366, #128C7E); }
 
-  /* Yo mejoro el texto “Con cariño, Jimena” con una cinta de cristal */
-  .ribbon{
-    margin-top:18px; display:inline-block; padding:10px 16px; border-radius:999px;
-    background: rgba(8,25,54,.25); backdrop-filter: blur(10px) saturate(120%);
-    box-shadow: 0 10px 20px var(--shadow), inset 0 1px 0 rgba(255,255,255,.35);
-  }
-  .ribbon-text{
-    /* yo aplico mismo degradado plata-azul pero más finito */
-    background: linear-gradient(180deg, #ffffff 0%, #d9ecff 40%, #8abff0 80%);
-    -webkit-background-clip: text; background-clip: text; color: transparent;
-    font-weight:1000; font-size:clamp(20px, 5.6vw, 26px);
-    text-shadow:
-      0 1px 0 rgba(0,0,0,.75),
-      0 0 14px rgba(130,190,255,.8);
-  }
-
-  /* Yo dejo un corazón helado palpitante */
+  /* Yo pongo un corazón Frozen que late */
+  .hug{ margin-top:18px; font-size:clamp(20px, 5.4vw, 26px); font-weight:900; }
   .big-heart{
     margin-top:6px; font-size:clamp(70px, 22vw, 130px);
     animation: heartThump 1.2s ease-in-out infinite;
     text-shadow:0 0 16px var(--brand-light), 0 8px 20px rgba(0,0,0,.5);
   }
   @keyframes heartThump{ 0%{transform:scale(.9)}50%{transform:scale(1.1)}100%{transform:scale(.9)} }
-  @media (prefers-reduced-motion: reduce){
-    .big-heart{ animation:none; }
-  }
 
-  /* Yo preparo la capa para el confeti helado */
-  .emoji-layer{ position:fixed; inset:0; max-width:var(--maxw); margin:0 auto; pointer-events:none; overflow:hidden; }
+  /* Yo preparo la capa del confeti Frozen */
+  .emoji-layer{ position:fixed; inset:0; max-width:480px; margin:0 auto; pointer-events:none; overflow:hidden; }
   .emoji{
     position:absolute; top:-100px;
     font-size:clamp(22px, 6.2vw, 36px);
@@ -144,7 +134,6 @@
     <h2 class="title">¡Te invito a mi fiesta!</h2>
     <h1 class="title">JIMENA CUMPLE 6 AÑOS</h1>
 
-    <!-- Yo muestro la foto con el aviso de toque -->
     <div class="photo-wrap" id="photo" aria-label="Toca la foto para oír la invitación y ver la magia">
       <img src="jimena1.jpg" alt="Foto de Jimena" />
       <div class="tap-hint">🎈 Toca mi foto para ver la magia ❄️</div>
@@ -161,43 +150,55 @@
       ❄️ ¡Habrá risas y mucha diversión! ❄️
     </div>
 
-    <a class="cta cta-map" href="https://www.google.com/maps/search/?api=1&query=Burbuja%27s+Park" target="_blank" rel="noopener">📍 Abrir ubicación</a>
-    <a class="cta cta-wa" href="https://wa.me/34675311350?text=%C2%A1Hola!%20Confirmo%20asistencia%20a%20la%20fiesta%20%F0%9F%8E%89" target="_blank" rel="noopener">💬 Confirmar por WhatsApp</a>
+    <a class="cta cta-map" href="https://www.google.com/maps/search/?api=1&query=Burbuja%27s+Park" target="_blank">📍 Abrir ubicación</a>
 
-    <!-- Yo hago la firma legible siempre gracias a la cinta -->
-    <div class="ribbon">
-      <span class="ribbon-text">❄️💙 Con cariño, Jimena 💙❄️</span>
-    </div>
-    <div class="big-heart" role="img" aria-label="corazón palpitante">💙</div>
+    <a class="cta cta-wa" href="https://wa.me/34675311350?text=%C2%A1Hola!%20Confirmo%20asistencia%20a%20la%20fiesta%20%F0%9F%8E%89" target="_blank">💬 Confirmar por WhatsApp</a>
+
+    <div class="hug">❄️💙☃️ Con cariño, Jimena ❄️💙☃️</div>
+    <div class="big-heart">💙</div>
   </div>
 
-  <!-- Yo creo la capa donde lloverán los emojis helados -->
+  <!-- Yo creo la capa para el confeti -->
   <div class="emoji-layer" id="emojiLayer" aria-hidden="true"></div>
 
-  <!-- Yo cargo tu audio (archivo en el mismo directorio) -->
+  <!-- Yo cargo el audio de la invitación -->
   <audio id="voice" preload="auto">
     <source src="voz.mp3" type="audio/mpeg">
   </audio>
 
 <script>
-  /* Yo selecciono mis elementos */
+  // Yo configuro la cuenta atrás
+  const countdownEl = document.getElementById("countdown");
+  const targetDate = new Date("2025-09-27T17:00:00");
+  function updateCountdown(){
+    const now = new Date();
+    const diff = targetDate - now;
+    if(diff <= 0){ countdownEl.textContent = "🎉 ¡Ya empezó la fiesta! 🎉"; clearInterval(timer); return; }
+    const d = Math.floor(diff/(1000*60*60*24));
+    const h = Math.floor((diff/(1000*60*60))%24);
+    const m = Math.floor((diff/(1000*60))%60);
+    const s = Math.floor((diff/1000)%60);
+    countdownEl.textContent = `⏳ Faltan ${d}d ${h}h ${m}m ${s}s`;
+  }
+  const timer=setInterval(updateCountdown,1000); updateCountdown();
+
+  /* Yo selecciono mis elementos para la magia */
   const layer  = document.getElementById('emojiLayer');
   const photo  = document.getElementById('photo');
   const audio  = document.getElementById('voice');
-  const countdownEl = document.getElementById("countdown");
 
-  /* Yo preparo emojis Frozen + cumpleaños con buen contraste */
+  /* Yo preparo emojis de Frozen + cumpleaños con buen contraste */
   const EMOJIS = ["❄️","💙","✨","🪄","👑","🧊","🎉","🎈","🎂","🎊","🌟","🧁","🎁","⛄"];
 
-  /* Yo desbloqueo el audio en el primer toque (móviles) */
+  /* Yo desbloqueo el audio en el primer toque (política móvil) */
   window.addEventListener('pointerdown', ()=> {
     try{ audio.play().then(()=>audio.pause()); }catch(e){}
   }, { once:true });
 
-  /* Yo conecto el toque de foto con confeti + audio */
+  /* Yo conecto el toque de la foto: confeti + audio */
   photo.addEventListener('click', () => {
-    rainEmojis(160);   // yo lanzo lluvia helada
-    playVoice();       // yo reproduzco la voz
+    rainEmojis(160);   // yo suelto confeti helado
+    playVoice();       // yo reproduzco voz.mp3
   });
 
   function playVoice(){
@@ -207,7 +208,7 @@
     }catch(e){}
   }
 
-  /* Yo fabrico la lluvia helada */
+  /* Yo fabrico la lluvia de emojis */
   function rainEmojis(count=150){
     const w = document.body.clientWidth;
     for(let i=0;i<count;i++){
@@ -225,20 +226,6 @@
       span.addEventListener('animationend', ()=> span.remove());
     }
   }
-
-  /* Yo configuro la cuenta atrás */
-  const targetDate = new Date("2025-09-27T17:00:00");
-  function updateCountdown(){
-    const now = new Date();
-    const diff = targetDate - now;
-    if(diff <= 0){ countdownEl.textContent = "🎉 ¡Ya empezó la fiesta! 🎉"; clearInterval(timer); return; }
-    const d = Math.floor(diff/(1000*60*60*24));
-    const h = Math.floor((diff/(1000*60*60))%24);
-    const m = Math.floor((diff/(1000*60))%60);
-    const s = Math.floor((diff/1000)%60);
-    countdownEl.textContent = `⏳ Faltan ${d}d ${h}h ${m}m ${s}s`;
-  }
-  const timer=setInterval(updateCountdown,1000); updateCountdown();
 </script>
 </body>
 </html>
