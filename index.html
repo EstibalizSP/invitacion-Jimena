@@ -8,12 +8,14 @@
 
 <style>
   :root{
-    --blue-ice: #3aa0ff;
-    --blue-soft: #8fd0ff;
+    --brand: #a3d8f4;        /* azul Frozen */
+    --brand-dark: #3c8dbc;   /* más intenso */
+    --brand-light: #d8f0ff;  /* más claro */
+    --glass: rgba(255,255,255,0.28);
+    --shadow: rgba(0,40,80,0.45);
     --maxw: 480px;
   }
 
-  /* Base móvil */
   body{
     margin:0;
     font-family: 'Segoe UI', sans-serif;
@@ -23,21 +25,28 @@
     margin:0 auto;
     overflow-x:hidden;
   }
-  .page{ padding:18px 16px 40px; text-align:center; }
 
-  /* Títulos Frozen con borde azul + resplandor */
-  .title{
-    margin:.35rem 0; font-weight:1000; letter-spacing:.6px; line-height:1.1;
-    font-size: clamp(28px, 8vw, 62px);
-    color:#fff;
-    text-shadow:
-      -2px -2px 0 var(--blue-ice),
-       2px -2px 0 var(--blue-ice),
-      -2px  2px 0 var(--blue-ice),
-       2px  2px 0 var(--blue-ice),
-       0 0 12px var(--blue-soft),
-       0 0 22px rgba(80,160,255,.9);
+  .page{
+    padding:18px 16px 100px;
+    text-align:center;
   }
+
+  /* Títulos Frozen */
+  .title{
+    margin:.35rem 0; font-weight:1000; letter-spacing:.6px; line-height:1.04;
+    background: linear-gradient(180deg, #ffffff 0%, #cfe8ff 35%, #8abff0 70%, #ddefff 100%);
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+    text-shadow: 0 1px 0 rgba(0,0,0,.65), 0 2px 12px rgba(0,0,0,.55), 0 0 20px rgba(120,200,255,.75);
+    position:relative;
+  }
+  .title::after{
+    content:""; position:absolute; inset:0; pointer-events:none;
+    background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,.55) 45%, transparent 60%);
+    mix-blend-mode: screen; animation: shine 4.5s linear infinite;
+  }
+  @keyframes shine{ 0%{transform:translateX(-120%)} 100%{transform:translateX(120%)} }
+  h1.title{ font-size: clamp(40px, 10vw, 60px); }
+  h2.title{ font-size: clamp(22px, 7vw, 30px); }
 
   /* Foto redonda */
   .photo-wrap{
@@ -45,18 +54,18 @@
     margin:14px auto 8px; border-radius:50%;
     overflow:hidden; position:relative; cursor:pointer;
     border:6px solid #fff;
-    box-shadow: 0 8px 22px rgba(0,0,0,.4), 0 0 20px var(--blue-ice);
+    box-shadow: 0 8px 22px rgba(0,0,0,.4), 0 0 20px var(--brand);
   }
   .photo-wrap img{ width:100%; height:100%; object-fit:cover; }
 
   /* Botón “toca aquí” */
   .tap-hint{
     display:inline-block;
-    margin:8px auto 12px;
+    margin:6px auto 4px;
     font-weight:900;
     font-size:clamp(12px,3.6vw,15px);
     color:#fff;
-    padding:8px 14px;
+    padding:6px 12px;
     border-radius:999px;
     background: linear-gradient(135deg, #3c8dbc, #6fc3ff);
     border:2px solid rgba(255,255,255,.95);
@@ -67,19 +76,19 @@
   }
   @keyframes pulse{ 0%{transform:scale(1)} 50%{transform:scale(1.08)} 100%{transform:scale(1)} }
 
-  /* Cajas minimalistas */
+  /* Tarjetas */
   .glass{
-    margin:16px auto;
-    padding:14px 12px;
-    border-radius:14px;
-    background: rgba(255,255,255,0.65);
-    border:2px solid rgba(80,160,255,0.55);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+    margin:18px auto 0;
+    padding:16px 14px;
+    border-radius:18px;
+    background: var(--glass);
+    backdrop-filter: blur(12px);
+    box-shadow: 0 10px 22px var(--shadow), inset 0 1px 0 rgba(255,255,255,.4);
     font-weight:700;
   }
   .count-line{ font-size: clamp(20px, 6vw, 28px); font-weight:900; }
 
-  /* Botones */
+  /* Botones Frozen */
   .cta{
     display:block;
     margin:14px auto 0;
@@ -95,8 +104,20 @@
     overflow:hidden;
     backdrop-filter: blur(10px) saturate(130%);
     border:1px solid rgba(255,255,255,0.4);
-    box-shadow:0 8px 20px rgba(0,40,80,.45), inset 0 1px 0 rgba(255,255,255,.6);
+    box-shadow:
+      0 8px 20px rgba(0,40,80,.45),
+      inset 0 1px 0 rgba(255,255,255,.6),
+      inset 0 -4px 8px rgba(0,0,0,.25);
+    transition: transform .15s ease, filter .3s ease;
   }
+  .cta:hover{ transform:scale(1.03); filter:brightness(1.1); }
+  .cta::after{
+    content:""; position:absolute; inset:-2px;
+    background: linear-gradient(120deg, transparent, rgba(255,255,255,.5), transparent);
+    transform:translateX(-120%);
+    animation: shimmer 4s infinite;
+  }
+  @keyframes shimmer{ 0%{ transform:translateX(-120%);} 100%{ transform:translateX(120%);} }
   .cta-map{
     background: linear-gradient(135deg, #5ba8ff 0%, #a3d8f4 45%, #d8f0ff 100%);
   }
@@ -104,22 +125,17 @@
     background: linear-gradient(135deg, #5ba8ff 0%, #a3d8f4 45%, #d8f0ff 100%);
   }
 
-  /* Con cariño */
+  /* Cierre */
   .hug{ margin-top:18px; font-size:clamp(20px, 5.4vw, 26px); font-weight:900; }
-  .hug .title{ font-size: inherit; }
-
-  /* Corazón reposicionado */
   .big-heart{
-    position:absolute;
-    right:15%;
-    bottom:25%;
-    font-size:clamp(40px, 14vw, 70px);
+    margin-top:6px;
+    font-size:clamp(50px, 18vw, 100px); /* más chico */
     animation: heartThump 1.2s ease-in-out infinite;
-    text-shadow:0 0 16px var(--blue-soft), 0 8px 20px rgba(0,0,0,.4);
+    text-shadow:0 0 16px var(--brand-light), 0 8px 20px rgba(0,0,0,.5);
   }
   @keyframes heartThump{ 0%{transform:scale(.9)}50%{transform:scale(1.1)}100%{transform:scale(.9)} }
 
-  /* Confeti */
+  /* Confeti elegante */
   .emoji-layer{ position:fixed; inset:0; max-width:var(--maxw); margin:0 auto; pointer-events:none; overflow:hidden; }
   .emoji{
     position:absolute; top:-100px;
@@ -128,9 +144,10 @@
     will-change: transform, opacity;
   }
   @keyframes fallDown{
-    0%   { transform: translateY(-110px) rotate(var(--r,0deg)); opacity:0; }
+    0%   { transform: translateY(-110px) rotate(var(--r,0deg)) scale(1); opacity:0; }
     10%  { opacity:1; }
-    100% { transform: translateY(calc(100vh + 120px)) rotate(calc(var(--r,0deg) + 120deg)); opacity:0; }
+    50%  { transform: translateY(50vh) rotate(calc(var(--r,0deg) + 80deg)) scale(1.1); }
+    100% { transform: translateY(100vh) rotate(calc(var(--r,0deg) + 160deg)) scale(0.9); opacity:0; }
   }
 </style>
 </head>
@@ -156,22 +173,15 @@
       ❄️ ¡Habrá risas y mucha diversión! ❄️
     </div>
 
-    <a class="cta cta-map" href="https://www.google.com/maps/search/?api=1&query=Burbuja%27s+Park" target="_blank">📍 Abrir ubicación</a>
-    <a class="cta cta-wa" href="https://wa.me/34675311350?text=%C2%A1Hola!%20Confirmo%20asistencia%20a%20la%20fiesta%20%F0%9F%8E%89" target="_blank">💬 Confirmar por WhatsApp</a>
+    <a class="cta cta-map" href="https://www.google.com/maps/search/?api=1&query=Burbuja%27s+Park" target="_blank" rel="noopener">📍 Abrir ubicación</a>
+    <a class="cta cta-wa" href="https://wa.me/34675311350?text=%C2%A1Hola!%20Confirmo%20asistencia%20a%20la%20fiesta%20%F0%9F%8E%89" target="_blank" rel="noopener">💬 Confirmar por WhatsApp</a>
 
     <div class="hug"><span class="title">❄️💙 Con cariño, Jimena 💙❄️</span></div>
-
-    <!-- Pie con imagen Frozen y corazón reposicionado -->
-    <div style="position:relative; margin-top:20px;">
-      <img src="frozen_footer.png" alt="Frozen" style="width:100%; border-radius:12px;" />
-      <div class="big-heart">💙</div>
-    </div>
+    <div class="big-heart">💙</div>
   </div>
 
-  <!-- Capa de confeti -->
   <div class="emoji-layer" id="emojiLayer" aria-hidden="true"></div>
 
-  <!-- Audio -->
   <audio id="voice" preload="auto">
     <source src="voz.mp3" type="audio/mpeg">
   </audio>
@@ -204,7 +214,7 @@
     try{ audio.play().then(()=>audio.pause()); }catch(e){}
   }, { once:true });
 
-  function triggerMagic(){ rainEmojis(120); playVoice(); }
+  function triggerMagic(){ rainEmojis(60); playVoice(); }
   photo.addEventListener('click', triggerMagic);
   tapHint.addEventListener('click', triggerMagic);
 
@@ -212,18 +222,18 @@
     try{ audio.currentTime = 0; audio.play().catch(()=>{}); }catch(e){}
   }
 
-  function rainEmojis(count=80){
+  function rainEmojis(count=60){ // menos cantidad, más elegante
     const w = document.body.clientWidth;
     for(let i=0;i<count;i++){
       const span = document.createElement('span');
       span.className = 'emoji';
       span.textContent = EMOJIS[Math.floor(Math.random()*EMOJIS.length)];
       const left  = Math.random() * w;
-      const delay = Math.random() * 2000;
-      const dur   = 6000 + Math.random()*4000;
+      const delay = Math.random() * 2000; 
+      const dur   = 7000 + Math.random()*4000; // 7–11s lento
       span.style.left = left + 'px';
       span.style.setProperty('--r', (Math.random()*80-40) + 'deg');
-      span.style.animation = `fallDown ${dur}ms ease-in forwards`;
+      span.style.animation = `fallDown ${dur}ms ease-in-out forwards`;
       span.style.animationDelay = `${delay}ms`;
       layer.appendChild(span);
       span.addEventListener('animationend', ()=> span.remove());
@@ -232,3 +242,4 @@
 </script>
 </body>
 </html>
+
