@@ -26,10 +26,7 @@
     overflow-x:hidden;
   }
 
-  .page{
-    padding:18px 16px 100px;
-    text-align:center;
-  }
+  .page{ padding:18px 16px 100px; text-align:center; }
 
   /* Títulos Frozen */
   .title{
@@ -76,17 +73,58 @@
   }
   @keyframes pulse{ 0%{transform:scale(1)} 50%{transform:scale(1.08)} 100%{transform:scale(1)} }
 
-  /* Tarjetas */
+  /* ——— TARJETAS “FROZEN” MEJORADAS ——— */
   .glass{
+    position:relative;
     margin:18px auto 0;
     padding:16px 14px;
     border-radius:18px;
-    background: var(--glass);
-    backdrop-filter: blur(12px);
-    box-shadow: 0 10px 22px var(--shadow), inset 0 1px 0 rgba(255,255,255,.4);
-    font-weight:700;
+    background:
+      linear-gradient(180deg, rgba(255,255,255,.22), rgba(255,255,255,.10)); /* velo suave */
+    backdrop-filter: blur(14px) saturate(130%);
+    -webkit-backdrop-filter: blur(14px) saturate(130%);
+    box-shadow:
+      0 18px 32px rgba(0,30,60,.35),
+      inset 0 1px 0 rgba(255,255,255,.55);
+    border:1px solid rgba(255,255,255,.55);
+    overflow:hidden;
   }
-  .count-line{ font-size: clamp(20px, 6vw, 28px); font-weight:900; }
+  /* Brillo que cruza el borde */
+  .glass::after{
+    content:""; position:absolute; inset:-2px;
+    background: radial-gradient(120% 50% at -20% -20%, rgba(255,255,255,.45), transparent 40%),
+                radial-gradient(120% 60% at 120% 20%, rgba(255,255,255,.25), transparent 50%);
+    pointer-events:none;
+  }
+
+  /* Filas y separadores suaves */
+  .card-row{ 
+    font-weight:900;
+    font-size: clamp(18px, 5.4vw, 24px);
+    padding:6px 4px;
+  }
+  .card-row + .card-row{
+    border-top:1px solid rgba(255,255,255,.28);
+  }
+
+  /* Texto con degradado plata-azul y sombra para leer siempre */
+  .frozen-text{
+    background: linear-gradient(180deg, #ffffff 10%, #dff1ff 40%, #8abff0 85%);
+    -webkit-background-clip:text; background-clip:text; color:transparent;
+    text-shadow: 0 2px 6px rgba(0,0,0,.45);
+  }
+
+  /* Cuenta atrás destacada */
+  .count-line{
+    font-size: clamp(22px, 6.6vw, 28px);
+    font-weight:1000;
+  }
+
+  .tagline{
+    margin-top:6px;
+    font-weight:900;
+    opacity:.95;
+  }
 
   /* Botones Frozen */
   .cta{
@@ -118,18 +156,14 @@
     animation: shimmer 4s infinite;
   }
   @keyframes shimmer{ 0%{ transform:translateX(-120%);} 100%{ transform:translateX(120%);} }
-  .cta-map{
-    background: linear-gradient(135deg, #5ba8ff 0%, #a3d8f4 45%, #d8f0ff 100%);
-  }
-  .cta-wa{
-    background: linear-gradient(135deg, #5ba8ff 0%, #a3d8f4 45%, #d8f0ff 100%);
-  }
+  .cta-map,
+  .cta-wa{ background: linear-gradient(135deg, #5ba8ff 0%, #a3d8f4 45%, #d8f0ff 100%); }
 
   /* Cierre */
   .hug{ margin-top:18px; font-size:clamp(20px, 5.4vw, 26px); font-weight:900; }
   .big-heart{
     margin-top:6px;
-    font-size:clamp(50px, 18vw, 100px); /* más chico */
+    font-size:clamp(50px, 18vw, 100px);
     animation: heartThump 1.2s ease-in-out infinite;
     text-shadow:0 0 16px var(--brand-light), 0 8px 20px rgba(0,0,0,.5);
   }
@@ -162,15 +196,17 @@
     </div>
     <button id="tapHint" class="tap-hint" type="button">👉 ¡Toca aquí para la magia! ❄️</button>
 
+    <!-- TARJETA 1: Fecha/Hora/Lugar más bonita -->
     <div class="glass">
-      📅 <time datetime="2025-09-27">27 de septiembre de 2025</time><br>
-      🕔 17:00 h<br>
-      📍 <strong>Burbuja’s Park</strong>
+      <div class="card-row frozen-text">📅 <time datetime="2025-09-27">27 de septiembre de 2025</time></div>
+      <div class="card-row frozen-text">🕔 17:00 h</div>
+      <div class="card-row frozen-text">📍 <strong>Burbuja’s Park</strong></div>
     </div>
 
+    <!-- TARJETA 2: Cuenta atrás con presencia -->
     <div class="glass">
-      <div id="countdown" class="count-line">⏳ Faltan …</div>
-      ❄️ ¡Habrá risas y mucha diversión! ❄️
+      <div id="countdown" class="count-line frozen-text">⏳ Faltan …</div>
+      <div class="tagline">❄️ ¡Habrá risas y mucha diversión! ❄️</div>
     </div>
 
     <a class="cta cta-map" href="https://www.google.com/maps/search/?api=1&query=Burbuja%27s+Park" target="_blank" rel="noopener">📍 Abrir ubicación</a>
@@ -222,15 +258,16 @@
     try{ audio.currentTime = 0; audio.play().catch(()=>{}); }catch(e){}
   }
 
-  function rainEmojis(count=60){ // menos cantidad, más elegante
+  // Confeti elegante y fluido
+  function rainEmojis(count=60){
     const w = document.body.clientWidth;
     for(let i=0;i<count;i++){
       const span = document.createElement('span');
       span.className = 'emoji';
       span.textContent = EMOJIS[Math.floor(Math.random()*EMOJIS.length)];
       const left  = Math.random() * w;
-      const delay = Math.random() * 2000; 
-      const dur   = 7000 + Math.random()*4000; // 7–11s lento
+      const delay = Math.random() * 2000;
+      const dur   = 7000 + Math.random()*4000; // 7–11s
       span.style.left = left + 'px';
       span.style.setProperty('--r', (Math.random()*80-40) + 'deg');
       span.style.animation = `fallDown ${dur}ms ease-in-out forwards`;
