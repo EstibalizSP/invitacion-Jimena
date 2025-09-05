@@ -3,81 +3,72 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-<!-- Yo sincronizo el color de la barra del navegador -->
 <meta name="theme-color" content="#a3d8f4" />
 <title>Invitación Frozen – Jimena 6 años</title>
 
 <style>
-  /* Yo preparo mis variables principales */
+  /* Yo preparo mis variables frías */
   :root{
-    --brand: #a3d8f4;        /* azul Frozen */
-    --brand-dark: #3c8dbc;   /* más intenso */
-    --brand-light: #d8f0ff;  /* más claro */
-    --glass: rgba(255,255,255,0.28);
-    --shadow: rgba(0,40,80,0.45);
+    --brand: #a3d8f4;
+    --brand-dark: #3c8dbc;
+    --brand-light: #e6f6ff;
+    --glass: rgba(255,255,255,.28);
+    --shadow: rgba(0,40,80,.45);
+    --maxw: 480px; /* yo fuerzo modo móvil */
   }
 
-  /* Yo fuerzo a que todo se vea como móvil (máx 480px) */
+  /* Yo limito el ancho como un teléfono y centro en escritorio */
+  html,body{height:100%}
   body{
     margin:0;
-    font-family: 'Segoe UI', sans-serif;
-    background: url("fondo_frozen_mobile.png") no-repeat center top / cover;
+    font-family: 'Segoe UI', system-ui, -apple-system, Roboto, Arial, sans-serif;
     color:#fff;
-    max-width:480px;
-    margin:0 auto;
+    background: url("fondo_frozen_mobile.png") no-repeat center top / cover;
+    max-width: var(--maxw);
+    margin: 0 auto;
     overflow-x:hidden;
   }
+  .page{ padding:18px 16px 110px; text-align:center; }
 
-  .page{
-    padding:18px 16px 100px;
-    text-align:center;
-  }
-
-  /* Yo hago los títulos más mágicos */
+  /* Yo hago títulos con brillo helado */
   h1,h2{
-    margin:.35rem 0;
-    font-weight:900;
-    text-shadow:
-      0 2px 6px rgba(0,0,0,.55),
-      0 0 12px rgba(163,216,244,.9);
+    margin:.35rem 0; font-weight:900;
+    text-shadow: 0 2px 6px rgba(0,0,0,.55), 0 0 12px rgba(163,216,244,.9);
   }
   h1{ font-size: clamp(40px, 10vw, 60px); }
   h2{ font-size: clamp(22px, 7vw, 30px); }
 
-  /* Yo pongo la foto de Jimena redonda y brillante */
+  /* Yo diseño la foto redonda brillante con pista de “tócame” */
   .photo-wrap{
-    width:200px; height:200px;
-    margin:14px auto 10px; border-radius:50%;
-    overflow:hidden; position:relative;
+    width:200px; height:200px; margin:14px auto 10px;
+    border-radius:50%; overflow:hidden; position:relative; cursor:pointer;
     border:6px solid #fff;
     box-shadow: 0 8px 22px rgba(0,0,0,.4), 0 0 20px var(--brand);
   }
   .photo-wrap img{ width:100%; height:100%; object-fit:cover; }
+  .tap-hint{
+    /* yo hago el aviso legible siempre */
+    position:absolute; left:50%; bottom:10px; transform:translateX(-50%);
+    font-weight:900; font-size:clamp(12px,3.6vw,15px);
+    color:#fff; padding:7px 12px; border-radius:999px; white-space:nowrap;
+    background: rgba(0,0,0,.58);
+    box-shadow:0 8px 18px rgba(0,0,0,.45);
+    pointer-events:none;
+  }
 
-  /* Yo preparo mis tarjetas de cristal */
+  /* Yo creo tarjetas de cristal */
   .glass{
-    margin:18px auto 0;
-    padding:16px 14px;
-    border-radius:18px;
-    background: var(--glass);
-    backdrop-filter: blur(12px);
+    margin:18px auto 0; padding:16px 14px; border-radius:18px;
+    background: var(--glass); backdrop-filter: blur(12px);
     box-shadow: 0 10px 22px var(--shadow), inset 0 1px 0 rgba(255,255,255,.4);
     font-weight:700;
   }
-
-  /* Yo estilizo la cuenta atrás */
   .count-line{ font-size: clamp(20px, 6vw, 28px); font-weight:900; }
 
-  /* Yo diseño mis botones estilo Frozen */
+  /* Yo hago botones Frozen */
   .cta{
-    display:block;
-    margin:14px auto 0;
-    padding:14px 18px;
-    width:90%;
-    border-radius:9999px;
-    color:#fff;
-    font-weight:900;
-    text-decoration:none;
+    display:block; margin:14px auto 0; padding:14px 18px; width:90%;
+    border-radius:9999px; color:#fff; font-weight:900; text-decoration:none;
     text-shadow:0 2px 6px rgba(0,0,0,.6);
     box-shadow:0 8px 20px var(--shadow), inset 0 -4px 8px rgba(0,0,0,.25);
     font-size: clamp(16px, 4.8vw, 22px);
@@ -85,7 +76,7 @@
   .cta-map{ background: linear-gradient(135deg, var(--brand-dark), var(--brand)); }
   .cta-wa{ background: linear-gradient(135deg, #25D366, #128C7E); }
 
-  /* Yo pongo un corazón Frozen que late */
+  /* Yo dejo un corazón helado palpitante */
   .hug{ margin-top:18px; font-size:clamp(20px, 5.4vw, 26px); font-weight:900; }
   .big-heart{
     margin-top:6px; font-size:clamp(70px, 22vw, 130px);
@@ -93,6 +84,20 @@
     text-shadow:0 0 16px var(--brand-light), 0 8px 20px rgba(0,0,0,.5);
   }
   @keyframes heartThump{ 0%{transform:scale(.9)}50%{transform:scale(1.1)}100%{transform:scale(.9)} }
+
+  /* Yo preparo la capa para el confeti helado */
+  .emoji-layer{ position:fixed; inset:0; max-width:var(--maxw); margin:0 auto; pointer-events:none; overflow:hidden; }
+  .emoji{
+    position:absolute; top:-100px;
+    font-size:clamp(22px, 6.2vw, 36px);
+    filter: drop-shadow(0 3px 6px rgba(0,0,0,.6));
+    will-change: transform, opacity;
+  }
+  @keyframes fallDown{
+    0%   { transform: translateY(-110px) rotate(var(--r,0deg)); opacity:0; }
+    10%  { opacity:1; }
+    100% { transform: translateY(calc(100vh + 120px)) rotate(calc(var(--r,0deg) + 120deg)); opacity:0; }
+  }
 </style>
 </head>
 
@@ -101,8 +106,10 @@
     <h2>¡Te invito a mi fiesta!</h2>
     <h1>JIMENA CUMPLE 6 AÑOS</h1>
 
-    <div class="photo-wrap">
+    <!-- Yo muestro la foto con el aviso de toque -->
+    <div class="photo-wrap" id="photo" aria-label="Toca la foto para oír la invitación y ver la magia">
       <img src="jimena1.jpg" alt="Foto de Jimena" />
+      <div class="tap-hint">🎈 Toca mi foto para ver la magia ❄️</div>
     </div>
 
     <div class="glass">
@@ -116,17 +123,69 @@
       ❄️ ¡Habrá risas y mucha diversión! ❄️
     </div>
 
-    <a class="cta cta-map" href="https://www.google.com/maps/search/?api=1&query=Burbuja%27s+Park" target="_blank">📍 Abrir ubicación</a>
-
-    <a class="cta cta-wa" href="https://wa.me/34675311350?text=%C2%A1Hola!%20Confirmo%20asistencia%20a%20la%20fiesta%20%F0%9F%8E%89" target="_blank">💬 Confirmar por WhatsApp</a>
+    <a class="cta cta-map" href="https://www.google.com/maps/search/?api=1&query=Burbuja%27s+Park" target="_blank" rel="noopener">📍 Abrir ubicación</a>
+    <a class="cta cta-wa" href="https://wa.me/34675311350?text=%C2%A1Hola!%20Confirmo%20asistencia%20a%20la%20fiesta%20%F0%9F%8E%89" target="_blank" rel="noopener">💬 Confirmar por WhatsApp</a>
 
     <div class="hug">❄️💙☃️ Con cariño, Jimena ❄️💙☃️</div>
-    <div class="big-heart">💙</div>
+    <div class="big-heart" role="img" aria-label="corazón palpitante">💙</div>
   </div>
 
+  <!-- Yo creo la capa donde lloverán los emojis helados -->
+  <div class="emoji-layer" id="emojiLayer" aria-hidden="true"></div>
+
+  <!-- Yo cargo tu audio (archivo en el mismo directorio) -->
+  <audio id="voice" preload="auto">
+    <source src="voz.mp3" type="audio/mpeg">
+  </audio>
+
 <script>
-  // Yo configuro la cuenta atrás
+  /* Yo selecciono mis elementos */
+  const layer  = document.getElementById('emojiLayer');
+  const photo  = document.getElementById('photo');
+  const audio  = document.getElementById('voice');
   const countdownEl = document.getElementById("countdown");
+
+  /* Yo preparo un set de emojis estilo Frozen + cumpleaños */
+  const EMOJIS = ["❄️","💙","✨","🪄","👑","🧊","🎉","🎈","🎂","🎊","🌟","🧁","🎁"];
+
+  /* Yo minimizo fricción móvil: primer toque “desbloquea” el audio */
+  window.addEventListener('pointerdown', ()=> {
+    try{ audio.play().then(()=>audio.pause()); }catch(e){}
+  }, { once:true });
+
+  /* Yo conecto el toque de foto con confeti + audio */
+  photo.addEventListener('click', () => {
+    rainEmojis(150);   // yo suelto lluvia de 150 piezas
+    playVoice();       // yo pongo tu voz
+  });
+
+  function playVoice(){
+    try{
+      audio.currentTime = 0;
+      audio.play().catch(()=>{ /* yo ignoro si el navegador bloquea */ });
+    }catch(e){}
+  }
+
+  /* Yo fabrico la lluvia */
+  function rainEmojis(count=140){
+    const w = document.body.clientWidth; // yo respeto el ancho móvil
+    for(let i=0;i<count;i++){
+      const span = document.createElement('span');
+      span.className = 'emoji';
+      span.textContent = EMOJIS[Math.floor(Math.random()*EMOJIS.length)];
+      const left  = Math.random() * w;
+      const delay = Math.random() * 900;
+      const dur   = 3200 + Math.random()*3600; // yo caigo ~3.2–6.8s
+      span.style.left = left + 'px';
+      span.style.setProperty('--r', (Math.random()*80-40) + 'deg');
+      span.style.animation = `fallDown ${dur}ms ease-in forwards`;
+      span.style.animationDelay = `${delay}ms`;
+      layer.appendChild(span);
+      span.addEventListener('animationend', ()=> span.remove());
+    }
+  }
+
+  /* Yo configuro la cuenta atrás */
   const targetDate = new Date("2025-09-27T17:00:00");
   function updateCountdown(){
     const now = new Date();
