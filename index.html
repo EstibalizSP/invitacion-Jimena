@@ -139,10 +139,12 @@
   /* Cierre */
   .hug{ margin-top:18px; font-size:clamp(20px, 5.4vw, 26px); font-weight:900; }
   .big-heart{
-    margin-top:6px; font-size:clamp(70px, 22vw, 130px);
-    animation: heartThump 1.2s ease-in-out infinite;
-    text-shadow:0 0 16px var(--brand-light), 0 8px 20px rgba(0,0,0,.5);
-  }
+  margin-top:6px; /* lo dejo igual que antes */
+  font-size:clamp(50px, 18vw, 100px); /* antes era 70px–130px, ahora más chico */
+  animation: heartThump 1.2s ease-in-out infinite;
+  text-shadow:0 0 16px var(--brand-light), 0 8px 20px rgba(0,0,0,.5);
+}
+
   @keyframes heartThump{ 0%{transform:scale(.9)}50%{transform:scale(1.1)}100%{transform:scale(.9)} }
 
   /* Confeti */
@@ -257,6 +259,7 @@
 </script>
 </body>
 </html>
+
 
 
 
